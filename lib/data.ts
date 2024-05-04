@@ -16,7 +16,9 @@ import {
   SiFlask,
   SiDjango,
   SiGithub,
+  SiArchlinux,
 } from "react-icons/si";
+import { text } from "stream/consumers";
 
 export const skills = [
   {
@@ -65,7 +67,7 @@ export const skills = [
   },
   {
     icon: SiDjango,
-    text: "React",
+    text: "Django",
   },
   {
     icon: SiMongodb,
@@ -87,6 +89,10 @@ export const skills = [
     icon: SiBootstrap,
     text: "Bootstrap",
   },
+  {
+    icon: SiArchlinux,
+    text: "Linux"
+  }
 ];
 
 export interface Project {
