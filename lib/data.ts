@@ -153,6 +153,6 @@ export const marketingHeadlines = {
 };
 
 export const websiteMetadata = {
-  title: "Mannu | me",
+  title: "Mannu | 17yo Developer",
   description: "👋 Hey, Mannu here. Welcome to my portflio/blog.",
 };
