@@ -148,7 +148,7 @@ export const aboutYou = {
 export const logoText = "@dev_mannu";
 
 export const marketingHeadlines = {
-  mainHeadline: "✨ I Turn those random 3AM ideas into ✨🤌 Reality",
+  mainHeadline: "✨ I Turn those random 3 AM ideas into ✨🤌 Reality",
   subHeadline: "I Use arch btw 🔥",
 };
 
