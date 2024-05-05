@@ -1,11 +1,12 @@
 import ActionButton from "@/components/action-button";
 import Footer from "@/components/footer";
+// import NowPlaying from "@/components/music";
 import Navbar from "@/components/navbar";
 import ProjectShowcase from "@/components/project-showcase";
 import Sidebar from "@/components/sidebar";
 import SkillOutline from "@/components/skill-outline";
 import { Separator } from "@/components/ui/separator";
-import WorkShowcase from "@/components/work-showcase";
+// import WorkShowcase from "@/components/work-showcase";
 
 import {
   Project,
