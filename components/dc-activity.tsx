@@ -4,7 +4,15 @@ import { LanyardResponse } from '@/app/api/discord/route';
 import useSWR from 'swr';
 import { Separator } from './ui/separator';
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar';
-import type { NowPlayingSong } from './music';
+
+type NowPlayingSong = {
+    isPlaying: boolean;
+    name: string;
+    artist: string;
+    album: string;
+    albumImage: string;
+    songUrl: string;
+};
 
 export default function DcActivity() {
     const { data, isLoading, error } = useSWR<LanyardResponse>(
