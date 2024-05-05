@@ -1,27 +1,22 @@
 import ActionButton from "@/components/action-button";
-import Footer from "@/components/footer";
-// import NowPlaying from "@/components/music";
-import Navbar from "@/components/navbar";
 import ProjectShowcase from "@/components/project-showcase";
 import Sidebar from "@/components/sidebar";
 import SkillOutline from "@/components/skill-outline";
 import { Separator } from "@/components/ui/separator";
-// import WorkShowcase from "@/components/work-showcase";
 
 import {
   Project,
-  WorkExperience,
+  // WorkExperience,
   aboutYou,
   marketingHeadlines,
   projects,
   skills,
-  workExperiences,
+  // workExperiences,
 } from "@/lib/data";
 
 export default function Home() {
   return (
     <div className="md:max-w-3xl mx-auto md:mt-8 ">
-      <Navbar />
       <div className="flex flex-col md:flex-row my-10 mx-10 md:mx-0 space-x-0 md:space-x-10 space-y-10 md:space-y-0 ">
         <Sidebar />
         <div className="md:min-w-[65vh] min-w-full space-y-10">
@@ -104,7 +99,6 @@ export default function Home() {
           </section>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
