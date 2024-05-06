@@ -14,6 +14,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import DcHoverCard from "./dc-hover-card";
+import { Spotify } from './spotify';
 
 function getStatusColor(status: string | undefined): string {
   if (!status) return "text-gray-400";
@@ -28,7 +29,6 @@ export default function Sidebar() {
     "/api/discord",
     fetcher
   );
-
   return (
     <React.Fragment>
       <div className="flex flex-col space-y-4">

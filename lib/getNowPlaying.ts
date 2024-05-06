@@ -9,6 +9,7 @@ const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token'
 
 type Song = {
     is_playing: boolean
+    progress_ms: number
     item: {
         name: string
         artists: {
