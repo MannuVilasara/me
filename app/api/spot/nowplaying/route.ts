@@ -30,6 +30,8 @@ export const GET = async () => {
         const album = song.item.album.name
         const albumImage = song.item.album.images[0].url
         const songUrl = song.item.external_urls.spotify
+        const progress = song.progress_ms
+        const duration = song.item.duration_ms
 
         return NextResponse.json({
             isPlaying,
@@ -38,6 +40,8 @@ export const GET = async () => {
             album,
             albumImage,
             songUrl,
+            progress,
+            duration
         })
     } catch {
         return NextResponse.json(
