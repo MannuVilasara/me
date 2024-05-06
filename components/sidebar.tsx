@@ -14,7 +14,6 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
 import DcHoverCard from "./dc-hover-card";
-import { Spotify } from './spotify';
 
 function getStatusColor(status: string | undefined): string {
   if (!status) return "text-gray-400";
