@@ -11,6 +11,7 @@ export default function ProjectShowcase({ project }: ProjectShowcaseProps) {
   return (
     <div
       onClick={() => {
+        if (project.link == "/") return;
         window.open(project.link);
       }}
       className="rounded-xl border bg-card text-card-foreground shadow cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground"
