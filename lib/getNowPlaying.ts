@@ -12,6 +12,7 @@ type Song = {
     progress_ms: number
     item: {
         name: string
+        duration_ms: number
         artists: {
             name: string
         }[]
