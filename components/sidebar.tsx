@@ -1,5 +1,6 @@
 "use client";
 
+import React from 'react';
 import { aboutYou } from "@/lib/data";
 import { Separator } from "./ui/separator";
 import { SiDiscord } from "react-icons/si";
@@ -14,14 +15,22 @@ import {
 } from "@/components/ui/hover-card"
 import DcHoverCard from "./dc-hover-card";
 
+function getStatusColor(status: string | undefined): string {
+  if (!status) return "text-gray-400";
+  if (status === "online") return "text-green-500";
+  if (status === "idle") return "text-yellow-500";
+  if (status === "dnd") return "text-red-500";
+  return "text-gray-400"
+}
 
 export default function Sidebar() {
   const { data, isLoading, error } = useSWR<LanyardResponse>(
     "/api/discord",
     fetcher
   );
+
   return (
-    <>
+    <React.Fragment>
       <div className="flex flex-col space-y-4">
         <div className="rounded-xl border bg-card text-card-foreground shadow p-4">
           {/* Title/Name */}
@@ -33,7 +42,6 @@ export default function Sidebar() {
             {" "}
             <a href="http://github.com/MannuVilasara" target="_blank">Github.</a>
           </p>
-
         </div>
         <Separator />
         <div className="rounded-xl border bg-card text-card-foreground shadow p-4">
@@ -41,7 +49,7 @@ export default function Sidebar() {
           <br />
           <HoverCard>
             <HoverCardTrigger>
-              <a href="http://discord.com/users/786926252811485186" target="_blank">
+              <a className={getStatusColor(data?.data.discord_status.toString())} href="http://discord.com/users/786926252811485186" target="_blank">
                 <SkillOutline Icon={SiDiscord} text={error || isLoading ? "offline" : data?.data.discord_status + ""} />
               </a>
             </HoverCardTrigger>
@@ -49,9 +57,8 @@ export default function Sidebar() {
               <DcHoverCard />
             </HoverCardContent>
           </HoverCard>
-
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 }
