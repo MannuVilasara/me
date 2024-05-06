@@ -35,6 +35,9 @@ dependencies:
   '@types/react-dom':
     specifier: 18.2.7
     version: 18.2.7
+  Badge:
+    specifier: link:@mui/material/Badge
+    version: link:@mui/material/Badge
   autoprefixer:
     specifier: 10.4.15
     version: 10.4.15(postcss@8.4.28)

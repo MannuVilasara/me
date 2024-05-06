@@ -105,7 +105,7 @@ export const projects: Project[] = [
   {
     title: "This Page",
     description: "The page you are viewing rn",
-    link: "https://dev-mannu.vercel.app",
+    link: "/",
   },
   {
     title: "requests-abuser",
