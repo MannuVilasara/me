@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React from "react";
 import { aboutYou } from "@/lib/data";
 import { Separator } from "./ui/separator";
 import { SiDiscord } from "react-icons/si";
@@ -12,7 +12,7 @@ import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card"
+} from "@/components/ui/hover-card";
 import DcHoverCard from "./dc-hover-card";
 
 function getStatusColor(status: string | undefined): string {
@@ -20,13 +20,13 @@ function getStatusColor(status: string | undefined): string {
   if (status === "online") return "text-green-500";
   if (status === "idle") return "text-yellow-500";
   if (status === "dnd") return "text-red-500";
-  return "text-gray-400"
+  return "text-gray-400";
 }
 
 export default function Sidebar() {
   const { data, isLoading, error } = useSWR<LanyardResponse>(
     "/api/discord",
-    fetcher
+    fetcher,
   );
   return (
     <React.Fragment>
@@ -35,11 +35,11 @@ export default function Sidebar() {
           {/* Title/Name */}
           <p className="font-semibold">{aboutYou.name}</p>
           {/* Description */}
-          <p className="text-sm text-muted-foreground">{aboutYou.description}
-            {" "}
-            Here is my
-            {" "}
-            <a href="http://github.com/MannuVilasara" target="_blank">Github.</a>
+          <p className="text-sm text-muted-foreground">
+            {aboutYou.description} Here is my{" "}
+            <a href="http://github.com/MannuVilasara" target="_blank">
+              Github.
+            </a>
           </p>
         </div>
         <Separator />
@@ -48,8 +48,19 @@ export default function Sidebar() {
           <br />
           <HoverCard>
             <HoverCardTrigger>
-              <a className={getStatusColor(data?.data.discord_status.toString())} href="http://discord.com/users/786926252811485186" target="_blank">
-                <SkillOutline Icon={SiDiscord} text={error || isLoading ? "offline" : data?.data.discord_status + ""} />
+              <a
+                className={getStatusColor(data?.data.discord_status.toString())}
+                href="http://discord.com/users/786926252811485186"
+                target="_blank"
+              >
+                <SkillOutline
+                  Icon={SiDiscord}
+                  text={
+                    error || isLoading
+                      ? "offline"
+                      : data?.data.discord_status + ""
+                  }
+                />
               </a>
             </HoverCardTrigger>
             <HoverCardContent>

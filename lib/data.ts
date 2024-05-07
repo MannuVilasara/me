@@ -91,8 +91,8 @@ export const skills = [
   },
   {
     icon: SiArchlinux,
-    text: "Linux"
-  }
+    text: "Linux",
+  },
 ];
 
 export interface Project {
@@ -109,7 +109,8 @@ export const projects: Project[] = [
   },
   {
     title: "requests-abuser",
-    description: "Python based request abuser to send as definite number/type of request to any url",
+    description:
+      "Python based request abuser to send as definite number/type of request to any url",
     link: "https://github.com/MannuVilasara/requests-abuser",
   },
   {
@@ -119,7 +120,8 @@ export const projects: Project[] = [
   },
   {
     title: "my-dsc-rpc",
-    description: "a python script that I use to show my presence on discord. it uses playerctl to fetch my now playing.",
+    description:
+      "a python script that I use to show my presence on discord. it uses playerctl to fetch my now playing.",
     link: "https://github.com/MannuVilasara/my-dsc-rpc",
   },
 ];
