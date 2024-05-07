@@ -1,4 +1,5 @@
 import ActionButton from "@/components/action-button";
+import Contact from "@/components/contact";
 import ProjectShowcase from "@/components/project-showcase";
 import Sidebar from "@/components/sidebar";
 import SkillOutline from "@/components/skill-outline";
@@ -89,13 +90,7 @@ export default function Home() {
           </section> */}
           {/* Contact */}
           <section id="contact" key="contact">
-            <h2 className="text-2xl font-semibold tracking-tight">Contact</h2>
-            <div className="mt-5 rounded-xl border bg-card text-card-foreground shadow">
-              <p className="p-6 text-sm text-muted-foreground">
-                Best way to reach me is through:{" "}
-                <a href={`mailto:${aboutYou.email}`}>{aboutYou.email}</a>
-              </p>
-            </div>
+            <Contact />
           </section>
         </div>
       </div>
