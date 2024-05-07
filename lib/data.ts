@@ -17,6 +17,12 @@ import {
   SiDjango,
   SiGithub,
   SiArchlinux,
+  SiVisualstudiocode,
+  SiPostman,
+  SiCyberdefenders,
+  SiNetlify,
+  SiVercel,
+  SiDigitalocean,
 } from "react-icons/si";
 import { text } from "stream/consumers";
 
@@ -92,6 +98,22 @@ export const skills = [
   {
     icon: SiArchlinux,
     text: "Linux",
+  },
+  {
+    icon: SiVisualstudiocode,
+    text: "vscode",
+  },
+  {
+    icon: SiPostman,
+    text: "Postman",
+  },
+  {
+    icon: SiNetlify,
+    text: "Netlify",
+  },
+  {
+    icon: SiVercel,
+    text: "Vercel",
   },
 ];
 
