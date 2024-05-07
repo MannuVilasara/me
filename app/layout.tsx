@@ -6,7 +6,6 @@ import "@/styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,13 +23,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="md:max-w-3xl mx-auto md:mt-8 ">
-
             <Navbar />
             {children}
             <Footer />
           </div>
         </ThemeProvider>
       </body>
-    </html >
+    </html>
   );
 }
