@@ -169,7 +169,7 @@ export const workExperiences: WorkExperience[] = [
 export const aboutYou = {
   name: "Mannu Vilasara",
   description:
-    "👋 Hi, I'm Mannu. A 17-year-old Developer from India, is a backend developer with a passion for coding and a thirst for knowledge.",
+    "👋 Hi, I'm Mannu. A 17-year-old Developer from India, with a passion for coding and a thirst for knowledge.",
   yearsOfExperience: "1 year",
   location: "India",
   email: "mannuvilasara@gmail.com",
