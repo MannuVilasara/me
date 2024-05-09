@@ -100,17 +100,9 @@ export const skills = [
     text: "Linux",
   },
   {
-    icon: SiPostman,
-    text: "Postman",
-  },
-  {
-    icon: SiNetlify,
-    text: "Netlify",
-  },
-  {
-    icon: SiVercel,
-    text: "Vercel",
-  },
+    icon: SiVisualstudiocode,
+    text: "vscode",
+  }
 ];
 
 export interface Project {
