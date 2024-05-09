@@ -32,8 +32,8 @@ export const skills = [
     text: "TypeScript",
   },
   {
-    icon: SiJavascript,
-    text: "JavaScript",
+    icon: SiNodedotjs,
+    text: "Node",
   },
   {
     icon: SiReact,
@@ -56,8 +56,8 @@ export const skills = [
     text: "CSS3",
   },
   {
-    icon: SiNodedotjs,
-    text: "Node",
+    icon: SiJavascript,
+    text: "Javascript",
   },
   {
     icon: SiExpress,
