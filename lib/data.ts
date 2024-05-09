@@ -29,7 +29,7 @@ import { text } from "stream/consumers";
 export const skills = [
   {
     icon: SiTypescript,
-    text: "TypeScript",
+    text: "Ts",
   },
   {
     icon: SiNodedotjs,
@@ -57,7 +57,7 @@ export const skills = [
   },
   {
     icon: SiJavascript,
-    text: "Javascript",
+    text: "Js",
   },
   {
     icon: SiExpress,
