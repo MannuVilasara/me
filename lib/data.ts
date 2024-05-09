@@ -100,10 +100,6 @@ export const skills = [
     text: "Linux",
   },
   {
-    icon: SiVisualstudiocode,
-    text: "vscode",
-  },
-  {
     icon: SiPostman,
     text: "Postman",
   },
