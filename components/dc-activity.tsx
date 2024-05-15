@@ -25,8 +25,8 @@ export default function DcActivity() {
     return null; // Or loading/error UI
   }
 
-  const flag = data.data.activities[0].flags;
-  const rawLargeImg = data.data.activities[0].assets.large_image;
+  const flag = data.data.activities[1].flags;
+  let rawLargeImg = data.data.activities[1].assets.large_image;
   const httpsIndex = rawLargeImg.indexOf("/https/");
   let type;
   let image;
@@ -39,13 +39,13 @@ export default function DcActivity() {
       const nextSlashIndex = httpsSubstring.indexOf("/");
       image = "https://" + httpsSubstring.substring(nextSlashIndex + 1);
       details = data.data.activities[0].details.slice(
-        data.data.activities[0].details.indexOf("-") + 1,
+        data.data.activities[1].details.indexOf("-") + 1,
       );
     }
   } else {
     type = "Listening to";
     image = spt.data?.albumImage;
-    details = data.data.activities[0].details.slice(0, 15);
+    details = data.data.activities[1].details.slice(0, 15);
   }
 
   return (
@@ -65,7 +65,7 @@ export default function DcActivity() {
           </Avatar>
           <div className="space-y-1">
             <span className="text-xs text-muted-foreground font-serif">
-              {type + " " + data.data.activities[0].name}
+              {type + " " + data.data.activities[1].name}
             </span>
             <div className="flex items-center pt-2">
               <span className="text-xs text-muted-foreground font-sans font-light">
