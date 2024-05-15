@@ -28,6 +28,9 @@ export default function DcActivity() {
   if (data?.data.activities[index].id === "custom") {
     index++;
   }
+  if (isLoading || error || !data?.data.activities[index]) {
+    return null; // Or loading/error UI
+  }
   const flag = data.data.activities[index].flags;
   let rawLargeImg = data.data.activities[index].assets.large_image;
   const httpsIndex = rawLargeImg.indexOf("/https/");
