@@ -24,9 +24,12 @@ export default function DcActivity() {
   if (isLoading || error || !data?.data.activities[0]) {
     return null; // Or loading/error UI
   }
-
-  const flag = data.data.activities[1].flags;
-  let rawLargeImg = data.data.activities[1].assets.large_image;
+  let index = 0;
+  if (data?.data.activities[index].id === "custom") {
+    index++;
+  }
+  const flag = data.data.activities[index].flags;
+  let rawLargeImg = data.data.activities[index].assets.large_image;
   const httpsIndex = rawLargeImg.indexOf("/https/");
   let type;
   let image;
@@ -38,14 +41,14 @@ export default function DcActivity() {
       const httpsSubstring = rawLargeImg.substring(httpsIndex + 1);
       const nextSlashIndex = httpsSubstring.indexOf("/");
       image = "https://" + httpsSubstring.substring(nextSlashIndex + 1);
-      details = data.data.activities[0].details.slice(
-        data.data.activities[1].details.indexOf("-") + 1,
+      details = data.data.activities[index].details.slice(
+        data.data.activities[index].details.indexOf("-") + 1,
       );
     }
   } else {
     type = "Listening to";
     image = spt.data?.albumImage;
-    details = data.data.activities[1].details.slice(0, 15);
+    details = data.data.activities[index].details.slice(0, 15);
   }
 
   return (
@@ -65,7 +68,7 @@ export default function DcActivity() {
           </Avatar>
           <div className="space-y-1">
             <span className="text-xs text-muted-foreground font-serif">
-              {type + " " + data.data.activities[1].name}
+              {type + " " + data.data.activities[index].name}
             </span>
             <div className="flex items-center pt-2">
               <span className="text-xs text-muted-foreground font-sans font-light">
