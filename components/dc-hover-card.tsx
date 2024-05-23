@@ -43,7 +43,7 @@ export default function DcHoverCard() {
       <div className="flex justify-between space-x-4">
         <Badge variant="dot" color={color} overlap="circular">
           <Avatar>
-            <AvatarImage src="https://cdn.discordapp.com/avatars/786926252811485186/e33462707910e441f37eee8abce6af32.webp" />
+            <AvatarImage src="https://cdn.discordapp.com/avatars/786926252811485186/7458577c448cb6e68db1a6e89d5c36da.webp" />
           </Avatar>
         </Badge>
         <div className="space-y-1">
