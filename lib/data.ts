@@ -134,6 +134,11 @@ export const projects: Project[] = [
       "a python script that I use to show my presence on discord. it uses playerctl to fetch my now playing.",
     link: "https://github.com/MannuVilasara/my-dsc-rpc",
   },
+  {
+    title: "Calculator",
+    description: "A calculator built using nextjs and nextui.",
+    link: "https://calculator-xi-lilac.vercel.app/",
+  }
 ];
 
 export interface WorkExperience {
