@@ -46,6 +46,13 @@ export default function Home() {
                 </h3>
                 <p className="text-xs text-muted-foreground">Location</p>
               </div>
+              <iframe
+                src="https://github.com/sponsors/MannuVilasara/button"
+                title="Sponsor MannuVilasara"
+                height="32"
+                width="114"
+                style={{ border: 0, borderEndEndRadius: "6px" }}
+              ></iframe>
             </div>
             <div className="space-y-1">
               <div className="space-y-2">
@@ -71,6 +78,7 @@ export default function Home() {
               </div>
             </div>
           </section>
+
           {/* Work */}
           {/* <section id="work" key="work">
             <h2 className="text-2xl font-semibold tracking-tight">Work</h2>
