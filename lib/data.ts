@@ -102,7 +102,7 @@ export const skills = [
   {
     icon: SiVisualstudiocode,
     text: "vscode",
-  }
+  },
 ];
 
 export interface Project {
@@ -136,9 +136,9 @@ export const projects: Project[] = [
   },
   {
     title: "Calculator",
-    description: "A calculator built using nextjs and nextui.",
+    description: "A calculator built using nextjs and nextui. ",
     link: "https://calculator-xi-lilac.vercel.app/",
-  }
+  },
 ];
 
 export interface WorkExperience {
