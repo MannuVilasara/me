@@ -44,7 +44,6 @@ export default function DcHoverCard() {
         <Badge variant="dot" color={color} overlap="circular">
           <Avatar>
             <AvatarImage src="https://avatars.githubusercontent.com/u/117009138?s=400&u=7689c5d0450e6808a28847c6cb9eaef672ed7300&v=4" />
-            
           </Avatar>
         </Badge>
         <div className="space-y-1">
