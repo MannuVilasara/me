@@ -46,13 +46,13 @@ export default function Home() {
                 </h3>
                 <p className="text-xs text-muted-foreground">Location</p>
               </div>
-          {/*     <iframe
+              {/*     <iframe
                 src="https://github.com/sponsors/MannuVilasara/button"
                 title="Sponsor MannuVilasara"
                 height="32"
                 width="114"
                 style={{ border: 0, borderEndEndRadius: "6px" }}
-              ></iframe>   */ }
+              ></iframe>   */}
             </div>
             <div className="space-y-1">
               <div className="space-y-2">
