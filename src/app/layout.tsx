@@ -1,4 +1,4 @@
-import { Inter, JetBrains_Mono, DM_Sans } from 'next/font/google';
+import { JetBrains_Mono, DM_Sans } from 'next/font/google';
 
 import { ThemeProvider } from '@/components/themeProvider';
 import '@/styles/globals.css';
@@ -6,11 +6,6 @@ import Navbar from '@/components/myComponents/Navbar';
 import { ProgressBar } from '@/components/myComponents/ProgressBar';
 import Link from 'next/link';
 import { FaGithub } from 'react-icons/fa';
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
