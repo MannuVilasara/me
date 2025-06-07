@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import NowPlayingInline from './NowPlayingInLine';
 import DiscordStatusInline from './Discord';
@@ -8,12 +8,23 @@ import LocationTime from './LocationTime';
 import LatestCommitActivity from './LatestCommitActivity';
 
 export default function Activities() {
+  const [graphUrl, setGraphUrl] = useState<string | undefined>();
   const { theme } = useTheme();
+
   const light_url =
     'https://github.com/MannuVilasara/MannuVilasara/blob/output/github-contribution-grid-snake.svg?raw=true';
   const dark_url =
     'https://github.com/MannuVilasara/MannuVilasara/blob/output/github-contribution-grid-snake-dark.svg?raw=true';
-  const graphUrl = theme === 'dark' ? dark_url : light_url;
+
+  // Update graph URL when theme changes
+  useEffect(() => {
+    if (theme === 'dark') {
+      setGraphUrl(dark_url);
+    } else {
+      setGraphUrl(light_url);
+    }
+  }, [theme]);
+
   return (
     <section className="mt-16 border-t pt-8">
       <h2 className="text-2xl font-semibold mb-4">Activity Feed</h2>
@@ -39,6 +50,7 @@ export default function Activities() {
         src={graphUrl}
         alt="GitHub Contributions Snake Graph"
         className="max-w-full h-auto rounded-md shadow"
+        loading="lazy" // optional: improves performance
       />
     </section>
   );
