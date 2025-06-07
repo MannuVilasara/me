@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Footer />
             </div>
             <Toaster
-              position="top-right"
+              position="bottom-right"
               richColors
               closeButton
               toastOptions={{
