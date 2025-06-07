@@ -5,7 +5,7 @@ import { SwitchTheme } from '@/components/myComponents/themeSwitch';
 
 const navItems = [
   { name: 'Projects', href: '/projects' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Blog', href: '/blog' },
   { name: 'About', href: '/about' },
 ];
 
