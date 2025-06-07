@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
+import Activities from '@/components/myComponents/Activities';
+import DiscordMessageBox from '@/components/myComponents/MessageBox';
 
 export default function Page() {
   const [isHovered, setIsHovered] = useState(false);
@@ -47,9 +49,14 @@ export default function Page() {
             </motion.span>
           </Link>
         </Button>
-
-        <section className="mt-16 border-t pt-8"></section>
       </main>
+      <Activities />
+
+      <section className="mt-16 border-t pt-8">
+        <h2 className="text-2xl font-semibold mb-4">Send me a message</h2>
+
+        <DiscordMessageBox />
+      </section>
     </div>
   );
 }
