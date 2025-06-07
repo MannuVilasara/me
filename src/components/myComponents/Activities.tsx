@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
 import NowPlayingInline from './NowPlayingInLine';
 import DiscordStatusInline from './Discord';
 import LocationTime from './LocationTime';
@@ -46,11 +47,13 @@ export default function Activities() {
       <h2 className="mono text-muted-foreground font-semibold mt-8">
         Snake Eating my Contributions
       </h2>
-      <img
-        src={graphUrl}
+      <Image
+        width={800}
+        height={400}
+        src={graphUrl || dark_url}
         alt="GitHub Contributions Snake Graph"
         className="max-w-full h-auto rounded-md shadow"
-        loading="lazy" // optional: improves performance
+        loading="lazy"
       />
     </section>
   );
