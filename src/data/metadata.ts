@@ -50,7 +50,7 @@ export const metadata = {
     siteName: 'Manpreet Singh — Full Stack Developer & Designer',
     images: [
       {
-        url: 'https://mannu.me/og.png', // replace with your OG image URL
+        url: 'https://mannu.live/og.png', // replace with your OG image URL
         width: 1200,
         height: 630,
         alt: 'Manpreet Singh — Full Stack Developer & Designer',

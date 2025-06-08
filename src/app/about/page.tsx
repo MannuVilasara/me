@@ -1,4 +1,6 @@
+import TechStack from '@/components/myComponents/TechStack';
 import React from 'react';
+import { webdev, tools } from '@/data/techstack';
 
 export default function page() {
   return (
@@ -16,20 +18,16 @@ export default function page() {
           part of.
         </p>
       </main>
-      <section className="mt-16 border-t pt-8">
-        <h2 className="text-2xl font-semibold mb-4">Skills</h2>
-        <ul className="list-disc pl-5 space-y-2">
-          <li>JavaScript, TypeScript</li>
-          <li>React, Next.js</li>
-          <li>Node.js, Express</li>
-          <li>MongoDB, PostgreSQL</li>
-          <li>HTML, CSS, Tailwind CSS</li>
-          <li>Git, GitHub</li>
-          <li>Docker, CI/CD</li>
-          <li>RESTful APIs, GraphQL</li>
-          <li>Cloud Services (AWS, Azure), Linux</li>
-          <li>WebSockets, Kafka + zookeeper</li>
-        </ul>
+      <section className="mt-2 border-t pt-8">
+        <h2 className="text-2xl font-semibold mb-4">🛠 Technologies and Tool Box</h2>
+        <p className="text-lg text-muted-foreground mono mb-4 leading-relaxed">
+          Web - Development 🌐
+        </p>
+        <TechStack techStack={webdev} />
+        <p className="text-lg text-muted-foreground mono mb-4 leading-relaxed mt-6">
+          Tools and Platforms 🛠️
+        </p>
+        <TechStack techStack={tools} />
       </section>
       <section className="mt-8 border-t pt-8">
         <h2 className="text-2xl font-semibold mb-4">Interests</h2>
