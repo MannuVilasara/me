@@ -6,7 +6,7 @@ import { projects } from '@/data/projects';
 
 const ProjectsShowcase = () => {
   return (
-    <section className="bg-neutral-950 p-4 md:p-8 min-h-screen">
+    <section className=" p-4 md:p-8 min-h-screen">
       <div className="mx-auto max-w-5xl flex flex-col gap-6">
         {projects.map(({ title, description, imgSrc, href, target }, i) => (
           <ProjectLink

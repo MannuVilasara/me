@@ -49,7 +49,7 @@ export const ProjectLink = ({ heading, imgSrc, subheading, href, target }: Proje
       onMouseMove={handleMouseMove}
       initial="initial"
       whileHover="whileHover"
-      className="group relative flex items-center justify-between border-b-2 border-neutral-700 py-6 transition-colors duration-500 hover:border-neutral-50 cursor-pointer md:py-8"
+      className="group relative flex items-center justify-between border-b-2 py-6 transition-colors duration-500 hover:text-foreground cursor-pointer md:py-8"
     >
       <div>
         <motion.span
@@ -62,7 +62,7 @@ export const ProjectLink = ({ heading, imgSrc, subheading, href, target }: Proje
             staggerChildren: 0.05,
             delayChildren: 0.25,
           }}
-          className="relative z-10 block text-4xl font-bold text-neutral-400 transition-colors duration-500 group-hover:text-neutral-50 md:text-4xl"
+          className="relative z-10 block text-4xl font-bold transition-colors duration-500  md:text-4xl"
         >
           {heading.split('').map((l, i) => (
             <motion.span
@@ -78,7 +78,7 @@ export const ProjectLink = ({ heading, imgSrc, subheading, href, target }: Proje
             </motion.span>
           ))}
         </motion.span>
-        <span className="relative z-10 mt-2 block text-base text-neutral-500 transition-colors duration-500 group-hover:text-neutral-50 max-w-lg mono">
+        <span className="relative z-10 mt-2 block text-base transition-colors duration-500  max-w-lg mono">
           {subheading}
         </span>
       </div>
@@ -114,7 +114,7 @@ export const ProjectLink = ({ heading, imgSrc, subheading, href, target }: Proje
         transition={{ type: 'spring' }}
         className="relative z-10 p-4"
       >
-        <FiArrowRight className="text-4xl text-neutral-50" />
+        <FiArrowRight className="text-4xl " />
       </motion.div>
     </motion.a>
   );
