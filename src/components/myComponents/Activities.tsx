@@ -9,14 +9,14 @@ import LocationTime from './LocationTime';
 import LatestCommitActivity from './LatestCommitActivity';
 
 export default function Activities() {
-  const [graphUrl, setGraphUrl] = useState<string | undefined>();
   const { theme } = useTheme();
-
   const light_url =
     'https://github.com/MannuVilasara/MannuVilasara/blob/output/github-contribution-grid-snake.svg?raw=true';
   const dark_url =
     'https://github.com/MannuVilasara/MannuVilasara/blob/output/github-contribution-grid-snake-dark.svg?raw=true';
 
+  const initialGraphUrl = theme === 'light' ? light_url : dark_url;
+  const [graphUrl, setGraphUrl] = useState<string>(initialGraphUrl);
   // Update graph URL when theme changes
   useEffect(() => {
     if (theme === 'dark') {

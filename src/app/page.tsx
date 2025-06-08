@@ -22,7 +22,7 @@ export default function Page() {
               autoStart: true,
               loop: true,
               delay: 75,
-              cursor: '|',
+              cursor: '_',
             }}
           />
         </h2>
@@ -34,12 +34,12 @@ export default function Page() {
 
         <Button asChild className="text-sm px-6 py-3 rounded-full font-bold">
           <Link
-            href="/contact"
+            href="/about"
             className="flex items-center gap-1 cursor-pointer mono"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            Contact{' '}
+            About{' '}
             <motion.span
               animate={{ x: isHovered ? 6 : 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -53,7 +53,7 @@ export default function Page() {
       <Activities />
 
       <section className="mt-16 border-t pt-8">
-        <h2 className="text-2xl font-semibold mb-4">Send me a message</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-muted-foreground">Send me a message</h2>
 
         <DiscordMessageBox />
       </section>
