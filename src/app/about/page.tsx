@@ -1,6 +1,7 @@
 import TechStack from '@/components/myComponents/TechStack';
 import React from 'react';
 import { webdev, tools } from '@/data/techstack';
+import Github from '@/components/myComponents/GitHub';
 
 export default function page() {
   return (
@@ -28,6 +29,10 @@ export default function page() {
           Tools and Platforms 🛠️
         </p>
         <TechStack techStack={tools} />
+      </section>
+      <section className="mt-8 border-t pt-8">
+        <h2 className="text-2xl font-semibold mb-4">GitHub Contributions</h2>
+        <Github />
       </section>
       <section className="mt-8 border-t pt-8">
         <h2 className="text-2xl font-semibold mb-4">Interests</h2>
