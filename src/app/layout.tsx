@@ -6,6 +6,8 @@ import Navbar from '@/components/myComponents/Navbar';
 import { ProgressBar } from '@/components/myComponents/ProgressBar';
 import Footer from '@/components/myComponents/Footer';
 import { Toaster } from '@/components/ui/sonner';
+import { Metadata } from 'next';
+import { metadata as appMetadata } from '@/data/metadata';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -16,6 +18,10 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains-mono',
 });
+
+export const metadata: Metadata = {
+  ...appMetadata,
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
