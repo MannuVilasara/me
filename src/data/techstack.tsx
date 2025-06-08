@@ -7,6 +7,10 @@ import {
   SiDocker,
   SiApachekafka,
   SiArchlinux,
+  SiExpress,
+  SiMongodb,
+  SiPostgresql,
+  SiOpenai,
 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 
@@ -30,20 +34,25 @@ export const webdev = [
   {
     name: 'Tailwind CSS',
     description: 'CSS Frameworks',
-    icon: <SiTailwindcss className="text-cyan-400 text-4xl" />,
+    icon: <SiTailwindcss className="text-cyan-500 dark:text-cyan-400 text-4xl" />,
   },
   {
     name: 'NextJS',
     description: 'React Framework',
-    icon: <SiNextdotjs className="text-white text-4xl" />,
+    icon: <SiNextdotjs className="text-foreground text-4xl" />,
+  },
+  {
+    name: 'ExpressJS',
+    description: 'Web Framework for Node.js',
+    icon: <SiExpress className="text-gray-800 dark:text-gray-400 text-4xl" />,
   },
 ];
 
 export const tools = [
   {
-    name: 'GitHub',
+    name: 'Git & GitHub',
     description: 'Version Control',
-    icon: <FaGithub className="text-gray-400 text-4xl" />,
+    icon: <FaGithub className="text-gray-800 dark:text-gray-400 text-4xl" />,
   },
   {
     name: 'VS Code',
@@ -69,5 +78,23 @@ export const tools = [
     name: 'Arch Linux',
     description: 'Linux Distribution',
     icon: <SiArchlinux className="text-blue-400 text-4xl" />,
+  },
+  {
+    name: 'OpenAI',
+    description: 'AI and Machine Learning',
+    icon: <SiOpenai className=" text-4xl" />,
+  },
+];
+
+export const database = [
+  {
+    name: 'MongoDB',
+    description: 'NoSQL Database',
+    icon: <SiMongodb className="text-green-500 text-4xl" />,
+  },
+  {
+    name: 'PostgreSQL',
+    description: 'Relational Database',
+    icon: <SiPostgresql className="text-blue-400 text-4xl" />,
   },
 ];

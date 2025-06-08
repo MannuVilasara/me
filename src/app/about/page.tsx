@@ -1,6 +1,6 @@
 import TechStack from '@/components/myComponents/TechStack';
 import React from 'react';
-import { webdev, tools } from '@/data/techstack';
+import { webdev, tools, database } from '@/data/techstack';
 import Github from '@/components/myComponents/GitHub';
 
 export default function page() {
@@ -29,6 +29,10 @@ export default function page() {
           Tools and Platforms 🛠️
         </p>
         <TechStack techStack={tools} />
+        <p className="text-lg text-muted-foreground mono mb-4 leading-relaxed mt-6">
+          Database and Storage 📦
+        </p>
+        <TechStack techStack={database} />
       </section>
       <section className="mt-8 border-t pt-8">
         <h2 className="text-2xl font-semibold mb-4">GitHub Contributions</h2>
