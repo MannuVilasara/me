@@ -46,6 +46,7 @@
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "sonner": "^2.0.5",
+    "sugar-high": "^0.9.3",
     "swr": "^2.3.3",
     "tailwind-animate": "^0.2.10",
     "tailwind-merge": "^3.3.0",
