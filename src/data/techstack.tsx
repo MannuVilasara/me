@@ -1,4 +1,4 @@
-import { FaJs, FaReact, FaGithub } from 'react-icons/fa';
+import { FaJs, FaReact, FaGithub, FaAws } from 'react-icons/fa';
 import {
   SiNextdotjs,
   SiTailwindcss,
@@ -11,6 +11,7 @@ import {
   SiMongodb,
   SiPostgresql,
   SiOpenai,
+  SiGithubactions,
 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 
@@ -65,16 +66,6 @@ export const tools = [
     icon: <SiPostman className="text-orange-500 text-4xl" />,
   },
   {
-    name: 'Docker',
-    description: 'Containerization',
-    icon: <SiDocker className="text-blue-400 text-4xl" />,
-  },
-  {
-    name: 'Apache Kafka',
-    description: 'Distributed Streaming Platform',
-    icon: <SiApachekafka className="text-gray-500 text-4xl" />,
-  },
-  {
     name: 'Arch Linux',
     description: 'Linux Distribution',
     icon: <SiArchlinux className="text-blue-400 text-4xl" />,
@@ -96,5 +87,28 @@ export const database = [
     name: 'PostgreSQL',
     description: 'Relational Database',
     icon: <SiPostgresql className="text-blue-400 text-4xl" />,
+  },
+];
+
+export const devops = [
+  {
+    name: 'Docker',
+    description: 'Containerization',
+    icon: <SiDocker className="text-blue-400 text-4xl" />,
+  },
+  {
+    name: 'Apache Kafka',
+    description: 'Distributed Streaming Platform',
+    icon: <SiApachekafka className="text-gray-500 text-4xl" />,
+  },
+  {
+    name: 'AWS',
+    description: 'Cloud Computing',
+    icon: <FaAws className="text-orange-500 text-4xl" />,
+  },
+  {
+    name: 'CI/CD',
+    description: 'CI/CD with GitHub Actions',
+    icon: <SiGithubactions className="text-gray-800 dark:text-gray-400 text-4xl" />,
   },
 ];
