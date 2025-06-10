@@ -14,7 +14,7 @@ export function BlogPosts() {
         {allBlogs.map((post, index) => (
           <li
             key={post.slug}
-            className="flex justify-between items-center text-base text-neutral-700 dark:text-neutral-300"
+            className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-base text-neutral-700 dark:text-neutral-300"
           >
             <Link
               href={`/blog/${post.slug}`}
@@ -23,7 +23,7 @@ export function BlogPosts() {
               <span className="font-mono text-neutral-500 w-6 text-right">{index + 1}.</span>
               <span className="truncate">{post.metadata.title}</span>
             </Link>
-            <span className="text-sm text-neutral-500 dark:text-neutral-400 ml-4 shrink-0 whitespace-nowrap">
+            <span className="text-sm text-neutral-500 dark:text-neutral-400 mt-1 sm:mt-0 sm:ml-4 shrink-0 whitespace-nowrap">
               {formatDate(post.metadata.publishedAt, false)}
             </span>
           </li>
