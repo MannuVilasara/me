@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link'; // for Next.js routing
 import { BlogPosts } from '@/components/myComponents/posts';
 
 export default function Page() {

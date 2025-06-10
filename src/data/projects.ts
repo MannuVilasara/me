@@ -1,33 +1,40 @@
-export const projects = [
+export interface Project {
+  heading: string;
+  subheading: string;
+  color: string;
+  language?: string;
+  stars?: number;
+  href: string;
+  target?: string;
+}
+
+export const projects: Project[] = [
   {
-    title: 'Portfolio',
-    description: 'Showcasing my skills and projects in one place.',
-    imgSrc: '/imgs/projects/portfolio.jpg',
+    heading: 'me',
+    subheading: 'My personal portfolio website built with Next.js and Tailwind CSS.',
+    color: 'bg-[#3178C6]',
+    language: 'TypeScript',
+    stars: 1,
     href: '/',
     target: '_self',
   },
   {
-    title: 'EduClinic',
-    description:
-      'A fully functional Student and Alumni Connecting Platform for Colleges (Team Project).',
-    imgSrc: '/imgs/projects/educlinic.jpg',
-    href: 'https://campus.educlinic.org/',
-    target: '_blank',
+    heading: "Edclinic Campus",
+    subheading: "A fully functional Student and Alumni Connecting Platform for Colleges (Team Project).",
+    color: "bg-[#3178C6]",
+    stars: 2,
+    href: "https://campus.educlinic.org/",
+    target: "_blank",
+    language: "TypeScript",
   },
   {
-    title: 'mfetch',
-    description:
-      'A Simple System Information Fetching Tool for Linux inspired by neofetch but more aesthetic and minimilistic.',
-    imgSrc: '/imgs/projects/mfetch.jpg',
-    href: 'https://pypi.org/project/mfetch/',
-    target: '_blank',
-  },
-  {
-    title: 'TicketingSystem',
-    description:
-      'A simple Ticketing System for managing customer support requests, with AI integration for automated responses and ticket management.',
-    imgSrc: '/imgs/projects/ticket.png',
-    href: 'https://ai-ticket-agent.vercel.app/',
-    target: '_blank',
-  },
+    heading: "Minimal-Fetch",
+    subheading: "Minimal fetch is a more ascetically pleasing neofetch built with Python.",
+    color: "bg-[#3572A5]",
+    stars: 0,
+    href: "https://pypi.org/project/mfetch/",
+    target: "_blank",
+    language: "Python",
+  }
+
 ];
