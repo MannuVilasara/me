@@ -4,7 +4,7 @@ import React from 'react';
 import { ProjectLink } from '@/components/myComponents/ProjectLinks';
 import { projects } from '@/data/projects';
 
-export const ProjectsShowcase = () => {
+export default function Page() {
   return (
     <section className="px-5 sm:px-6 lg:px-8 py-1">
       <h1 className="text-3xl font-bold text-center mb-8">Projects Showcase</h1>
@@ -17,6 +17,4 @@ export const ProjectsShowcase = () => {
       </main>
     </section>
   );
-};
-
-export default ProjectsShowcase;
+}
