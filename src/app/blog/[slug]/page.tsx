@@ -13,8 +13,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: any) {
+  const { slug } = await params;
   const posts = getBlogPosts(); // no need for await
-  const post = posts.find((post) => post.slug === params.slug);
+  const post = posts.find((post) => post.slug === slug);
 
   if (!post) {
     return;
@@ -48,7 +49,8 @@ export async function generateMetadata({ params }: any) {
 }
 
 export default async function Blog({ params }: any) {
-  const post = getBlogPosts().find((post) => post.slug === params.slug);
+  const { slug } = await params;
+  const post = getBlogPosts().find((post) => post.slug === slug);
 
   if (!post) {
     notFound();
