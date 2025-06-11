@@ -30,7 +30,7 @@ export const projects: Project[] = [
   },
   {
     heading: 'Minimal-Fetch',
-    subheading: 'Minimal fetch is a more ascetically pleasing neofetch built with Python.',
+    subheading: 'Minimal fetch is a more ascetically pleasing neofetch (FOSS by ToxicWaveHD)',
     color: 'bg-[#3572A5]',
     stars: 0,
     href: 'https://pypi.org/project/mfetch/',
