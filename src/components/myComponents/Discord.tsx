@@ -5,7 +5,7 @@ const DISCORD_USER_ID = '786926252811485186';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function DiscordStatusInline() {
-  const { data } = useSWR(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`, fetcher, {
+  const { data } = useSWR(`/api/get-discord-status`, fetcher, {
     refreshInterval: 5000,
   });
 
