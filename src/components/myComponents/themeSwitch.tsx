@@ -16,7 +16,7 @@ export function SwitchTheme() {
       onClick={toggleTheme}
       variant="link"
       size="icon"
-      className="relative cursor-pointer hover:underline"
+      className="relative cursor-pointer hover:underline transition-colors hover:text-foreground/60"
     >
       <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
       <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
