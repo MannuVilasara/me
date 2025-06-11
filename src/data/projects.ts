@@ -29,12 +29,12 @@ export const projects: Project[] = [
     language: 'TypeScript',
   },
   {
-    heading: 'Minimal-Fetch',
-    subheading: 'Minimal fetch is a more ascetically pleasing neofetch (FOSS by ToxicWaveHD)',
-    color: 'bg-[#3572A5]',
-    stars: 0,
-    href: 'https://pypi.org/project/mfetch/',
+    heading: "Ticketify (in progress)",
+    subheading: 'A platform to manage support tickets from user. used inngest.',
+    color: 'bg-[#3178C6]',
+    stars: 2,
+    href: 'https://https://ai-ticket-agent.vercel.app/',
     target: '_blank',
-    language: 'Python',
+    language: 'TypeScript',
   },
 ];
