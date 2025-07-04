@@ -37,4 +37,12 @@ export const projects: Project[] = [
     target: '_blank',
     language: 'TypeScript',
   },
+  {
+    heading: 'Fit-AI',
+    subheading: 'A Disease Prediction and Disease Information App using Machine Learning (Team Project).',
+    color: 'bg-[#3178DC]',
+    stars: 2,
+    href: 'https://fit-ai.mannu.live/',
+    target: '_blank',
+  }
 ];
