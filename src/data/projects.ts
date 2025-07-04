@@ -44,5 +44,6 @@ export const projects: Project[] = [
     stars: 2,
     href: 'https://fit-ai.mannu.live/',
     target: '_blank',
+    language: "Python",
   }
 ];
