@@ -29,7 +29,7 @@ export const projects: Project[] = [
     language: 'TypeScript',
   },
   {
-    heading: "Ticketify (in progress)",
+    heading: 'Ticketify (in progress)',
     subheading: 'A platform to manage support tickets from user. used inngest.',
     color: 'bg-[#3178C6]',
     stars: 2,
@@ -39,11 +39,12 @@ export const projects: Project[] = [
   },
   {
     heading: 'Fit-AI',
-    subheading: 'A Disease Prediction and Disease Information App using Machine Learning (Team Project).',
+    subheading:
+      'A Disease Prediction and Disease Information App using Machine Learning (Team Project).',
     color: 'bg-[#3178DC]',
     stars: 2,
     href: 'https://fit-ai.mannu.live/',
     target: '_blank',
-    language: "Python",
-  }
+    language: 'Python',
+  },
 ];
