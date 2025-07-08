@@ -25,7 +25,7 @@ jobs:
           prettier_options: --write
 
       - name: commit changes
-      - uses: stefanzweifel/git-auto-commit-action@v6
+        uses: stefanzweifel/git-auto-commit-action@v6
         with:
           commit_message: 'chore: format code with Prettier'
           branch: main
