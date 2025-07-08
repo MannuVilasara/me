@@ -29,5 +29,3 @@ jobs:
         with:
           commit_message: 'chore: format code with Prettier'
           branch: main
-          add: '.'
-          author_name: 'GitHub Actions'
