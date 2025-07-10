@@ -1,0 +1,8 @@
+{
+  "frontend": ["src/components/", "src/app/", "src/styles/", "public/"],
+  "backend": ["src/app/api"],
+  "documentation": ["README.md", "docs/", "CHANGELOG.md"],
+  "ci/cd": [".github/", "Dockerfile", "docker-compose.yml"],
+  "dependencies": ["package.json", "package-lock.json", "yarn.lock"],
+  "content": ["src/content/", "src/assets/", "src/locales/"]
+}
