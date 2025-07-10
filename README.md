@@ -64,8 +64,11 @@ cp .env.example .env.local
 Add your environment variables:
 
 ```env
-# Discord Bot Token (for status integration)
-DISCORD_BOT_TOKEN=your_discord_bot_token
+SPOTIFY_CLIENT_ID=
+SPOTIFY_CLIENT_SECRET=
+SPOTIFY_REFRESH_TOKEN=
+DISCORD_WEBHOOK_URL=
+GITHUB_TOKEN=
 
 # Other API keys as needed
 ```
