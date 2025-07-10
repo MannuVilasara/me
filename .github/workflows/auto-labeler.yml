@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  pull-requests: write
+  contents: read
 jobs:
   auto-label:
     runs-on: ubuntu-latest
