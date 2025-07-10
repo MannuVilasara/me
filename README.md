@@ -166,4 +166,4 @@ ______________________________________________________________________
 
 **Built with ❤️ by [Manpreet Singh](https://mannu.live)**
 
-[⭐ Star this repo](https://github.com/MannuVilasara/me/stargazers) • [🐛 Report Bug](https://github.com/MannuVilasara/me/issues) • [� Request Feature](https://github.com/MannuVilasara/me/issues)
+[⭐ Star this repo](https://github.com/MannuVilasara/me/stargazers) • [🐛 Report Bug](https://github.com/MannuVilasara/me/issues) • [💡 Request Feature](https://github.com/MannuVilasara/me/issues)
