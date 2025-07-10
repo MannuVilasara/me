@@ -162,7 +162,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **GitHub**: [@MannuVilasara](https://github.com/MannuVilasara)
 - **Twitter**: [@dev_mannuu](https://twitter.com/dev_mannuu)
 
-______________________________________________________________________
+---
 
 **Built with ❤️ by [Manpreet Singh](https://mannu.live)**
 
