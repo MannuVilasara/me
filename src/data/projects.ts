@@ -26,16 +26,9 @@ const projects: Project[] = [
       'Built with Next.js 15 framework',
       'Modern UI components styled with shadcn-ui and Tailwind CSS',
       'Framer motion for smooth animations',
-      'Real Time Presence'
+      'Real Time Presence',
     ],
-    badge: [
-      'Open source',
-      'Next.js',
-      'Typescript',
-      'Tailwind CSS',
-      'Shadcn UI',
-      'Framer motion',
-    ],
+    badge: ['Open source', 'Next.js', 'Typescript', 'Tailwind CSS', 'Shadcn UI', 'Framer motion'],
   },
   {
     id: 2,
@@ -52,15 +45,9 @@ const projects: Project[] = [
       'CLI tool for easy integration into workflows',
       'Built with Node.js and TypeScript',
       'Cross-platform compatibility',
-      'Open source and community-driven'
+      'Open source and community-driven',
     ],
-    badge: [
-      'Open source',
-      'Node.js',
-      'Typescript',
-      'Git',
-      'CLI',
-    ],
+    badge: ['Open source', 'Node.js', 'Typescript', 'Git', 'CLI'],
   },
   {
     id: 3,
@@ -77,16 +64,11 @@ const projects: Project[] = [
       'Supports multiple programming languages',
       'Built with Node.js and TypeScript',
     ],
-    badge: [
-      'Open source',
-      'Node.js',
-      'Typescript',
-      'GitHub Actions',
-    ],
+    badge: ['Open source', 'Node.js', 'Typescript', 'GitHub Actions'],
   },
   {
     id: 4,
-    title: "Educlinic Campus (Team Project)",
+    title: 'Educlinic Campus (Team Project)',
     // href: '',
     live: 'https://campus.educlinic.org/',
     createdAt: '30-10-2024',
@@ -151,12 +133,7 @@ const projects: Project[] = [
       'Showcase of my projects',
       'Integration with Spotify API for music display',
     ],
-    badge: [
-      'Next.js',
-      'Typescript',
-      'Tailwind CSS',
-      'Shadcn UI',
-    ]
+    badge: ['Next.js', 'Typescript', 'Tailwind CSS', 'Shadcn UI'],
   },
 
   // Add more projects as needed
