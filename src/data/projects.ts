@@ -96,6 +96,32 @@ const projects: Project[] = [
   },
   {
     id: 5,
+    title: 'Appwrite Blog',
+    href: 'https://github.com/MannuVilasara/appwrite-blog',
+    live: 'https://appwrite-blog.mannu.live/',
+    createdAt: '12-07-2024',
+    description:
+      'A blog platform built with Appwrite, featuring user authentication, real-time content updates, and a responsive design.',
+    features: [
+      'User authentication with Appwrite',
+      'Real-time content updates',
+      'Responsive design for all devices',
+      'Rich text editor for blog posts',
+      'Redux-toolkit for state management',
+      'Vite for fast rendering',
+    ],
+    badge: [
+      'Open source',
+      'Appwrite',
+      'React',
+      'Typescript',
+      'Tailwind CSS',
+      'Redux-toolkit',
+      'Vite',
+    ],
+  },
+  {
+    id: 6,
     title: 'Fit-Ai (Team Project)',
     href: 'https://github.com/MannuVilasara/disease-detector',
     live: 'https://fit-ai.mannu.live/',
@@ -121,7 +147,7 @@ const projects: Project[] = [
     ],
   },
   {
-    id: 6,
+    id: 7,
     title: 'Portfolio (Old Version)',
     href: 'https://github.com/MannuVilasara/me/tree/beta',
     live: 'https://beta.mannu.live/',
