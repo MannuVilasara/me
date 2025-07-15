@@ -11,9 +11,9 @@ import LatestCommitActivity from './LatestCommitActivity';
 export default function Activities() {
   const { theme } = useTheme();
   const light_url =
-    'https://github.com/MannuVilasara/MannuVilasara/blob/output/github-contribution-grid-snake.svg?raw=true';
+    'https://github.com/MannuVilasara/MannuVilasara/blob/output/pacman-contribution-graph.svg?raw=true';
   const dark_url =
-    'https://github.com/MannuVilasara/MannuVilasara/blob/output/github-contribution-grid-snake-dark.svg?raw=true';
+    'https://github.com/MannuVilasara/MannuVilasara/blob/output/pacman-contribution-graph-dark.svg?raw=true';
 
   const initialGraphUrl = theme === 'light' ? light_url : dark_url;
   const [graphUrl, setGraphUrl] = useState<string>(initialGraphUrl);
@@ -45,13 +45,13 @@ export default function Activities() {
         <LatestCommitActivity />
       </div>
       <h2 className="mono text-muted-foreground font-semibold mt-8">
-        Snake Eating my Contributions
+        Pacman Eating My Contributions
       </h2>
       <Image
         width={800}
         height={400}
         src={graphUrl || dark_url}
-        alt="GitHub Contributions Snake Graph"
+        alt="GitHub Contributions Pacman Graph"
         className="max-w-full h-auto rounded-md shadow"
         loading="lazy"
       />
