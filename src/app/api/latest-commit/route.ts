@@ -5,12 +5,16 @@ const GITHUB_API_URL = 'https://api.github.com/repos/MannuVilasara/me/commits/ma
 
 export async function GET() {
   try {
-    const res = await axios.get(GITHUB_API_URL, {
-      headers: {
-        Accept: 'application/vnd.github.v3+json',
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      },
-    });
+    const headers: Record<string, string> = {
+      Accept: 'application/vnd.github.v3+json',
+    };
+
+    // Only add Authorization header if token exists
+    if (process.env.GITHUB_TOKEN) {
+      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+    }
+
+    const res = await axios.get(GITHUB_API_URL, { headers });
 
     const data = res.data;
 
