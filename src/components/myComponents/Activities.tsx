@@ -39,8 +39,8 @@ export default function Activities() {
         <div>
           [🌍] Location: <LocationTime />
         </div>
-        <div>[📚] Reading: "Documentation {'>.<'}"</div>
-        <div>[🎬] Watching: "One Piece 👒"</div>
+        <div>[📚] Reading: "LOTM {'>.<'}"</div>
+        <div>[🎬] Watching: "Open-Source 👒"</div>
         <div>[⚙️] Status: Building my personal site 🚀</div>
         <LatestCommitActivity />
       </div>
