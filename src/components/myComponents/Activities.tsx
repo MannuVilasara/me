@@ -51,9 +51,10 @@ export default function Activities() {
         width={800}
         height={400}
         src={graphUrl || dark_url}
-        alt="GitHub Contributions Pacman Graph"
+        alt="GitHub Contributions Graph - Animated Pacman eating contributions showing yearly activity"
         className="max-w-full h-auto rounded-md shadow"
         loading="lazy"
+        priority={false}
       />
     </section>
   );
