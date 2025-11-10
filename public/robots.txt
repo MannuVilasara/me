@@ -1,0 +1,9 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin or API routes if needed
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://mannu.live/sitemap.xml

@@ -45,6 +45,9 @@ export async function generateMetadata({ params }: any) {
       description,
       images: [ogImage],
     },
+    alternates: {
+      canonical: `${baseUrl}/blog/${post.slug}`,
+    },
   };
 }
 
@@ -75,7 +78,8 @@ export default async function Blog({ params }: any) {
             url: `${baseUrl}/blog/${post.slug}`,
             author: {
               '@type': 'Person',
-              name: 'My Portfolio',
+              name: 'Manpreet Singh',
+              url: 'https://mannu.live',
             },
           }),
         }}

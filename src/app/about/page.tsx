@@ -2,6 +2,23 @@ import TechStack from '@/components/myComponents/TechStack';
 import React from 'react';
 import { webdev, tools, database, devops } from '@/data/techstack';
 import Github from '@/components/myComponents/GitHub';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About Me — Manpreet Singh',
+  description:
+    'Learn more about Manpreet Singh, a Full Stack Developer passionate about building scalable web applications with modern technologies like React, Next.js, and TypeScript.',
+  openGraph: {
+    title: 'About Me — Manpreet Singh',
+    description:
+      'Learn more about Manpreet Singh, a Full Stack Developer passionate about building scalable web applications.',
+    url: 'https://mannu.live/about',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://mannu.live/about',
+  },
+};
 
 export default function page() {
   return (
