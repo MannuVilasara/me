@@ -228,6 +228,19 @@
     @apply visible;
   }
 
+  /* Accessibility: ensure Tailwind's .text-blue-500 links meet WCAG contrast
+     Improve contrast for light and dark themes specifically for anchors that
+     use the utility class `text-blue-500` (commits and code links). */
+  a.text-blue-500 {
+    /* darker blue for sufficient contrast on light backgrounds */
+    color: #1d4ed8; /* Tailwind blue-700 */
+  }
+
+  .dark a.text-blue-500 {
+    /* lighter blue for sufficient contrast on dark backgrounds */
+    color: #60a5fa; /* Tailwind blue-400 */
+  }
+
   .prose pre {
     @apply bg-neutral-50 dark:bg-neutral-900 rounded-lg overflow-x-auto border border-neutral-200 dark:border-neutral-900 py-2 px-3 text-sm;
   }

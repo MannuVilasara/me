@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import axios from 'axios';
 
 const GITHUB_API_URL = 'https://api.github.com/repos/MannuVilasara/me/commits/main';
 
@@ -14,9 +13,13 @@ export async function GET() {
       headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
 
-    const res = await axios.get(GITHUB_API_URL, { headers });
+    const res = await fetch(GITHUB_API_URL, { headers });
 
-    const data = res.data;
+    if (!res.ok) {
+      throw new Error(`GitHub API returned ${res.status}`);
+    }
+
+    const data = await res.json();
 
     return NextResponse.json({
       sha: data.sha,

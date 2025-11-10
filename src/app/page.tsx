@@ -3,8 +3,18 @@
 import { useState, lazy, Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import Typewriter from 'typewriter-effect';
+import dynamic from 'next/dynamic';
+
+// Dynamically import heavy animation libraries
+const Typewriter = dynamic(() => import('typewriter-effect'), {
+  ssr: false,
+  loading: () => <span className="text-2xl">Full Stack Developer, India</span>,
+});
+
+const MotionSpan = dynamic(() => import('framer-motion').then((mod) => mod.motion.span), {
+  ssr: false,
+  loading: () => <span>→</span>,
+});
 
 // Lazy load components below the fold
 const Activities = lazy(() => import('@/components/myComponents/Activities'));
@@ -43,7 +53,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="flex flex-col">
-        <main className="flex-grow px-4 max-w-3xl mx-auto py-8">
+        <main className="grow px-4 max-w-3xl mx-auto py-8">
           <h1 className="text-4xl font-bold mb-4">Manpreet Singh</h1>
           <h2 className="text-2xl text-gray-500 mb-6">
             <Typewriter
@@ -70,13 +80,13 @@ export default function HomePage() {
               onMouseLeave={() => setIsHovered(false)}
             >
               About{' '}
-              <motion.span
+              <MotionSpan
                 animate={{ x: isHovered ? 6 : 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 style={{ display: 'inline-block' }}
               >
                 →
-              </motion.span>
+              </MotionSpan>
             </Link>
           </Button>
         </main>

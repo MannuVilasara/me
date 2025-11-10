@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import axios from 'axios';
 
 const client_id = process.env.SPOTIFY_CLIENT_ID!;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET!;
@@ -10,28 +9,26 @@ const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
 
 async function getAccessToken() {
-  const response = await axios.post(
-    TOKEN_ENDPOINT,
-    new URLSearchParams({
+  const response = await fetch(TOKEN_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${basic}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
       grant_type: 'refresh_token',
       refresh_token,
     }),
-    {
-      headers: {
-        Authorization: `Basic ${basic}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    }
-  );
+  });
 
-  return response.data;
+  return response.json();
 }
 
 export async function GET() {
   try {
     const { access_token } = await getAccessToken();
 
-    const response = await axios.get(NOW_PLAYING_ENDPOINT, {
+    const response = await fetch(NOW_PLAYING_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
@@ -42,7 +39,7 @@ export async function GET() {
       return NextResponse.json({ isPlaying: false });
     }
 
-    const song = response.data;
+    const song = await response.json();
 
     return NextResponse.json({
       isPlaying: song.is_playing,

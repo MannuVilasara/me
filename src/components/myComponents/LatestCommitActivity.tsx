@@ -1,11 +1,10 @@
 'use client';
 
 import useSWR from 'swr';
-import axios from 'axios';
 import Link from 'next/link';
 import { ActivityItem } from './ActivityItem';
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function LatestCommitActivity() {
   const { data, error, isLoading } = useSWR('/api/latest-commit', fetcher, {
