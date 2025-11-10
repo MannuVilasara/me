@@ -1,22 +1,13 @@
 import { JetBrains_Mono, DM_Sans } from 'next/font/google';
-import dynamic from 'next/dynamic';
 
 import { ThemeProvider } from '@/components/themeProvider';
 import '@/styles/globals.css';
 import Navbar from '@/components/myComponents/Navbar';
+import { ProgressBar } from '@/components/myComponents/ProgressBar';
 import Footer from '@/components/myComponents/Footer';
 import { Toaster } from '@/components/ui/sonner';
 import { Metadata } from 'next';
 import { metadata as appMetadata } from '@/data/metadata';
-
-// Lazy load ProgressBar since it's not critical
-const ProgressBar = dynamic(
-  () =>
-    import('@/components/myComponents/ProgressBar').then((mod) => ({ default: mod.ProgressBar })),
-  {
-    ssr: false,
-  }
-);
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
