@@ -1,6 +1,9 @@
 export const metadata = {
   metadataBase: new URL('https://mannu.live'),
-  title: 'Manpreet Singh — Full Stack Developer & Designer',
+  title: {
+    default: 'Manpreet Singh — Full Stack Developer & Designer',
+    template: '%s | Manpreet Singh',
+  },
   description:
     'Manpreet Singh — a passionate full stack developer & creative designer. Featuring web apps, UI experiments, and open source contributions.',
   keywords: [
@@ -75,4 +78,11 @@ export const metadata = {
       'application/rss+xml': 'https://mannu.live/rss',
     },
   },
+  // verification: {
+  //   google: 'your-google-verification-code', // Add your Google Search Console verification code
+  //   // yandex: 'your-yandex-verification-code',
+  //   // other: {
+  //   //   'msvalidate.01': 'your-bing-verification-code',
+  //   // },
+  // },
 };

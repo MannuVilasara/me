@@ -49,7 +49,14 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
+  // Enable compression
+  compress: true,
+  // Generate ETags for caching
+  generateEtags: true,
+  // Power by header
+  poweredByHeader: false,
 };
 
 export default nextConfig;

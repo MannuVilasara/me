@@ -19,13 +19,38 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://mannu.live',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://mannu.live/blog',
+      },
+    ],
+  };
+
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-6">Blog</h1>
-      <p className="text-muted-foreground mb-8">
-        Thoughts on web development, programming, and technology.
-      </p>
-      <BlogPosts />
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <div className="container mx-auto p-4">
+        <h1 className="text-4xl font-bold mb-6">Blog</h1>
+        <p className="text-muted-foreground mb-8">
+          Thoughts on web development, programming, and technology.
+        </p>
+        <BlogPosts />
+      </div>
+    </>
   );
 }
