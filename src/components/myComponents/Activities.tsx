@@ -17,14 +17,23 @@ export default function Activities() {
 
   const initialGraphUrl = theme === 'light' ? light_url : dark_url;
   const [graphUrl, setGraphUrl] = useState<string>(initialGraphUrl);
+  const [imageError, setImageError] = useState<boolean>(false);
+
   // Update graph URL when theme changes
   useEffect(() => {
+    setImageError(false); // Reset error state on theme change
     if (theme === 'dark') {
       setGraphUrl(dark_url);
     } else {
       setGraphUrl(light_url);
     }
   }, [theme]);
+
+  // Handle image load error (429 rate limit or network issues)
+  const handleImageError = () => {
+    setImageError(true);
+    console.warn('GitHub contribution graph failed to load (rate limit or network issue)');
+  };
 
   return (
     <section className="mt-16 border-t pt-8">
@@ -47,15 +56,37 @@ export default function Activities() {
       <h2 className="mono text-muted-foreground font-semibold mt-8">
         Pacman Eating My Contributions
       </h2>
-      <Image
-        width={800}
-        height={400}
-        src={graphUrl || dark_url}
-        alt="GitHub Contributions Graph - Animated Pacman eating contributions showing yearly activity"
-        className="max-w-full h-auto rounded-md shadow"
-        loading="lazy"
-        priority={false}
-      />
+      {!imageError ? (
+        <Image
+          width={800}
+          height={400}
+          src={graphUrl || dark_url}
+          alt="GitHub Contributions Graph - Animated Pacman eating contributions showing yearly activity"
+          className="max-w-full h-auto rounded-md shadow"
+          loading="lazy"
+          priority={false}
+          onError={handleImageError}
+          unoptimized // Skip Next.js optimization for external SVG
+        />
+      ) : (
+        <div className="w-full h-[200px] flex items-center justify-center rounded-md border border-dashed border-muted-foreground/30 bg-muted/10">
+          <div className="text-center text-sm text-muted-foreground">
+            <p className="font-mono">📊 Contribution graph temporarily unavailable</p>
+            <p className="text-xs mt-2">
+              (GitHub rate limit - check{' '}
+              <a
+                href="https://github.com/MannuVilasara"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-foreground"
+              >
+                GitHub profile
+              </a>
+              )
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

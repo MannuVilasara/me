@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import GitHubCalendar from 'react-github-calendar';
-import { Row } from 'react-bootstrap';
 import { useTheme } from 'next-themes';
 
 // Define ThemeInput type for explicitTheme
@@ -24,14 +23,14 @@ function Github() {
   }, [theme]);
 
   return (
-    <Row style={{ justifyContent: 'center', paddingBottom: '10px' }}>
+    <div className="flex justify-center pb-2">
       <GitHubCalendar
         username="MannuVilasara"
         colorScheme={isDarkMode ? 'dark' : 'light'}
         blockSize={7.5}
         fontSize={14}
       />
-    </Row>
+    </div>
   );
 }
 

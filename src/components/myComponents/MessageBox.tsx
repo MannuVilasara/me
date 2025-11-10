@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 
 import {
   Form,
@@ -50,11 +49,17 @@ export default function DiscordMessageBox() {
   async function onSubmit(values: FormValues) {
     setStatus('sending');
     try {
-      const res = await axios.post('/api/send-message', {
-        content: `📧 Email: ${values.email}\n💬 Message: ${values.message}`,
+      const res = await fetch('/api/send-message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          content: `📧 Email: ${values.email}\n💬 Message: ${values.message}`,
+        }),
       });
 
-      if (res.status === 200) {
+      if (res.ok) {
         setStatus('success');
         form.reset();
       } else {
