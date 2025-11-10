@@ -65,8 +65,7 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  // Modern build target
-  swcMinify: true,
+  // Modern build target - removed swcMinify (deprecated in Next.js 15)
   modularizeImports: {
     'react-icons': {
       transform: 'react-icons/{{member}}',
