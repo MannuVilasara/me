@@ -36,10 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       '@type': 'Organization',
       name: 'Independent',
     },
-    sameAs: [
-      'https://github.com/MannuVilasara',
-      'https://twitter.com/dev_mannuu',
-    ],
+    sameAs: ['https://github.com/MannuVilasara', 'https://twitter.com/dev_mannuu'],
     knowsAbout: [
       'Web Development',
       'Full Stack Development',
@@ -55,7 +52,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     '@type': 'WebSite',
     name: 'Manpreet Singh Portfolio',
     url: 'https://mannu.live',
-    description: 'Full Stack Developer & Designer portfolio featuring web apps, UI experiments, and open source contributions.',
+    description:
+      'Full Stack Developer & Designer portfolio featuring web apps, UI experiments, and open source contributions.',
     author: {
       '@type': 'Person',
       name: 'Manpreet Singh',
