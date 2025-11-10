@@ -1,0 +1,9 @@
+# Modern browsers only - no legacy polyfills needed
+
+> 0.5%
+> last 2 versions
+> not dead
+> not ie 11
+> not op_mini all
+> Firefox ESR
+> supports es6-module
