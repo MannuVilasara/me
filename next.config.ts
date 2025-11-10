@@ -1,9 +1,6 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   images: {
     remotePatterns: [
       {
@@ -57,46 +54,18 @@ const nextConfig: NextConfig = {
   generateEtags: true,
   // Power by header
   poweredByHeader: false,
-  // Optimize CSS
-  experimental: {
-    optimizeCss: true,
-  },
+  // Optimize CSS (Next.js 16+ has this built-in, experimental flag removed)
   // Compiler options
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  // Modern build target - removed swcMinify (deprecated in Next.js 15)
+  // Tree-shaking for icon libraries (lucide-react removed - Next.js 16 Turbopack handles it automatically)
   modularizeImports: {
     'react-icons': {
       transform: 'react-icons/{{member}}',
     },
-    'lucide-react': {
-      transform: 'lucide-react/dist/esm/icons/{{kebabCase member}}',
-    },
   },
-  // Add headers for caching and security
-  async headers() {
-    return [
-      {
-        source: '/:all*(svg|jpg|jpeg|png|webp|avif|gif|ico)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        source: '/_next/static/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-    ];
-  },
+  // Note: Security headers and caching are now handled in src/proxy.ts (Next.js 16+ pattern)
 };
 
 export default nextConfig;
