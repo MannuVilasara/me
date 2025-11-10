@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Typewriter from 'typewriter-effect';
-import Activities from '@/components/myComponents/Activities';
-import DiscordMessageBox from '@/components/myComponents/MessageBox';
+
+// Lazy load components below the fold
+const Activities = lazy(() => import('@/components/myComponents/Activities'));
+const DiscordMessageBox = lazy(() => import('@/components/myComponents/MessageBox'));
 
 export default function HomePage() {
   const [isHovered, setIsHovered] = useState(false);
@@ -78,12 +80,16 @@ export default function HomePage() {
             </Link>
           </Button>
         </main>
-        <Activities />
+        <Suspense fallback={<div className="h-40 animate-pulse bg-muted rounded-lg" />}>
+          <Activities />
+        </Suspense>
 
         <section className="mt-16 border-t pt-8">
           <h2 className="text-2xl font-semibold mb-4 text-muted-foreground">Send me a message</h2>
 
-          <DiscordMessageBox />
+          <Suspense fallback={<div className="h-32 animate-pulse bg-muted rounded-lg" />}>
+            <DiscordMessageBox />
+          </Suspense>
         </section>
       </div>
     </>
