@@ -24,6 +24,45 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Manpreet Singh',
+    alternateName: 'Mannu Vilasara',
+    url: 'https://mannu.live',
+    image: 'https://mannu.live/og.png',
+    jobTitle: 'Full Stack Developer',
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Independent',
+    },
+    sameAs: [
+      'https://github.com/MannuVilasara',
+      'https://twitter.com/dev_mannuu',
+    ],
+    knowsAbout: [
+      'Web Development',
+      'Full Stack Development',
+      'React',
+      'Next.js',
+      'TypeScript',
+      'JavaScript',
+    ],
+  };
+
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Manpreet Singh Portfolio',
+    url: 'https://mannu.live',
+    description: 'Full Stack Developer & Designer portfolio featuring web apps, UI experiments, and open source contributions.',
+    author: {
+      '@type': 'Person',
+      name: 'Manpreet Singh',
+    },
+    inLanguage: 'en-US',
+  };
+
   return (
     <>
       <html
@@ -31,7 +70,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         suppressHydrationWarning
         className={`${jetbrainsMono.variable} ${dmSans.variable} overflow-scroll scrollbar-hide`}
       >
-        <head />
+        <head>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+          />
+        </head>
         <body>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ProgressBar />
