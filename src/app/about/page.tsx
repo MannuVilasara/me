@@ -47,7 +47,7 @@ export default function page() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="flex flex-col">
-        <main className="flex-grow px-4 max-w-3xl mx-auto py-8">
+        <main className="grow px-4 max-w-3xl mx-auto py-8">
           <h1 className="text-4xl font-bold mb-4">About Me</h1>
           <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
             I am a Full Stack Developer with a passion for building scalable and efficient web
