@@ -24,7 +24,7 @@ async function getAccessToken() {
   return response.json();
 }
 
-export async function GET() {
+async function getSpotifyNowPlaying() {
   try {
     const { access_token } = await getAccessToken();
 
@@ -36,23 +36,101 @@ export async function GET() {
 
     // If no song is currently playing
     if (response.status === 204 || response.status > 400) {
-      return NextResponse.json({ isPlaying: false });
+      return null;
     }
 
     const song = await response.json();
 
-    return NextResponse.json({
-      isPlaying: song.is_playing,
+    if (!song.is_playing) {
+      return null;
+    }
+
+    return {
+      isPlaying: true,
       title: song.item.name,
       artist: song.item.artists.map((artist: any) => artist.name).join(', '),
       album: song.item.album.name,
       albumImageUrl: song.item.album.images[0].url,
       songUrl: song.item.external_urls.spotify,
-    });
+      source: 'spotify',
+    };
+  } catch (error) {
+    console.error(
+      'Error fetching Spotify now playing:',
+      error instanceof Error ? error.message : String(error)
+    );
+    return null;
+  }
+}
+
+async function getLastfmNowPlaying() {
+  try {
+    const API_KEY = process.env.LASTFM_API_KEY!;
+    const USERNAME = process.env.LASTFM_USERNAME!;
+
+    const RECENT_TRACKS_ENDPOINT = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${USERNAME}&api_key=${API_KEY}&format=json&limit=1`;
+
+    const response = await fetch(RECENT_TRACKS_ENDPOINT);
+
+    if (!response.ok) {
+      throw new Error(`Last.fm API returned ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!data.recenttracks?.track?.length) {
+      return null;
+    }
+
+    const track = data.recenttracks.track[0];
+
+    // Check if currently playing (has @attr.nowplaying)
+    const isPlaying = track['@attr']?.nowplaying === 'true';
+
+    if (!isPlaying) {
+      return null;
+    }
+
+    return {
+      isPlaying: true,
+      title: track.name,
+      artist: track.artist['#text'],
+      album: track.album['#text'] || 'Unknown Album',
+      albumImageUrl:
+        track.image?.find((img: any) => img.size === 'large')?.['#text'] ||
+        track.image?.find((img: any) => img.size === 'medium')?.['#text'] ||
+        track.image?.find((img: any) => img.size === 'small')?.['#text'] ||
+        null,
+      songUrl: track.url,
+      source: 'lastfm',
+    };
+  } catch (error) {
+    console.error(
+      'Error fetching Last.fm now playing:',
+      error instanceof Error ? error.message : String(error)
+    );
+    return null;
+  }
+}
+
+export async function GET() {
+  try {
+    // Try Spotify first
+    const spotifyData = await getSpotifyNowPlaying();
+    if (spotifyData) {
+      return NextResponse.json(spotifyData);
+    }
+
+    // Fallback to Last.fm
+    const lastfmData = await getLastfmNowPlaying();
+    if (lastfmData) {
+      return NextResponse.json(lastfmData);
+    }
+
+    // Neither service is playing
+    return NextResponse.json({ isPlaying: false });
   } catch (error: any) {
     console.error('Error fetching now playing:', error.message);
-
-    // Fallback in case of error
     return NextResponse.json({ isPlaying: false });
   }
 }

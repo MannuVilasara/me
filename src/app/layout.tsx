@@ -8,6 +8,7 @@ import Footer from '@/components/myComponents/Footer';
 import { Toaster } from '@/components/ui/sonner';
 import { Metadata } from 'next';
 import { metadata as appMetadata } from '@/data/metadata';
+import { Analytics } from '@vercel/analytics/next';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -105,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }}
             />
           </ThemeProvider>
+          <Analytics />
         </body>
       </html>
     </>
