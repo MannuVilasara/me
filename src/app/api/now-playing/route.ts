@@ -55,7 +55,10 @@ async function getSpotifyNowPlaying() {
       source: 'spotify',
     };
   } catch (error) {
-    console.error('Error fetching Spotify now playing:', error instanceof Error ? error.message : String(error));
+    console.error(
+      'Error fetching Spotify now playing:',
+      error instanceof Error ? error.message : String(error)
+    );
     return null;
   }
 }
@@ -93,7 +96,8 @@ async function getLastfmNowPlaying() {
       title: track.name,
       artist: track.artist['#text'],
       album: track.album['#text'] || 'Unknown Album',
-      albumImageUrl: track.image?.find((img: any) => img.size === 'large')?.['#text'] ||
+      albumImageUrl:
+        track.image?.find((img: any) => img.size === 'large')?.['#text'] ||
         track.image?.find((img: any) => img.size === 'medium')?.['#text'] ||
         track.image?.find((img: any) => img.size === 'small')?.['#text'] ||
         null,
@@ -101,7 +105,10 @@ async function getLastfmNowPlaying() {
       source: 'lastfm',
     };
   } catch (error) {
-    console.error('Error fetching Last.fm now playing:', error instanceof Error ? error.message : String(error));
+    console.error(
+      'Error fetching Last.fm now playing:',
+      error instanceof Error ? error.message : String(error)
+    );
     return null;
   }
 }
