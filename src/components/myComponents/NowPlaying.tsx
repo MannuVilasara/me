@@ -2,6 +2,7 @@
 
 import useSWR from 'swr';
 import { FaSpotify } from 'react-icons/fa';
+import { SiLastdotfm } from 'react-icons/si';
 import Image from 'next/image';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -13,13 +14,15 @@ export default function NowPlaying() {
     <div className="flex items-center gap-3">
       {data?.isPlaying ? (
         <>
-          <Image
-            src={data.albumImageUrl}
-            alt={`${data.album} album cover`}
-            width={48}
-            height={48}
-            className="rounded"
-          />
+          {data.albumImageUrl && (
+            <Image
+              src={data.albumImageUrl}
+              alt={`${data.album} album cover`}
+              width={48}
+              height={48}
+              className="rounded"
+            />
+          )}
           <div className="flex flex-col">
             <a
               href={data.songUrl}
@@ -29,7 +32,14 @@ export default function NowPlaying() {
             >
               {data.title}
             </a>
-            <span className="text-sm text-muted-foreground">{data.artist}</span>
+            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+              {data.source === 'spotify' ? (
+                <FaSpotify className="text-green-500" />
+              ) : (
+                <SiLastdotfm className="text-red-500" />
+              )}
+              <span>{data.artist}</span>
+            </div>
           </div>
         </>
       ) : (
