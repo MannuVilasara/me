@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, lazy, Suspense } from 'react';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { lazy, Suspense, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { Copy } from 'lucide-react';
 
 // Dynamically import heavy animation libraries
 const Typewriter = dynamic(() => import('typewriter-effect'), {
@@ -11,18 +10,12 @@ const Typewriter = dynamic(() => import('typewriter-effect'), {
   loading: () => <span className="text-2xl">Full Stack Developer, India</span>,
 });
 
-const MotionSpan = dynamic(() => import('framer-motion').then((mod) => mod.motion.span), {
-  ssr: false,
-  loading: () => <span>→</span>,
-});
-
 // Lazy load components below the fold
 const Activities = lazy(() => import('@/components/myComponents/Activities'));
 const DiscordMessageBox = lazy(() => import('@/components/myComponents/MessageBox'));
 
 export default function HomePage() {
-  const [isHovered, setIsHovered] = useState(false);
-
+  const [copied, setCopied] = useState(false);
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -72,23 +65,28 @@ export default function HomePage() {
             experiences and robust backend systems.
           </p>
 
-          <Button asChild className="text-sm px-6 py-3 rounded-full font-bold">
-            <Link
-              href="/about"
-              className="flex items-center gap-1 cursor-pointer mono"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+          <div className="flex items-center gap-2">
+            <pre className="bg-gray-900 dark:bg-gray-800 text-green-400 px-3 py-2 rounded font-mono text-sm border border-gray-300 dark:border-gray-600">
+              <code>$ npx hello-mannu</code>
+            </pre>
+            <button
+              onClick={async () => {
+                await navigator.clipboard.writeText('npx hello-mannu');
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="p-2 rounded border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-1"
+              title="Copy command"
             >
-              About{' '}
-              <MotionSpan
-                animate={{ x: isHovered ? 6 : 0 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                style={{ display: 'inline-block' }}
-              >
-                →
-              </MotionSpan>
-            </Link>
-          </Button>
+              {copied ? (
+                <>
+                  <span className="text-xs">Copied!</span>
+                </>
+              ) : (
+                <Copy size={16} />
+              )}
+            </button>
+          </div>
         </main>
         <Suspense fallback={<div className="h-40 animate-pulse bg-muted rounded-lg" />}>
           <Activities />
