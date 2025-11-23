@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import Image from 'next/image';
 import NowPlayingInline from './NowPlayingInLine';
 import DiscordStatusInline from './Discord';
 import LocationTime from './LocationTime';
@@ -14,12 +13,20 @@ export default function Activities() {
   const dark_url = '/github-contributions-dark.svg';
 
   const [graphUrl, setGraphUrl] = useState<string>(theme === 'light' ? light_url : dark_url);
-  const [imageError, setImageError] = useState<boolean>(false);
+  const [imageError, setImageError] = useState<boolean>(true); // Start with error to show fallback
 
-  // Update graph URL when theme changes
+  // Update graph URL when theme changes and check if image exists
   useEffect(() => {
-    setImageError(false); // Reset error state on theme change
-    setGraphUrl(theme === 'dark' ? dark_url : light_url);
+    setImageError(true); // Assume error until proven otherwise
+    const img = new Image();
+    img.src = theme === 'dark' ? dark_url : light_url;
+    img.onload = () => {
+      setGraphUrl(img.src);
+      setImageError(false);
+    };
+    img.onerror = () => {
+      setImageError(true);
+    };
   }, [theme]);
 
   // Handle image load error (429 rate limit or network issues)
@@ -52,7 +59,6 @@ export default function Activities() {
       {!imageError ? (
         <img
           src={graphUrl}
-          alt="GitHub Contributions Graph - Animated Pacman eating contributions showing yearly activity"
           className="max-w-full h-auto rounded-md shadow"
           loading="lazy"
           onError={handleImageError}
