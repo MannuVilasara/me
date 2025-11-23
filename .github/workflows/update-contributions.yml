@@ -38,3 +38,8 @@ jobs:
                   git add public/github-contributions-*.svg
                   git commit -m "Update GitHub contribution graphs" || echo "No changes to commit"
                   git push
+
+            - name: Trigger Vercel deployment
+              if: steps.verify-changed-files.outputs.files_updated == 'true'
+              run: |
+                  echo "Vercel deployment will be triggered automatically by the push to main branch"
