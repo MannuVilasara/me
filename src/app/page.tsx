@@ -68,8 +68,8 @@ export default function HomePage() {
           <div className="flex items-center gap-3">
             <pre
               className="px-3 py-2 rounded-lg font-mono text-sm 
-               bg-neutral-900 text-neutral-100 border border-neutral-700
-               dark:bg-neutral-950 dark:text-neutral-300 dark:border-neutral-800"
+               bg-gray-100 text-gray-900 border border-gray-300
+               dark:bg-neutral-900 dark:text-neutral-100 dark:border-neutral-700"
             >
               <code>$ npx hello-mannu</code>
             </pre>
@@ -82,18 +82,18 @@ export default function HomePage() {
               }}
               title="Copy"
               className="
-      px-2 py-2 rounded-lg border border-neutral-700 
-      bg-neutral-900 text-neutral-300
-      hover:bg-neutral-800 hover:border-neutral-600 
-      dark:bg-neutral-950 dark:hover:bg-neutral-900 
-      dark:text-neutral-400 dark:border-neutral-800
+      px-2 py-2 rounded-lg border border-gray-300 
+      bg-gray-100 text-gray-700
+      hover:bg-gray-200 hover:border-gray-400 
+      dark:bg-neutral-900 dark:hover:bg-neutral-800 
+      dark:text-neutral-300 dark:border-neutral-700
       transition-colors flex items-center gap-1
     "
             >
               {copied ? (
-                <span className="text-xs text-neutral-400">Copied</span>
+                <span className="text-xs text-gray-600 dark:text-neutral-400">Copied</span>
               ) : (
-                <Copy size={16} className="text-neutral-400" />
+                <Copy size={16} className="text-gray-600 dark:text-neutral-400" />
               )}
             </button>
           </div>
