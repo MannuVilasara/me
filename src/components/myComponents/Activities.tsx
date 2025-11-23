@@ -10,23 +10,16 @@ import LatestCommitActivity from './LatestCommitActivity';
 
 export default function Activities() {
   const { theme } = useTheme();
-  const light_url =
-    'https://github.com/MannuVilasara/MannuVilasara/blob/output/pacman-contribution-graph.svg?raw=true';
-  const dark_url =
-    'https://github.com/MannuVilasara/MannuVilasara/blob/output/pacman-contribution-graph-dark.svg?raw=true';
+  const light_url = '/github-contributions-light.svg';
+  const dark_url = '/github-contributions-dark.svg';
 
-  const initialGraphUrl = theme === 'light' ? light_url : dark_url;
-  const [graphUrl, setGraphUrl] = useState<string>(initialGraphUrl);
+  const [graphUrl, setGraphUrl] = useState<string>(theme === 'light' ? light_url : dark_url);
   const [imageError, setImageError] = useState<boolean>(false);
 
   // Update graph URL when theme changes
   useEffect(() => {
     setImageError(false); // Reset error state on theme change
-    if (theme === 'dark') {
-      setGraphUrl(dark_url);
-    } else {
-      setGraphUrl(light_url);
-    }
+    setGraphUrl(theme === 'dark' ? dark_url : light_url);
   }, [theme]);
 
   // Handle image load error (429 rate limit or network issues)
@@ -57,16 +50,12 @@ export default function Activities() {
         Pacman Eating My Contributions
       </h2>
       {!imageError ? (
-        <Image
-          width={800}
-          height={400}
-          src={graphUrl || dark_url}
+        <img
+          src={graphUrl}
           alt="GitHub Contributions Graph - Animated Pacman eating contributions showing yearly activity"
           className="max-w-full h-auto rounded-md shadow"
           loading="lazy"
-          priority={false}
           onError={handleImageError}
-          unoptimized // Skip Next.js optimization for external SVG
         />
       ) : (
         <div className="w-full h-[200px] flex items-center justify-center rounded-md border border-dashed border-muted-foreground/30 bg-muted/10">

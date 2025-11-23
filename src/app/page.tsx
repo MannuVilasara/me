@@ -65,25 +65,35 @@ export default function HomePage() {
             experiences and robust backend systems.
           </p>
 
-          <div className="flex items-center gap-2">
-            <pre className="bg-gray-900 dark:bg-gray-800 text-green-400 px-3 py-2 rounded font-mono text-sm border border-gray-300 dark:border-gray-600">
+          <div className="flex items-center gap-3">
+            <pre
+              className="px-3 py-2 rounded-lg font-mono text-sm 
+               bg-neutral-900 text-neutral-100 border border-neutral-700
+               dark:bg-neutral-950 dark:text-neutral-300 dark:border-neutral-800"
+            >
               <code>$ npx hello-mannu</code>
             </pre>
+
             <button
               onClick={async () => {
                 await navigator.clipboard.writeText('npx hello-mannu');
                 setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
+                setTimeout(() => setCopied(false), 1500);
               }}
-              className="p-2 rounded border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors flex items-center gap-1"
-              title="Copy command"
+              title="Copy"
+              className="
+      px-2 py-2 rounded-lg border border-neutral-700 
+      bg-neutral-900 text-neutral-300
+      hover:bg-neutral-800 hover:border-neutral-600 
+      dark:bg-neutral-950 dark:hover:bg-neutral-900 
+      dark:text-neutral-400 dark:border-neutral-800
+      transition-colors flex items-center gap-1
+    "
             >
               {copied ? (
-                <>
-                  <span className="text-xs">Copied!</span>
-                </>
+                <span className="text-xs text-neutral-400">Copied</span>
               ) : (
-                <Copy size={16} />
+                <Copy size={16} className="text-neutral-400" />
               )}
             </button>
           </div>

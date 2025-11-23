@@ -1,0 +1,40 @@
+name: Update GitHub Contributions
+
+on:
+    schedule:
+        - cron: "0 0 * * *" # Run daily at midnight UTC
+    workflow_dispatch: # Allow manual trigger
+
+jobs:
+    update-contributions:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Download light theme contribution graph
+              run: |
+                  curl -L "https://github.com/MannuVilasara/MannuVilasara/blob/output/pacman-contribution-graph.svg?raw=true" -o public/github-contributions-light.svg
+
+            - name: Download dark theme contribution graph
+              run: |
+                  curl -L "https://github.com/MannuVilasara/MannuVilasara/blob/output/pacman-contribution-graph-dark.svg?raw=true" -o public/github-contributions-dark.svg
+
+            - name: Check for changes
+              id: verify-changed-files
+              run: |
+                  if [ -f public/github-contributions-light.svg ] && [ -f public/github-contributions-dark.svg ]; then
+                    echo "files_updated=true" >> $GITHUB_OUTPUT
+                  else
+                    echo "files_updated=false" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Commit and push changes
+              if: steps.verify-changed-files.outputs.files_updated == 'true'
+              run: |
+                  git config --local user.email "action@github.com"
+                  git config --local user.name "GitHub Action"
+                  git add public/github-contributions-*.svg
+                  git commit -m "Update GitHub contribution graphs" || echo "No changes to commit"
+                  git push
