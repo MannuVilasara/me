@@ -94,6 +94,16 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
   };
 
   const getImageUrl = (assetUrl: string) => {
+    // Handle spotify asset identifiers like `spotify:ab67616d0000b273...`
+    // Convert them to the public CDN URL used by Spotify album art
+    // e.g. spotify:ab67616d0000b273... -> https://i.scdn.co/image/ab67616d0000b273...
+    if (assetUrl?.startsWith('spotify:')) {
+      const parts = assetUrl.split(':');
+      if (parts.length >= 2 && parts[1]) {
+        return `https://i.scdn.co/image/${parts[1]}`;
+      }
+    }
+
     if (assetUrl?.startsWith('mp:external/')) {
       // Handle mp:external format like:
       // mp:external/gSyzI_yG7kG8NH4jj5t-4JxVmOIHeM6bkwsNAx3oAxY/%3Fv%3D20/https/raw.githubusercontent.com/vyfor/icons/master/icons/default/dark/dashboard.png
@@ -326,16 +336,15 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
 
                     {/* Activity Details */}
                     <div className="flex-1 min-w-0 flex flex-col justify-center gap-0.5">
-                      <div className="font-bold text-base text-foreground leading-tight truncate">
-                        {activity.name}
+                      <div className="flex items-center gap-1.5 font-bold text-base text-foreground leading-tight truncate">
+                        {activity.type !== undefined && getActivityIcon(activity.type)}
+                        {activity.type !== undefined && (
+                          <span className="text-muted-foreground font-normal">
+                            {getActivityTypeLabel(activity.type)}
+                          </span>
+                        )}
+                        <span>{activity.name}</span>
                       </div>
-
-                      {activity.type !== undefined && (
-                        <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
-                          {getActivityIcon(activity.type)}
-                          <span>{getActivityTypeLabel(activity.type)}</span>
-                        </div>
-                      )}
 
                       {activity.details && (
                         <p className="text-sm text-foreground/90 truncate font-medium">
