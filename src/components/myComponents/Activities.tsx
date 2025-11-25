@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import useSWR from 'swr';
 import NowPlayingInline from './NowPlayingInLine';
@@ -142,6 +143,13 @@ export default function Activities() {
         >
           <LatestCommitActivity />
         </div>
+        <Link
+          href="/guestbook"
+          className="cursor-pointer hover:bg-muted/50 px-2 py-1 rounded transition-colors"
+          title="Visit my guestbook"
+        >
+          [📝] Guestbook: Sign my guestbook ✨
+        </Link>
       </div>
 
       {/* Modals */}
