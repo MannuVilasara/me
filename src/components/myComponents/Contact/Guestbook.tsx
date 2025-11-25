@@ -36,6 +36,8 @@ export default function Guestbook() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [entryToDelete, setEntryToDelete] = useState<GuestbookEntry | null>(null);
   const [mounted, setMounted] = useState(false);
 
   const { data: session, status } = useSession();
@@ -92,24 +94,35 @@ export default function Guestbook() {
   };
 
   const deleteMessage = async (messageId: string) => {
-    if (!confirm('Delete this message?')) return;
+    const entry = entries.find((e) => e.id === messageId);
+    if (!entry) return;
 
-    setDeletingId(messageId);
+    setEntryToDelete(entry);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!entryToDelete) return;
+
+    setDeletingId(entryToDelete.id);
+    setDeleteModalOpen(false);
+
     try {
-      const response = await fetch(`/api/guestbook?id=${messageId}`, {
+      const response = await fetch(`/api/guestbook?id=${entryToDelete.id}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
-        setEntries((prev) => prev.filter((entry) => entry.id !== messageId));
-        toast.success('Deleted.');
+        setEntries((prev) => prev.filter((entry) => entry.id !== entryToDelete.id));
+        toast.success('Message deleted successfully.');
       } else {
-        toast.error('Failed to delete.');
+        toast.error('Failed to delete message.');
       }
     } catch (error) {
       toast.error('Error deleting message.');
     } finally {
       setDeletingId(null);
+      setEntryToDelete(null);
     }
   };
 
@@ -248,11 +261,7 @@ export default function Guestbook() {
               >
                 {/* Avatar */}
                 <Avatar className="h-8 w-8 sm:h-10 sm:w-10 border border-border/50 shrink-0">
-                  <AvatarImage
-                    src={entry.avatar}
-                    alt={entry.author}
-                    className="grayscale hover:grayscale-0 transition-all duration-300"
-                  />
+                  <AvatarImage src={entry.avatar} alt={entry.author} />
                   <AvatarFallback className="bg-muted text-muted-foreground text-xs">
                     {entry.author?.[0]}
                   </AvatarFallback>
@@ -283,15 +292,10 @@ export default function Guestbook() {
                     {session && (entry.username === session.user.username || isAdmin) && (
                       <button
                         onClick={() => deleteMessage(entry.id)}
-                        disabled={deletingId === entry.id}
                         className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-red-500/10 hover:text-red-600 rounded-md text-muted-foreground"
                         title="Delete message"
                       >
-                        {deletingId === entry.id ? (
-                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                        ) : (
-                          <Trash2 className="h-3.5 w-3.5" />
-                        )}
+                        <Trash2 className="h-3.5 w-3.5" />
                       </button>
                     )}
                   </div>
@@ -305,6 +309,52 @@ export default function Guestbook() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteModalOpen && entryToDelete && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+          <div className="bg-background border border-border rounded-lg shadow-lg max-w-[400px] w-full p-6 space-y-6">
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                Delete Message
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Are you sure you want to remove this message? This action cannot be undone.
+              </p>
+            </div>
+
+            {/* Minimal Preview */}
+            <div className="bg-muted/30 border border-border/50 rounded-md p-3">
+              <p className="text-sm text-foreground/80 line-clamp-2 italic">
+                "{entryToDelete.message}"
+              </p>
+            </div>
+
+            <div className="flex items-center justify-end gap-2">
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setDeleteModalOpen(false);
+                  setEntryToDelete(null);
+                }}
+                className="h-9 text-muted-foreground hover:text-foreground"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={confirmDelete}
+                disabled={deletingId === entryToDelete.id}
+                className="h-9 bg-foreground text-background hover:bg-foreground/90 transition-colors"
+              >
+                {deletingId === entryToDelete.id ? (
+                  <Loader2 className="h-3 w-3 animate-spin mr-2" />
+                ) : null}
+                Delete
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
