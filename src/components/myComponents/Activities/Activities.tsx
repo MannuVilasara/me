@@ -3,14 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import useSWR from 'swr';
 import NowPlayingInline from './NowPlayingInLine';
 import DiscordStatusInline from './Discord';
 import LocationTime from './LocationTime';
 import LatestCommitActivity from './LatestCommitActivity';
-import { NowPlayingModal, DiscordModal } from '../modals';
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Activities() {
   const { theme } = useTheme();
@@ -20,21 +16,9 @@ export default function Activities() {
   const [graphUrl, setGraphUrl] = useState<string>(theme === 'light' ? light_url : dark_url);
   const [imageError, setImageError] = useState<boolean>(true); // Start with error to show fallback
 
-  // Modal states
-  const [nowPlayingModalOpen, setNowPlayingModalOpen] = useState(false);
-  const [discordModalOpen, setDiscordModalOpen] = useState(false);
-
   // Oneko toggle state
   const [onekoEnabled, setOnekoEnabled] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
-
-  // Fetch data for modals
-  const { data: nowPlayingData } = useSWR('/api/now-playing', fetcher, {
-    refreshInterval: 5000,
-  });
-  const { data: discordData } = useSWR('/api/get-discord-status', fetcher, {
-    refreshInterval: 5000,
-  });
 
   // Check if desktop and load Oneko preference
   useEffect(() => {
@@ -90,14 +74,12 @@ export default function Activities() {
       <h2 className="text-2xl font-semibold mb-4">Activity Feed</h2>
       <div className="flex flex-col gap-2 text-sm text-muted-foreground font-mono">
         <div
-          onClick={() => setNowPlayingModalOpen(true)}
           className="cursor-pointer hover:bg-muted/50 px-2 py-1 rounded transition-colors"
           title="Click to view music player"
         >
           [🎵] Now Playing: <NowPlayingInline />
         </div>
         <div
-          onClick={() => setDiscordModalOpen(true)}
           className="cursor-pointer hover:bg-muted/50 px-2 py-1 rounded transition-colors"
           title="Click to view Discord profile"
         >
@@ -150,18 +132,6 @@ export default function Activities() {
           [📝] Guestbook: Sign my guestbook ✨
         </Link>
       </div>
-
-      {/* Modals */}
-      <NowPlayingModal
-        isOpen={nowPlayingModalOpen}
-        onClose={() => setNowPlayingModalOpen(false)}
-        data={nowPlayingData}
-      />
-      <DiscordModal
-        isOpen={discordModalOpen}
-        onClose={() => setDiscordModalOpen(false)}
-        data={discordData}
-      />
 
       <h2 className="mono text-muted-foreground font-semibold mt-8">
         Pacman Eating My Contributions

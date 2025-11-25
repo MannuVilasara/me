@@ -1,6 +1,6 @@
 import { JetBrains_Mono, DM_Sans } from 'next/font/google';
 
-import { ThemeProvider, Providers } from '@/components/myComponents/providers';
+import { ThemeProvider, GlobalModalProvider, Providers } from '@/components/myComponents/providers';
 import '@/styles/globals.css';
 import { Navbar, Footer, ProgressBar } from '@/components/myComponents/layout';
 import { Toaster } from '@/components/ui/sonner';
@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import { metadata as appMetadata } from '@/data/metadata';
 import { Analytics } from '@vercel/analytics/next';
 import { Oneko } from '../components/myComponents/Oneko';
+import { CommandMenuProvider } from '@/components/CommandMenuProvider';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -87,25 +88,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body>
           <Providers>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <ProgressBar />
-              <Oneko />
-              <div className="mx-auto max-w-2xl px-5 sm:px-6 lg:px-8 flex flex-col pt-12 min-h-screen">
-                <Navbar />
-                <main className="grow">{children}</main>
-                <Footer />
-              </div>
-              <Toaster
-                position="bottom-right"
-                richColors
-                closeButton
-                toastOptions={{
-                  className: 'bg-gray-800 text-white',
-                  duration: 5000,
-                  style: {
-                    fontFamily: 'DM Sans, sans-serif',
-                  },
-                }}
-              />
+              <GlobalModalProvider>
+                <CommandMenuProvider>
+                  <ProgressBar />
+                  <Oneko />
+                  <div className="mx-auto max-w-2xl px-5 sm:px-6 lg:px-8 flex flex-col pt-12 min-h-screen">
+                    <Navbar />
+                    <main className="grow">{children}</main>
+                    <Footer />
+                  </div>
+                  <Toaster
+                    position="bottom-right"
+                    richColors
+                    closeButton
+                    toastOptions={{
+                      className: 'bg-gray-800 text-white',
+                      duration: 5000,
+                      style: {
+                        fontFamily: 'DM Sans, sans-serif',
+                      },
+                    }}
+                  />
+                </CommandMenuProvider>
+              </GlobalModalProvider>
             </ThemeProvider>
           </Providers>
           <Analytics />
