@@ -1,16 +1,13 @@
 import { JetBrains_Mono, DM_Sans } from 'next/font/google';
 
-import { ThemeProvider } from '@/components/themeProvider';
-import { Providers } from '@/components/providers';
+import { ThemeProvider, Providers } from '@/components/myComponents/providers';
 import '@/styles/globals.css';
-import Navbar from '@/components/myComponents/Navbar';
-import { ProgressBar } from '@/components/myComponents/ProgressBar';
-import Footer from '@/components/myComponents/Footer';
+import { Navbar, Footer, ProgressBar } from '@/components/myComponents/layout';
 import { Toaster } from '@/components/ui/sonner';
 import { Metadata } from 'next';
 import { metadata as appMetadata } from '@/data/metadata';
 import { Analytics } from '@vercel/analytics/next';
-import Oneko from '@/components/myComponents/Oneko';
+import { Oneko } from '../components/myComponents/Oneko';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],

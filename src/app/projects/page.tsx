@@ -1,6 +1,6 @@
 import React from 'react';
 import { projects } from '@/data/projects';
-import ProjectsSection from '@/components/myComponents/ProjectSection';
+import { ProjectSection } from '@/components/myComponents/stats';
 
 export default function Page() {
   const jsonLd = {
@@ -39,7 +39,7 @@ export default function Page() {
         </p>
         <main className="relative left-1/2 -ml-[50vw] w-screen max-w-none px-0">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <ProjectsSection />
+            <ProjectSection />
           </div>
         </main>
       </section>

@@ -8,8 +8,7 @@ import NowPlayingInline from './NowPlayingInLine';
 import DiscordStatusInline from './Discord';
 import LocationTime from './LocationTime';
 import LatestCommitActivity from './LatestCommitActivity';
-import { NowPlayingModal } from './NowPlayingModal';
-import { DiscordModal } from './DiscordModal';
+import { NowPlayingModal, DiscordModal } from '../modals';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

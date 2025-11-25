@@ -4,7 +4,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import Link from 'next/link';
 import { ActivityItem } from './ActivityItem';
-import { CommitDiffModal } from './CommitDiffModal';
+import { CommitDiffModal } from '../modals';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

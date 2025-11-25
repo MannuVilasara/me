@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlogPosts } from '@/components/myComponents/posts';
+import { BlogPosts } from '@/components/myComponents/stats';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
