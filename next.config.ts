@@ -1,6 +1,10 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  // Target modern browsers to reduce polyfills
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'react-icons'],
+  },
   images: {
     remotePatterns: [
       {
