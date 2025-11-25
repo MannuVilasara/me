@@ -355,25 +355,27 @@ export default function Guestbook() {
                       </p>
                     </div>
 
-                    {/* Delete Action (Only for owner) */}
-                    {session && entry.username === session.user.username && (
-                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => deleteMessage(entry.id)}
-                          disabled={deletingId === entry.id}
-                          className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                        >
-                          {deletingId === entry.id ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <Trash2 className="h-4 w-4" />
-                          )}
-                          <span className="sr-only">Delete</span>
-                        </Button>
-                      </div>
-                    )}
+                    {/* Delete Action (Only for owner or admin) */}
+                    {session &&
+                      (entry.username === session.user.username ||
+                        session.user.username === 'MannuVilasara') && (
+                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => deleteMessage(entry.id)}
+                            disabled={deletingId === entry.id}
+                            className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                          >
+                            {deletingId === entry.id ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="h-4 w-4" />
+                            )}
+                            <span className="sr-only">Delete</span>
+                          </Button>
+                        </div>
+                      )}
                   </div>
                 </CardContent>
               </Card>
