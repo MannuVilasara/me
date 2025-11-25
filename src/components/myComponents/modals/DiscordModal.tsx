@@ -13,6 +13,7 @@ import {
   Code2,
   Sparkles,
   BadgeCheck,
+  MessageCircle,
 } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
@@ -26,12 +27,12 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
   if (!isOpen || !data?.data) return null;
 
   const user = data.data.discord_user;
-  const activities = data.data.activities || [];
+  const rawActivities = data.data.activities || [];
   const discordStatus = data.data.discord_status;
 
-  // console.log('Discord activities data:', activities);
-  // console.log('First activity:', activities[0]);
-  // console.log('First activity assets:', activities[0]?.assets);
+  // Filter out custom status (type 4) from the main list, and save it for the header
+  const customStatus = rawActivities.find((a: any) => a.type === 4);
+  const activities = rawActivities.filter((a: any) => a.type !== 4);
 
   // --- Helpers ---
 
@@ -260,7 +261,57 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                 className={`absolute bottom-1 right-1 w-7 h-7 rounded-full border-[5px] border-background ${getStatusColor(discordStatus)}`}
                 title={getStatusLabel(discordStatus)}
               />
+
+              {/* Custom Status Speech Bubble (Desktop) */}
+              {customStatus && customStatus.state && (
+                <div className="absolute left-[110%] bottom-8 w-max max-w-[200px] hidden sm:flex items-center animate-in fade-in slide-in-from-left-2 duration-300">
+                  <div className="relative bg-background text-foreground px-3 py-2 rounded-xl shadow-sm border border-border text-sm font-medium flex items-center gap-2">
+                    {/* Tail */}
+                    <div className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-3 h-3 bg-background border-l border-b border-border rotate-45 transform" />
+
+                    {/* Content */}
+                    <div className="relative z-10 flex items-center gap-2">
+                      {customStatus.emoji && (
+                        <span>
+                          {customStatus.emoji.id ? (
+                            <img
+                              src={`https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png`}
+                              alt={customStatus.emoji.name}
+                              className="w-4 h-4 inline-block"
+                            />
+                          ) : (
+                            customStatus.emoji.name
+                          )}
+                        </span>
+                      )}
+                      <span className="truncate max-w-[150px]">{customStatus.state}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
+
+            {/* Custom Status Bubble (Mobile Fallback) */}
+            {customStatus && customStatus.state && (
+              <div className="mb-2 ml-auto max-w-[50%] flex-1 pl-4 flex justify-end sm:hidden">
+                <div className="bg-background/80 backdrop-blur-md border border-border/50 px-3 py-1.5 rounded-xl shadow-sm text-sm text-foreground/90 font-medium truncate flex items-center gap-2">
+                  {customStatus.emoji && (
+                    <span>
+                      {customStatus.emoji.id ? (
+                        <img
+                          src={`https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png`}
+                          alt={customStatus.emoji.name}
+                          className="w-4 h-4 inline-block"
+                        />
+                      ) : (
+                        customStatus.emoji.name
+                      )}
+                    </span>
+                  )}
+                  <span className="truncate">{customStatus.state}</span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* User Info & Badges */}
