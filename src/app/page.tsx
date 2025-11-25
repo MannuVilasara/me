@@ -2,7 +2,9 @@
 
 import { lazy, Suspense, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { Copy } from 'lucide-react';
+import { Copy, Check, Github, Instagram, Terminal } from 'lucide-react';
+import { FaDiscord, FaDev } from 'react-icons/fa';
+import { Button } from '@/components/ui/button';
 
 // Dynamically import heavy animation libraries
 const Typewriter = dynamic(() => import('typewriter-effect'), {
@@ -16,6 +18,13 @@ const DiscordMessageBox = lazy(() => import('@/components/myComponents/Contact/M
 
 export default function HomePage() {
   const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText('npx hello-mannu');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -48,56 +57,91 @@ export default function HomePage() {
       <div className="flex flex-col">
         <main className="grow px-4 max-w-3xl mx-auto py-8">
           <h1 className="text-4xl font-bold mb-4">Manpreet Singh</h1>
-          <h2 className="text-2xl text-gray-500 mb-6">
+          <div className="text-xl sm:text-2xl text-muted-foreground font-medium h-8 flex items-center mb-8">
+            <span className="mr-2 text-foreground/50">{'>'}</span>
             <Typewriter
               options={{
-                strings: ['Full Stack Developer, India', 'Tech Enthusiast', 'Open For Internships'],
+                strings: ['Full Stack Developer', 'Tech Enthusiast', 'Open For Internships'],
                 autoStart: true,
                 loop: true,
-                delay: 75,
+                delay: 50,
+                deleteSpeed: 30,
                 cursor: '_',
               }}
             />
-          </h2>
+          </div>
           <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
             I work with latest technologies to build scalable and efficient web applications. My
             expertise lies in full-stack development, with a focus on creating seamless user
             experiences and robust backend systems.
           </p>
 
-          <div className="flex items-center gap-3">
-            <pre
-              className="px-3 py-2 rounded-lg font-mono text-sm 
-               bg-gray-100 text-gray-900 border border-gray-300
-               dark:bg-neutral-900 dark:text-neutral-100 dark:border-neutral-700"
-            >
-              <code>$ npx hello-mannu</code>
-            </pre>
-
+          <div className="flex flex-wrap items-center gap-4 pt-2">
+            {/* NPX Card */}
             <button
-              onClick={async () => {
-                await navigator.clipboard.writeText('npx hello-mannu');
-                setCopied(true);
-                setTimeout(() => setCopied(false), 1500);
-              }}
-              title="Copy"
-              className="
-      px-2 py-2 rounded-lg border border-gray-300 
-      bg-gray-100 text-gray-700
-      hover:bg-gray-200 hover:border-gray-400 
-      dark:bg-neutral-900 dark:hover:bg-neutral-800 
-      dark:text-neutral-300 dark:border-neutral-700
-      transition-colors flex items-center gap-1
-    "
+              onClick={handleCopy}
+              className="group cursor-pointer flex items-center gap-3 px-4 py-2.5 rounded-lg border border-border bg-muted/30 hover:bg-muted/60 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+              aria-label="Copy npx command"
             >
-              {copied ? (
-                <span className="text-xs text-gray-600 dark:text-neutral-400">Copied</span>
-              ) : (
-                <Copy size={16} className="text-gray-600 dark:text-neutral-400" />
-              )}
+              <Terminal className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+              <code className="font-mono text-sm text-foreground">npx hello-mannu</code>
+              <div className="pl-3 border-l border-border/50 ml-1">
+                {copied ? (
+                  <Check className="h-3.5 w-3.5 text-green-500 animate-in zoom-in" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                )}
+              </div>
             </button>
+
+            {/* Social Links */}
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-foreground"
+                asChild
+              >
+                <a
+                  href="https://github.com/MannuVilasara"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="h-5 w-5" />
+                </a>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-foreground"
+                asChild
+              >
+                <a
+                  href="https://instagram.com/dev_mannuu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-foreground"
+                asChild
+              >
+                <a
+                  href="https://discord.com/users/786926252811485186"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaDiscord className="h-5 w-5" />
+                </a>
+              </Button>
+            </div>
           </div>
         </main>
+
         <Suspense fallback={<div className="h-40 animate-pulse bg-muted rounded-lg" />}>
           <Activities />
         </Suspense>
