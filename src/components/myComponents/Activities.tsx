@@ -24,6 +24,10 @@ export default function Activities() {
   const [nowPlayingModalOpen, setNowPlayingModalOpen] = useState(false);
   const [discordModalOpen, setDiscordModalOpen] = useState(false);
 
+  // Oneko toggle state
+  const [onekoEnabled, setOnekoEnabled] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
+
   // Fetch data for modals
   const { data: nowPlayingData } = useSWR('/api/now-playing', fetcher, {
     refreshInterval: 5000,
@@ -31,6 +35,35 @@ export default function Activities() {
   const { data: discordData } = useSWR('/api/get-discord-status', fetcher, {
     refreshInterval: 5000,
   });
+
+  // Check if desktop and load Oneko preference
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.matchMedia('(min-width: 768px)').matches);
+    };
+
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+
+    // Load saved Oneko preference
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('oneko-enabled');
+      if (saved !== null) {
+        setOnekoEnabled(saved === 'true');
+      }
+    }
+
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
+  // Toggle Oneko
+  const toggleOneko = () => {
+    const newState = !onekoEnabled;
+    setOnekoEnabled(newState);
+    localStorage.setItem('oneko-enabled', newState.toString());
+    // Dispatch custom event to notify Oneko component
+    window.dispatchEvent(new CustomEvent('oneko-toggle', { detail: { enabled: newState } }));
+  };
 
   // Update graph URL when theme changes and check if image exists
   useEffect(() => {
@@ -94,6 +127,15 @@ export default function Activities() {
         >
           [⚙️] Status: Building my personal site 🚀
         </div>
+        {isDesktop && (
+          <div
+            onClick={toggleOneko}
+            className="cursor-pointer hover:bg-muted/50 px-2 py-1 rounded transition-colors"
+            title="Toggle desktop cat companion"
+          >
+            [🐱] Cat: {onekoEnabled ? 'Enabled' : 'Disabled'}
+          </div>
+        )}
         <div
           className="cursor-pointer hover:bg-muted/50 px-2 py-1 rounded transition-colors"
           title="Latest commit"

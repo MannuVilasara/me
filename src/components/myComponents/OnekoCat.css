@@ -1,0 +1,8 @@
+.oneko-cat {
+  width: 32px;
+  height: 32px;
+  position: fixed;
+  pointer-events: none;
+  image-rendering: pixelated;
+  z-index: 2147483647;
+}
