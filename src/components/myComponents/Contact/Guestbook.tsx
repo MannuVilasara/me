@@ -9,36 +9,12 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from '@/components/ui/card';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Badge } from '@/components/ui/badge';
-import {
-  MessageSquare,
-  Send,
-  Loader2,
-  Github,
-  User,
-  LogOut,
-  Trash2,
-  Sparkles,
-  Quote,
-} from 'lucide-react';
+import { Loader2, Github, LogOut, Trash2, CheckCircle2, ArrowRight, Terminal } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
+// Zod Schema
 const messageSchema = z.object({
   message: z.string().min(1, 'Message is required').max(500, 'Message too long'),
 });
@@ -71,7 +47,6 @@ export default function Guestbook() {
     },
   });
 
-  // Prevent hydration mismatch for dates
   useEffect(() => {
     setMounted(true);
     fetchGuestbook();
@@ -86,7 +61,6 @@ export default function Guestbook() {
       }
     } catch (error) {
       console.error('Failed to load guestbook:', error);
-      toast.error('Failed to load messages');
     } finally {
       setIsLoading(false);
     }
@@ -97,9 +71,7 @@ export default function Guestbook() {
     try {
       const response = await fetch('/api/guestbook', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
@@ -107,24 +79,20 @@ export default function Guestbook() {
         const newEntry = await response.json();
         setEntries((prev) => [newEntry, ...prev]);
         form.reset();
-        toast.success('Message added to guestbook!');
+        toast.success('Message posted.');
       } else {
         const error = await response.json();
-        toast.error(error.error || 'Failed to add message');
+        toast.error(error.error || 'Failed to post.');
       }
     } catch (error) {
-      console.error('Failed to submit message:', error);
-      toast.error('Failed to add message');
+      toast.error('Something went wrong.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const deleteMessage = async (messageId: string) => {
-    // Optimistic UI or wait for server? Let's verify first.
-    if (!confirm('Are you sure you want to delete this message?')) {
-      return;
-    }
+    if (!confirm('Delete this message?')) return;
 
     setDeletingId(messageId);
     try {
@@ -134,14 +102,12 @@ export default function Guestbook() {
 
       if (response.ok) {
         setEntries((prev) => prev.filter((entry) => entry.id !== messageId));
-        toast.success('Message deleted successfully!');
+        toast.success('Deleted.');
       } else {
-        const error = await response.json();
-        toast.error(error.error || 'Failed to delete message');
+        toast.error('Failed to delete.');
       }
     } catch (error) {
-      console.error('Failed to delete message:', error);
-      toast.error('Failed to delete message');
+      toast.error('Error deleting message.');
     } finally {
       setDeletingId(null);
     }
@@ -149,236 +115,192 @@ export default function Guestbook() {
 
   if (!mounted) return null;
 
+  const isAdmin = session?.user?.username === 'MannuVilasara';
+
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12 space-y-10 animate-in fade-in duration-500">
-      {/* Hero Header */}
-      <div className="text-center space-y-4">
-        <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-full mb-2">
-          <Sparkles className="h-8 w-8 text-primary" />
-        </div>
-        <h2 className="text-4xl font-extrabold tracking-tight lg:text-5xl">Guestbook</h2>
-        <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-          Leave a mark for future visitors! Share your thoughts, feedback, or just say hello. 💝
+    <div className="max-w-2xl mx-auto px-4 py-12 sm:py-20 animate-in fade-in duration-700">
+      {/* 1. Header: Minimal & Clean */}
+      <div className="mb-12 space-y-2">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">Guestbook</h1>
+        <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-md">
+          Leave a permanent mark. Share thoughts, feedback, or just verify your visit.
         </p>
       </div>
 
-      {/* Input Section */}
-      <Card className="border-2 shadow-sm relative overflow-hidden">
-        {/* Decorative background element */}
-        <div className="absolute top-0 right-0 p-16 bg-primary/5 rounded-bl-full -mr-8 -mt-8 pointer-events-none" />
-
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Quote className="h-5 w-5 text-muted-foreground" />
-            Sign the Guestbook
-          </CardTitle>
-          <CardDescription>Join the conversation with the community.</CardDescription>
-        </CardHeader>
-
-        <CardContent>
-          {status === 'loading' ? (
-            <div className="flex flex-col items-center justify-center py-8 space-y-3">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
-              <p className="text-sm text-muted-foreground">Checking authentication...</p>
-            </div>
-          ) : session ? (
-            <div className="space-y-6">
-              {/* Authenticated User Banner */}
-              <div className="flex items-center justify-between p-4 bg-muted/40 rounded-xl border border-border/50">
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-12 w-12 border-2 border-background shadow-sm">
-                    <AvatarImage
-                      src={session.user.avatar || undefined}
-                      alt={session.user.name || 'User'}
-                    />
-                    <AvatarFallback className="bg-primary/10 text-primary">
-                      {session.user.name?.[0] || <User className="h-5 w-5" />}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-semibold text-sm">Signed in as</p>
-                    <p className="font-bold text-base">{session.user.name || 'Anonymous'}</p>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => signOut()}
-                  className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Sign Out
-                </Button>
+      {/* 2. Authentication / Input Area */}
+      <div className="mb-16">
+        {status === 'loading' ? (
+          <div className="h-24 w-full bg-muted/10 animate-pulse rounded-md border border-border/50" />
+        ) : session ? (
+          <div className="space-y-4">
+            {/* User State */}
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500/80" />
+                <span>
+                  Signed in as{' '}
+                  <span className="font-medium text-foreground">{session.user.name}</span>
+                </span>
               </div>
+              <button
+                onClick={() => signOut()}
+                className="text-xs hover:text-foreground transition-colors text-muted-foreground underline decoration-muted-foreground/30 hover:decoration-foreground"
+              >
+                Sign out
+              </button>
+            </div>
 
-              {/* Form */}
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <div className="relative">
-                            <Textarea
-                              placeholder="Write your message here..."
-                              {...field}
-                              rows={4}
-                              className="resize-none pr-4 pb-8 text-base bg-background/50 focus:bg-background transition-colors"
-                              disabled={isSubmitting}
-                            />
-                            <div className="absolute bottom-2 right-2 text-xs text-muted-foreground bg-background/80 px-2 py-0.5 rounded-full pointer-events-none">
-                              {field.value?.length || 0}/500
-                            </div>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+            {/* Form */}
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="relative group">
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Type your message..."
+                          {...field}
+                          rows={3}
+                          className="resize-none bg-background border-muted-foreground/20 focus:border-foreground transition-all rounded-md px-4 py-3 text-sm sm:text-base"
+                          disabled={isSubmitting}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
+                <div className="flex justify-between items-center mt-2">
+                  <span className="text-[10px] text-muted-foreground">
+                    {form.watch('message')?.length || 0}/500
+                  </span>
                   <Button
                     type="submit"
                     disabled={isSubmitting || !form.formState.isValid}
-                    className="w-full sm:w-auto min-w-[150px]"
-                    size="lg"
+                    size="sm"
+                    className="rounded-full px-5 bg-foreground text-background hover:bg-foreground/80 transition-opacity"
                   >
                     {isSubmitting ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Publishing...
-                      </>
+                      <Loader2 className="h-3 w-3 animate-spin" />
                     ) : (
-                      <>
-                        <Send className="h-4 w-4 mr-2" />
-                        Post Message
-                      </>
+                      <div className="flex items-center gap-2">
+                        <span>Post</span>
+                        <ArrowRight className="h-3 w-3" />
+                      </div>
                     )}
                   </Button>
-                </form>
-              </Form>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-8 text-center space-y-6 bg-muted/20 rounded-xl border border-dashed border-border">
-              <div className="p-4 bg-background rounded-full shadow-sm">
-                <Github className="h-8 w-8" />
+                </div>
+              </form>
+            </Form>
+          </div>
+        ) : (
+          /* Guest State: Simple Call to Action */
+          <div className="border border-dashed border-border rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-muted/5">
+            <div className="flex items-center gap-4 text-center sm:text-left">
+              <div className="p-3 bg-background border border-border rounded-full shrink-0">
+                <Terminal className="h-5 w-5 text-muted-foreground" />
               </div>
-              <div className="space-y-2 max-w-sm">
-                <h4 className="font-semibold text-lg">Login to Contribute</h4>
-                <p className="text-sm text-muted-foreground">
-                  Connect your GitHub account to verify your identity and leave a message.
+              <div className="space-y-1">
+                <p className="font-medium text-sm">Sign in to write</p>
+                <p className="text-xs text-muted-foreground">
+                  Authenticate via GitHub to prevent spam.
                 </p>
               </div>
-              <Button onClick={() => signIn('github')} size="lg" className="font-semibold">
-                <Github className="h-5 w-5 mr-2" />
-                Continue with GitHub
-              </Button>
             </div>
-          )}
-        </CardContent>
-      </Card>
+            <Button
+              onClick={() => signIn('github')}
+              variant="outline"
+              className="bg-background hover:bg-muted border-border text-foreground h-10 px-6 shrink-0"
+            >
+              <Github className="h-4 w-4 mr-2" />
+              GitHub
+            </Button>
+          </div>
+        )}
+      </div>
 
-      {/* Messages Feed */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between px-1">
-          <h3 className="text-2xl font-bold flex items-center gap-2">
-            <MessageSquare className="h-6 w-6 text-primary" />
-            Recent Messages
-            <Badge variant="secondary" className="ml-2 rounded-full px-2.5">
-              {entries.length}
-            </Badge>
-          </h3>
-        </div>
-
+      {/* 3. Message Feed */}
+      <div className="space-y-8">
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-12 space-y-4">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            <p className="text-muted-foreground">Loading recent messages...</p>
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex gap-4 opacity-50">
+                <div className="h-10 w-10 rounded-full bg-muted/20 animate-pulse" />
+                <div className="space-y-2 flex-1">
+                  <div className="h-4 w-1/4 bg-muted/20 animate-pulse rounded" />
+                  <div className="h-4 w-3/4 bg-muted/20 animate-pulse rounded" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : entries.length === 0 ? (
-          <Card className="bg-muted/30 border-dashed">
-            <CardContent className="py-12 text-center">
-              <div className="inline-flex items-center justify-center p-4 bg-background rounded-full shadow-sm mb-4">
-                <Sparkles className="h-8 w-8 text-muted-foreground/50" />
-              </div>
-              <h4 className="text-lg font-semibold text-foreground/80">No messages yet</h4>
-              <p className="text-muted-foreground">Be the first to sign the guestbook! 🚀</p>
-            </CardContent>
-          </Card>
+          <div className="text-center py-12 text-muted-foreground text-sm">
+            No entries yet. Be the first.
+          </div>
         ) : (
-          <div className="grid gap-4">
+          <div className="flex flex-col gap-0 divide-y divide-border/40">
             {entries.map((entry) => (
-              <Card
+              <div
                 key={entry.id}
-                className="group relative transition-all hover:shadow-md hover:border-primary/20"
+                className="group py-6 first:pt-0 flex gap-3 sm:gap-4 transition-colors hover:bg-muted/5 px-2 -mx-2 rounded-md"
               >
-                <CardContent className="p-5">
-                  <div className="flex items-start gap-4">
-                    {/* Author Avatar */}
-                    <Avatar className="h-10 w-10 border border-border shrink-0">
-                      <AvatarImage src={entry.avatar} alt={entry.author} />
-                      <AvatarFallback>
-                        <User className="h-5 w-5 text-muted-foreground" />
-                      </AvatarFallback>
-                    </Avatar>
+                {/* Avatar */}
+                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 border border-border/50 shrink-0">
+                  <AvatarImage
+                    src={entry.avatar}
+                    alt={entry.author}
+                    className="grayscale hover:grayscale-0 transition-all duration-300"
+                  />
+                  <AvatarFallback className="bg-muted text-muted-foreground text-xs">
+                    {entry.author?.[0]}
+                  </AvatarFallback>
+                </Avatar>
 
-                    {/* Content */}
-                    <div className="flex-1 min-w-0 space-y-1.5">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-semibold text-sm sm:text-base truncate">
-                            {entry.author}
-                          </span>
+                {/* Content */}
+                <div className="flex-1 min-w-0 space-y-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-semibold text-sm text-foreground">{entry.author}</span>
 
-                          {entry.verified && (
-                            <Badge
-                              variant="secondary"
-                              className="h-5 px-1.5 text-[10px] gap-0.5 bg-green-500/10 text-green-600 hover:bg-green-500/20 border-green-500/20"
-                            >
-                              <span className="font-bold">✓</span> Verified
-                            </Badge>
-                          )}
-
-                          <span className="text-xs text-muted-foreground">•</span>
-                          <span
-                            className="text-xs text-muted-foreground font-medium"
-                            title={new Date(entry.timestamp).toLocaleString()}
-                          >
-                            {formatDistanceToNow(new Date(entry.timestamp), { addSuffix: true })}
-                          </span>
-                        </div>
-                      </div>
-
-                      <p className="text-sm sm:text-base leading-relaxed text-foreground/90 wrap-break-words whitespace-pre-wrap">
-                        {entry.message}
-                      </p>
-                    </div>
-
-                    {/* Delete Action (Only for owner or admin) */}
-                    {session &&
-                      (entry.username === session.user.username ||
-                        session.user.username === 'MannuVilasara') && (
-                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => deleteMessage(entry.id)}
-                            disabled={deletingId === entry.id}
-                            className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                          >
-                            {deletingId === entry.id ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <Trash2 className="h-4 w-4" />
-                            )}
-                            <span className="sr-only">Delete</span>
-                          </Button>
+                      {entry.verified && (
+                        <div className="text-foreground" title="Verified User">
+                          <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 fill-foreground text-background" />
                         </div>
                       )}
+
+                      <span className="text-xs text-muted-foreground/60 select-none">•</span>
+                      <span
+                        className="text-xs text-muted-foreground"
+                        title={new Date(entry.timestamp).toLocaleString()}
+                      >
+                        {formatDistanceToNow(new Date(entry.timestamp), { addSuffix: true })}
+                      </span>
+                    </div>
+
+                    {/* Delete Action */}
+                    {session && (entry.username === session.user.username || isAdmin) && (
+                      <button
+                        onClick={() => deleteMessage(entry.id)}
+                        disabled={deletingId === entry.id}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-red-500/10 hover:text-red-600 rounded-md text-muted-foreground"
+                        title="Delete message"
+                      >
+                        {deletingId === entry.id ? (
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-3.5 w-3.5" />
+                        )}
+                      </button>
+                    )}
                   </div>
-                </CardContent>
-              </Card>
+
+                  <p className="text-sm sm:text-[15px] leading-relaxed text-foreground/80 break-words whitespace-pre-wrap font-normal">
+                    {entry.message}
+                  </p>
+                </div>
+              </div>
             ))}
           </div>
         )}
