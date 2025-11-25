@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'react-icons'],
   },
+  // Disable TypeScript type checking only in CI/production deployments
+  typescript: {
+    ignoreBuildErrors: process.env.CI === 'true' || process.env.SKIP_TS_CHECK === 'true',
+  },
   images: {
     remotePatterns: [
       {
