@@ -94,7 +94,12 @@ export default function Activities() {
         >
           [⚙️] Status: Building my personal site 🚀
         </div>
-        <LatestCommitActivity />
+        <div
+          className="cursor-pointer hover:bg-muted/50 px-2 py-1 rounded transition-colors"
+          title="Latest commit"
+        >
+          <LatestCommitActivity />
+        </div>
       </div>
 
       {/* Modals */}
