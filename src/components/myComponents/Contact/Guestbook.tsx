@@ -131,7 +131,7 @@ export default function Guestbook() {
   const isAdmin = session?.user?.username === 'MannuVilasara';
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12 sm:py-20 animate-in fade-in duration-700">
+    <div className="max-w-2xl mx-auto px-4 py-8 sm:py-8 animate-in fade-in duration-700">
       {/* 1. Header: Minimal & Clean */}
       <div className="mb-12 space-y-2">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">Guestbook</h1>
