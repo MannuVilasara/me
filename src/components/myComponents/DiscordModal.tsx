@@ -14,6 +14,7 @@ import {
   Sparkles,
   BadgeCheck,
 } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface DiscordModalProps {
   isOpen: boolean;
@@ -27,6 +28,10 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
   const user = data.data.discord_user;
   const activities = data.data.activities || [];
   const discordStatus = data.data.discord_status;
+
+  // console.log('Discord activities data:', activities);
+  // console.log('First activity:', activities[0]);
+  // console.log('First activity assets:', activities[0]?.assets);
 
   // --- Helpers ---
 
@@ -90,12 +95,45 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
 
   const getImageUrl = (assetUrl: string) => {
     if (assetUrl?.startsWith('mp:external/')) {
+      // Handle mp:external format like:
+      // mp:external/gSyzI_yG7kG8NH4jj5t-4JxVmOIHeM6bkwsNAx3oAxY/%3Fv%3D20/https/raw.githubusercontent.com/vyfor/icons/master/icons/default/dark/dashboard.png
+
+      // Extract the URL part after the hash
       const urlMatch = assetUrl.match(/mp:external\/[^\/]+\/(.+)/);
       if (urlMatch) {
-        return decodeURIComponent(urlMatch[1]).replace('/', '://');
+        const encodedPart = urlMatch[1];
+
+        // Decode the URL-encoded part
+        const decodedPart = decodeURIComponent(encodedPart);
+
+        // The decoded part should be something like: ?v=20/https/raw.githubusercontent.com/...
+        // We need to extract the actual HTTPS URL and add the query param
+        const httpsMatch = decodedPart.match(/https\/(.+)/);
+        if (httpsMatch) {
+          let finalUrl = 'https://' + httpsMatch[1];
+          // Add the v=20 parameter if it exists
+          const queryMatch = decodedPart.match(/\?v=(\d+)/);
+          if (queryMatch) {
+            finalUrl += '?v=' + queryMatch[1];
+          }
+          return finalUrl;
+        }
+
+        // Fallback: if no https match, try to construct URL from the decoded part
+        if (decodedPart.includes('https://')) {
+          const httpsIndex = decodedPart.indexOf('https://');
+          const finalUrl = decodedPart.substring(httpsIndex);
+          return finalUrl;
+        }
       }
       return null;
     }
+
+    // Handle regular Discord CDN URLs
+    if (assetUrl?.startsWith('https://')) {
+      return assetUrl;
+    }
+
     return assetUrl;
   };
 
@@ -115,31 +153,63 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
 
     return (
       <div className="flex items-center gap-2 mt-3 flex-wrap">
-        <div className={badgeStyle} title="HypeSquad Brilliance">
-          <Trophy size={16} />
-        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className={badgeStyle}>
+              <Trophy size={16} />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>HypeSquad Brilliance</p>
+          </TooltipContent>
+        </Tooltip>
 
-        <div className={badgeStyle} title="Nitro Subscriber">
-          <Zap size={16} className="fill-current/10" />
-        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className={badgeStyle}>
+              <Zap size={16} className="fill-current/10" />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Nitro Subscriber</p>
+          </TooltipContent>
+        </Tooltip>
 
-        <div className={badgeStyle} title="Active Developer">
-          <Code2 size={16} />
-        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className={badgeStyle}>
+              <Code2 size={16} />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Active Developer</p>
+          </TooltipContent>
+        </Tooltip>
 
-        <div className={badgeStyle} title="Early Supporter">
-          <Sparkles size={16} />
-        </div>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className={badgeStyle}>
+              <Sparkles size={16} />
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Early Supporter</p>
+          </TooltipContent>
+        </Tooltip>
 
         {/* Verified Bot (Monochrome) */}
         {user.bot && (
-          <div
-            className="bg-foreground text-background px-1.5 rounded-lg flex items-center gap-0.5 text-[10px] font-bold uppercase tracking-wide h-[22px]"
-            title="Verified Bot"
-          >
-            <BadgeCheck size={12} className="fill-background text-foreground" />
-            <span>Bot</span>
-          </div>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="bg-foreground text-background px-1.5 rounded-lg flex items-center gap-0.5 text-[10px] font-bold uppercase tracking-wide h-[22px]">
+                <BadgeCheck size={12} className="fill-background text-foreground" />
+                <span>Bot</span>
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Verified Bot</p>
+            </TooltipContent>
+          </Tooltip>
         )}
       </div>
     );
@@ -210,17 +280,41 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                     <div className="relative shrink-0">
                       {activity.assets?.large_image ? (
                         <div className="relative">
-                          <img
-                            src={getImageUrl(activity.assets.large_image)!}
-                            alt="Activity Asset"
-                            className="w-20 h-20 rounded-xl object-cover grayscale-[0.2]"
-                          />
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <img
+                                src={getImageUrl(activity.assets.large_image)!}
+                                alt="Activity Asset"
+                                className="w-20 h-20 rounded-xl object-cover grayscale-[0.2] cursor-help"
+                                onError={(e) => {
+                                  // Large image failed to load - could add fallback here
+                                }}
+                              />
+                            </TooltipTrigger>
+                            {activity.assets?.large_text && (
+                              <TooltipContent>
+                                <p>{activity.assets.large_text}</p>
+                              </TooltipContent>
+                            )}
+                          </Tooltip>
                           {activity.assets?.small_image && (
-                            <img
-                              src={getImageUrl(activity.assets.small_image)!}
-                              alt="Small Asset"
-                              className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full border-[3px] border-card bg-card object-cover"
-                            />
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <img
+                                  src={getImageUrl(activity.assets.small_image)!}
+                                  alt="Small Asset"
+                                  className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full border-[3px] border-card bg-card object-cover cursor-help"
+                                  onError={(e) => {
+                                    // Small image failed to load - could add fallback here
+                                  }}
+                                />
+                              </TooltipTrigger>
+                              {activity.assets?.small_text && (
+                                <TooltipContent>
+                                  <p>{activity.assets.small_text}</p>
+                                </TooltipContent>
+                              )}
+                            </Tooltip>
                           )}
                         </div>
                       ) : (
