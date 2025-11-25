@@ -79,7 +79,7 @@ export default function LatestCommitActivity() {
           value={
             <div className="flex items-center gap-2">
               <span className="font-mono text-sm">
-                <span className="text-blue-600">{shortSha}</span> -{' '}
+                <span className="text-blue-700 dark:text-blue-400">{shortSha}</span> -{' '}
                 <span className="text-foreground/80">{data.message.split('\n')[0]}</span>
               </span>
               <Link

@@ -71,9 +71,13 @@
     "typescript": "^5.9.3"
   },
   "browserslist": [
-    ">0.3%",
+    ">0.5%",
     "not dead",
     "not op_mini all",
-    "supports es6-module"
+    "last 2 versions",
+    "Chrome >= 90",
+    "Firefox >= 88",
+    "Safari >= 14",
+    "Edge >= 90"
   ]
 }
