@@ -40,46 +40,33 @@ A modern, responsive portfolio website built with Next.js 15, TypeScript, and Ta
 - **Type Checking**: TypeScript 5
 - **Build Tool**: Turbopack
 
-## 📦 Installation
+## 🗄️ Guestbook Setup (Vercel KV)
 
-1. Clone the repository:
+The guestbook uses Vercel KV (Redis) for persistent storage. To set it up:
 
-```bash
-git clone https://github.com/MannuVilasara/me.git
-cd me
-```
+1. **Install Vercel CLI** (if not already installed):
 
-2. Install dependencies:
+   ```bash
+   npm i -g vercel
+   ```
 
-```bash
-pnpm install
-```
+2. **Create a KV database**:
 
-3. Set up environment variables:
+   ```bash
+   vercel kv:create
+   ```
 
-```bash
-cp .env.example .env.local
-```
+3. **Get your KV connection details**:
 
-Add your environment variables:
+   ```bash
+   vercel kv:ls
+   ```
 
-```env
-SPOTIFY_CLIENT_ID=
-SPOTIFY_CLIENT_SECRET=
-SPOTIFY_REFRESH_TOKEN=
-DISCORD_WEBHOOK_URL=
-GITHUB_TOKEN=
+4. **Add environment variables to Vercel**:
+   - Go to your Vercel dashboard → Project Settings → Environment Variables
+   - Add the KV variables that were displayed after `vercel kv:create`
 
-# Other API keys as needed
-```
-
-4. Run the development server:
-
-```bash
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view the website.
+The guestbook data will now persist across deployments! 🎉
 
 ## 🛠️ Scripts
 
