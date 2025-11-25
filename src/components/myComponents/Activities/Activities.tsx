@@ -74,12 +74,14 @@ export default function Activities() {
       <h2 className="text-2xl font-semibold mb-4">Activity Feed</h2>
       <div className="flex flex-col gap-2 text-sm text-muted-foreground font-mono">
         <div
+          onClick={() => window.dispatchEvent(new CustomEvent('open-now-playing-modal'))}
           className="cursor-pointer hover:bg-muted/50 px-2 py-1 rounded transition-colors"
           title="Click to view music player"
         >
           [🎵] Now Playing: <NowPlayingInline />
         </div>
         <div
+          onClick={() => window.dispatchEvent(new CustomEvent('open-discord-modal'))}
           className="cursor-pointer hover:bg-muted/50 px-2 py-1 rounded transition-colors"
           title="Click to view Discord profile"
         >
