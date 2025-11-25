@@ -1,7 +1,6 @@
-import TechStack from '@/components/myComponents/TechStack';
+import { TechStack, GitHub } from '@/components/myComponents/stats';
 import React from 'react';
 import { webdev, tools, database, devops } from '@/data/techstack';
-import Github from '@/components/myComponents/GitHub';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -81,7 +80,7 @@ export default function page() {
         </section>
         <section className="mt-8 border-t pt-8">
           <h2 className="text-2xl font-semibold mb-4">GitHub Contributions</h2>
-          <Github />
+          <GitHub />
         </section>
         <section className="mt-8 border-t pt-8">
           <h2 className="text-2xl font-semibold mb-4">Interests</h2>

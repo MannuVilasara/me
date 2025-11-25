@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
-import { SwitchTheme } from '@/components/myComponents/themeSwitch';
+import { SwitchTheme } from './themeSwitch';
 
 const navItems = [
   { name: 'Projects', href: '/projects' },

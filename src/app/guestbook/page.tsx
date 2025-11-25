@@ -1,4 +1,4 @@
-import Guestbook from '@/components/myComponents/Guestbook';
+import { Guestbook } from '@/components/myComponents/Contact';
 
 export default function GuestbookPage() {
   return (

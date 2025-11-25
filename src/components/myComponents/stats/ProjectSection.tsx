@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { ArrowUpRight, ChevronDown, ChevronUp, ExternalLinkIcon, GithubIcon } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { projects } from '@/data/projects';
 import { motion } from 'framer-motion';
 import {

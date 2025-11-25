@@ -11,8 +11,8 @@ const Typewriter = dynamic(() => import('typewriter-effect'), {
 });
 
 // Lazy load components below the fold
-const Activities = lazy(() => import('@/components/myComponents/Activities'));
-const DiscordMessageBox = lazy(() => import('@/components/myComponents/MessageBox'));
+const Activities = lazy(() => import('@/components/myComponents/Activities/Activities'));
+const DiscordMessageBox = lazy(() => import('@/components/myComponents/Contact/MessageBox'));
 
 export default function HomePage() {
   const [copied, setCopied] = useState(false);
