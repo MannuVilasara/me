@@ -350,7 +350,7 @@ export default function Guestbook() {
                         </div>
                       </div>
 
-                      <p className="text-sm sm:text-base leading-relaxed text-foreground/90 break-words whitespace-pre-wrap">
+                      <p className="text-sm sm:text-base leading-relaxed text-foreground/90 wrap-break-words whitespace-pre-wrap">
                         {entry.message}
                       </p>
                     </div>

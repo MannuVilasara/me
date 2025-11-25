@@ -173,6 +173,7 @@ export default function Activities() {
           className="max-w-full h-auto rounded-md shadow"
           loading="lazy"
           onError={handleImageError}
+          alt="Image of Pacman Eating github contributions"
         />
       ) : (
         <div className="w-full h-[200px] flex items-center justify-center rounded-md border border-dashed border-muted-foreground/30 bg-muted/10">
