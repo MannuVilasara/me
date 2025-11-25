@@ -150,8 +150,11 @@ export async function DELETE(request: NextRequest) {
 
     const message = entries[messageIndex];
 
-    // Check if the authenticated user owns this message
-    if (message.username !== session.user.username) {
+    // Check if the authenticated user owns this message OR is the admin (MannuVilasara)
+    const isOwner = message.username === session.user.username;
+    const isAdmin = session.user.username === 'MannuVilasara';
+
+    if (!isOwner && !isAdmin) {
       return NextResponse.json({ error: 'You can only delete your own messages' }, { status: 403 });
     }
 
