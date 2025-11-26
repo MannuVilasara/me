@@ -14,6 +14,22 @@ import {
   CommandShortcut,
 } from '@/components/ui/command';
 import { useTheme } from 'next-themes';
+import {
+  Home,
+  User,
+  FileText,
+  Briefcase,
+  BookOpen,
+  MessageCircle,
+  Music,
+  GitCommit,
+  Cat,
+  Sun,
+  Moon,
+  Monitor,
+  Github,
+  Globe,
+} from 'lucide-react';
 
 interface CommandMenuProps {
   open: boolean;
@@ -54,27 +70,27 @@ export function CommandMenu({
         {/* Navigation */}
         <CommandGroup heading="Navigation">
           <CommandItem onSelect={() => runCommand(() => router.push('/'))}>
-            <span className="font-mono text-muted-foreground mr-2">[🏠]</span>
+            <Home size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Home</span>
             <CommandShortcut>⌘H</CommandShortcut>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => router.push('/about'))}>
-            <span className="font-mono text-muted-foreground mr-2">[👤]</span>
+            <User size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">About</span>
             <CommandShortcut>⌘A</CommandShortcut>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => router.push('/blog'))}>
-            <span className="font-mono text-muted-foreground mr-2">[📝]</span>
+            <FileText size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Blog</span>
             <CommandShortcut>⌘B</CommandShortcut>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => router.push('/projects'))}>
-            <span className="font-mono text-muted-foreground mr-2">[💼]</span>
+            <Briefcase size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Projects</span>
             <CommandShortcut>⌘P</CommandShortcut>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => router.push('/guestbook'))}>
-            <span className="font-mono text-muted-foreground mr-2">[📖]</span>
+            <BookOpen size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Guestbook</span>
             <CommandShortcut>⌘G</CommandShortcut>
           </CommandItem>
@@ -85,17 +101,17 @@ export function CommandMenu({
         {/* Modals */}
         <CommandGroup heading="Modals">
           <CommandItem onSelect={() => runCommand(() => onOpenDiscordModal?.())}>
-            <span className="font-mono text-muted-foreground mr-2">[💬]</span>
+            <MessageCircle size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Discord Status</span>
             <CommandShortcut>⌘D</CommandShortcut>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => onOpenNowPlayingModal?.())}>
-            <span className="font-mono text-muted-foreground mr-2">[🎵]</span>
+            <Music size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Now Playing</span>
             <CommandShortcut>⌘M</CommandShortcut>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => onOpenCommitDiffModal?.())}>
-            <span className="font-mono text-muted-foreground mr-2">[🔧]</span>
+            <GitCommit size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Latest Commit</span>
             <CommandShortcut>⌘C</CommandShortcut>
           </CommandItem>
@@ -106,20 +122,20 @@ export function CommandMenu({
         {/* Features */}
         <CommandGroup heading="Features">
           <CommandItem onSelect={() => runCommand(() => onToggleCat?.())}>
-            <span className="font-mono text-muted-foreground mr-2">[🐱]</span>
+            <Cat size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">{catEnabled ? 'Disable' : 'Enable'} Cat</span>
             <CommandShortcut>⌘K</CommandShortcut>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => setTheme('light'))}>
-            <span className="font-mono text-muted-foreground mr-2">[☀️]</span>
+            <Sun size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Light Theme</span>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => setTheme('dark'))}>
-            <span className="font-mono text-muted-foreground mr-2">[🌙]</span>
+            <Moon size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Dark Theme</span>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => setTheme('system'))}>
-            <span className="font-mono text-muted-foreground mr-2">[⚙️]</span>
+            <Monitor size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">System Theme</span>
           </CommandItem>
         </CommandGroup>
@@ -133,7 +149,7 @@ export function CommandMenu({
               runCommand(() => window.open('https://github.com/MannuVilasara', '_blank'))
             }
           >
-            <span className="font-mono text-muted-foreground mr-2">[🐙]</span>
+            <Github size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">GitHub Profile</span>
             <CommandShortcut>⌘⇧G</CommandShortcut>
           </CommandItem>
@@ -144,14 +160,14 @@ export function CommandMenu({
               )
             }
           >
-            <span className="font-mono text-muted-foreground mr-2">[💬]</span>
+            <MessageCircle size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Discord Profile</span>
             <CommandShortcut>⌘⇧D</CommandShortcut>
           </CommandItem>
           <CommandItem
             onSelect={() => runCommand(() => window.open('https://mannu.live', '_blank'))}
           >
-            <span className="font-mono text-muted-foreground mr-2">[🌐]</span>
+            <Globe size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Portfolio</span>
             <CommandShortcut>⌘⇧P</CommandShortcut>
           </CommandItem>
