@@ -106,6 +106,7 @@ export default function HomePage() {
                   href="https://github.com/MannuVilasara"
                   target="_blank"
                   rel="noopener noreferrer"
+                  title="GitHub"
                 >
                   <Github className="h-5 w-5" />
                 </a>
@@ -120,6 +121,7 @@ export default function HomePage() {
                   href="https://instagram.com/dev_mannuu"
                   target="_blank"
                   rel="noopener noreferrer"
+                  title="Instagram"
                 >
                   <Instagram className="h-5 w-5" />
                 </a>
@@ -134,6 +136,7 @@ export default function HomePage() {
                   href="https://discord.com/users/786926252811485186"
                   target="_blank"
                   rel="noopener noreferrer"
+                  title="Discord"
                 >
                   <FaDiscord className="h-5 w-5" />
                 </a>
