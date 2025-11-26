@@ -39,7 +39,7 @@ export default function Navbar() {
               data-href={href}
               className={`relative z-10 text-sm font-medium transition-all duration-300 ${
                 isActive
-                  ? 'text-foreground underline underline-offset-4 decoration-2'
+                  ? 'text-foreground decoration-2'
                   : 'text-foreground/70 hover:text-foreground'
               }`}
             >
