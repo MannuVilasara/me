@@ -22,7 +22,9 @@ export async function generateMetadata({ params }: any) {
   }
 
   const { title, publishedAt: publishedTime, summary: description, image } = post.metadata;
-  const ogImage = image ? image : `${baseUrl}/og.png`;
+  const ogImage = image
+    ? image
+    : `https://mannu.live/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {
     title,
@@ -93,7 +95,7 @@ export default async function Blog({ params }: any) {
     description: post.metadata.summary,
     image: post.metadata.image
       ? `${baseUrl}${post.metadata.image}`
-      : `/og?title=${encodeURIComponent(post.metadata.title)}`,
+      : `https://mannu.live/og?title=${encodeURIComponent(post.metadata.title)}&description=${encodeURIComponent(post.metadata.summary)}`,
     url: `${baseUrl}/blog/${post.slug}`,
     author: {
       '@type': 'Person',
