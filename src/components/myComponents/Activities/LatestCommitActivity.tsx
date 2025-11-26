@@ -1,8 +1,7 @@
 'use client';
 
 import useSWR from 'swr';
-import Link from 'next/link';
-import { Loader2, AlertCircle, ExternalLink } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -47,17 +46,6 @@ export default function LatestCommitActivity() {
           </span>
           {date && <span className="text-[10px] text-muted-foreground/50 font-mono">{date}</span>}
         </div>
-
-        <Link
-          href={data?.html_url || '#'}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-muted-foreground/40 hover:text-blue-500 transition-colors"
-          onClick={(e) => e.stopPropagation()}
-          title="View on GitHub"
-        >
-          <ExternalLink size={12} />
-        </Link>
       </div>
 
       <p
