@@ -54,7 +54,7 @@ const ActivityCard = ({
           />
         )}
       </div>
-      <div className="font-medium text-xs sm:text-sm text-foreground/90 leading-relaxed break-words">
+      <div className="font-medium text-xs sm:text-sm text-foreground/90 leading-relaxed wrap-break-word">
         {children}
       </div>
     </>
@@ -237,7 +237,7 @@ export default function Activities() {
 
         {/* Row 4: Contribution Graph */}
         <div className="col-span-2 lg:col-span-4 relative group">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/5 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-b from-transparent to-background/5 pointer-events-none" />
           <div className="p-1 rounded-2xl border transition-all duration-300 backdrop-blur-sm overflow-hidden bg-white border-zinc-200 dark:bg-zinc-900/30 dark:border-zinc-800/50">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-border/20 mb-2">
               <Github size={13} className="text-muted-foreground/60" />
@@ -251,7 +251,6 @@ export default function Activities() {
                 <img
                   src={graphUrl}
                   className="w-full h-auto rounded-lg opacity-80 group-hover:opacity-100 transition-opacity duration-500 saturate-0 group-hover:saturate-100"
-                  loading="lazy"
                   alt="GitHub Contributions"
                 />
               ) : (
