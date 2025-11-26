@@ -61,6 +61,131 @@ export function CommandMenu({
     [onOpenChange]
   );
 
+  // Handle keyboard shortcuts when menu is open
+  React.useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const { key, metaKey, shiftKey } = e;
+
+      if (!metaKey) return;
+
+      e.preventDefault();
+
+      switch (key.toLowerCase()) {
+        case 'h':
+          runCommand(() => router.push('/'));
+          break;
+        case 'a':
+          runCommand(() => router.push('/about'));
+          break;
+        case 'b':
+          runCommand(() => router.push('/blog'));
+          break;
+        case 'p':
+          if (shiftKey) {
+            runCommand(() => window.open('https://mannu.live', '_blank'));
+          } else {
+            runCommand(() => router.push('/projects'));
+          }
+          break;
+        case 'g':
+          if (shiftKey) {
+            runCommand(() => window.open('https://github.com/MannuVilasara', '_blank'));
+          } else {
+            runCommand(() => router.push('/guestbook'));
+          }
+          break;
+        case 'd':
+          if (shiftKey) {
+            runCommand(() => window.open('https://discord.com/users/743850255332188200', '_blank'));
+          } else {
+            runCommand(() => onOpenDiscordModal?.());
+          }
+          break;
+        case 'm':
+          runCommand(() => onOpenNowPlayingModal?.());
+          break;
+        case 'c':
+          runCommand(() => onOpenCommitDiffModal?.());
+          break;
+        case 'k':
+          runCommand(() => onToggleCat?.());
+          break;
+        default:
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [
+    open,
+    runCommand,
+    router,
+    onOpenDiscordModal,
+    onOpenNowPlayingModal,
+    onOpenCommitDiffModal,
+    onToggleCat,
+  ]);
+
+  // Handle shortcuts when menu is open
+  React.useEffect(() => {
+    if (!open) return;
+
+    const handleShortcut = (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey)) return;
+
+      let action: (() => void) | undefined = undefined;
+
+      switch (e.key.toLowerCase()) {
+        case 'h':
+          action = () => router.push('/');
+          break;
+        case 'a':
+          action = () => router.push('/about');
+          break;
+        case 'b':
+          action = () => router.push('/blog');
+          break;
+        case 'p':
+          action = () => router.push('/projects');
+          break;
+        case 'g':
+          action = () => router.push('/guestbook');
+          break;
+        case 'd':
+          action = onOpenDiscordModal;
+          break;
+        case 'm':
+          action = onOpenNowPlayingModal;
+          break;
+        case 'c':
+          action = onOpenCommitDiffModal;
+          break;
+        case 'k':
+          action = onToggleCat;
+          break;
+      }
+
+      if (action) {
+        e.preventDefault();
+        runCommand(action);
+      }
+    };
+
+    document.addEventListener('keydown', handleShortcut);
+    return () => document.removeEventListener('keydown', handleShortcut);
+  }, [
+    open,
+    router,
+    onOpenDiscordModal,
+    onOpenNowPlayingModal,
+    onOpenCommitDiffModal,
+    onToggleCat,
+    runCommand,
+  ]);
+
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
       <CommandInput placeholder="Type a command or search..." />

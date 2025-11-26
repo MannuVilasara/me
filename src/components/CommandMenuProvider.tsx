@@ -33,6 +33,58 @@ export function CommandMenuProvider({ children }: CommandMenuProviderProps) {
     return () => document.removeEventListener('keydown', down);
   }, []);
 
+  // Global navigation shortcuts
+  useEffect(() => {
+    const handleNavigation = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey) {
+        switch (e.key.toLowerCase()) {
+          case 'h':
+            e.preventDefault();
+            window.location.href = '/';
+            break;
+          case 'a':
+            e.preventDefault();
+            window.location.href = '/about';
+            break;
+          case 'b':
+            e.preventDefault();
+            window.location.href = '/blog';
+            break;
+          case 'p':
+            e.preventDefault();
+            window.location.href = '/projects';
+            break;
+          case 'g':
+            e.preventDefault();
+            window.location.href = '/guestbook';
+            break;
+          case 'd':
+            if (!open) {
+              // Only if menu not open
+              e.preventDefault();
+              openDiscordModal();
+            }
+            break;
+          case 'm':
+            if (!open) {
+              e.preventDefault();
+              openNowPlayingModal();
+            }
+            break;
+          case 'c':
+            if (!open) {
+              e.preventDefault();
+              openCommitDiffModal();
+            }
+            break;
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleNavigation);
+    return () => document.removeEventListener('keydown', handleNavigation);
+  }, [open]);
+
   const toggleCat = () => {
     const newEnabled = !catEnabled;
     setCatEnabled(newEnabled);
