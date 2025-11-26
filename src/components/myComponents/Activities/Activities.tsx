@@ -37,7 +37,17 @@ export default function Activities() {
       }
     }
 
-    return () => window.removeEventListener('resize', checkDesktop);
+    // Listen for Oneko toggle events from command menu
+    const handleOnekoToggle = (event: CustomEvent) => {
+      setOnekoEnabled(event.detail.enabled);
+    };
+
+    window.addEventListener('oneko-toggle', handleOnekoToggle as EventListener);
+
+    return () => {
+      window.removeEventListener('resize', checkDesktop);
+      window.removeEventListener('oneko-toggle', handleOnekoToggle as EventListener);
+    };
   }, []);
 
   // Toggle Oneko
