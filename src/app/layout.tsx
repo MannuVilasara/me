@@ -77,6 +77,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         <head>
           <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                try {
+                  const theme = localStorage.getItem('theme') || 'system';
+                  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  const appliedTheme = theme === 'system' ? systemTheme : theme;
+                  document.documentElement.classList.add(appliedTheme);
+                } catch (e) {}
+              `,
+            }}
+          />
+          <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
           />
