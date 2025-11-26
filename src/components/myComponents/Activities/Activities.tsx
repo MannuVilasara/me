@@ -61,9 +61,14 @@ const ActivityCard = ({
   );
 
   const baseStyles = cn(
-    'group relative flex flex-col p-3 sm:p-4 rounded-xl border border-border/40 bg-zinc-900/30 hover:bg-zinc-900/60 dark:bg-zinc-900/30 dark:hover:bg-zinc-800/50 transition-all duration-300 overflow-hidden backdrop-blur-sm',
-    (onClick || href) &&
-      'cursor-pointer hover:border-border/80 hover:shadow-sm active:scale-[0.98]',
+    // Base Layout
+    'group relative flex flex-col p-3 sm:p-4 rounded-xl border transition-all duration-300 overflow-hidden backdrop-blur-sm',
+    // Light Mode Styles (Clean White)
+    'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-sm',
+    // Dark Mode Styles (Glassmorphism Dark)
+    'dark:bg-zinc-900/30 dark:border-zinc-800/50 dark:hover:bg-zinc-900/50 dark:hover:border-zinc-700',
+    // Interactive states
+    (onClick || href) && 'cursor-pointer active:scale-[0.98]',
     className
   );
 
@@ -233,7 +238,7 @@ export default function Activities() {
         {/* Row 4: Contribution Graph */}
         <div className="col-span-2 lg:col-span-4 relative group">
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/5 pointer-events-none" />
-          <div className="p-1 rounded-2xl border border-border/40 bg-zinc-900/30 backdrop-blur-sm">
+          <div className="p-1 rounded-2xl border transition-all duration-300 backdrop-blur-sm overflow-hidden bg-white border-zinc-200 dark:bg-zinc-900/30 dark:border-zinc-800/50">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-border/20 mb-2">
               <Github size={13} className="text-muted-foreground/60" />
               <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60">
