@@ -23,5 +23,10 @@ export default function LocationTime() {
     return () => clearInterval(interval);
   }, []);
 
-  return <>🇮🇳 IST — {timeString}</>;
+  return (
+    <div className="flex flex-col text-xs sm:text-sm text-foreground/90">
+      IST <br />
+      {timeString}
+    </div>
+  );
 }
