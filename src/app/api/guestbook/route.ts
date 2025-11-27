@@ -16,6 +16,7 @@ type GuestbookEntry = {
   message: string;
   timestamp: string;
   verified?: boolean;
+  pinned?: boolean;
 };
 
 // Helper function to read guestbook
@@ -48,10 +49,12 @@ async function writeGuestbook(entries: GuestbookEntry[]): Promise<void> {
 export async function GET() {
   try {
     const entries = await readGuestbook();
-    // Return entries sorted by timestamp (newest first)
-    const sortedEntries = entries.sort(
-      (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-    );
+    // Return entries sorted by pinned first, then by timestamp (newest first)
+    const sortedEntries = entries.sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+    });
 
     return NextResponse.json(sortedEntries);
   } catch (error) {
@@ -121,7 +124,58 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// DELETE /api/guestbook - Delete a message (requires authentication and ownership)
+// PATCH /api/guestbook - Pin/unpin a message (admin only)
+export async function PATCH(request: NextRequest) {
+  try {
+    // Check authentication
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user || session.user.username !== 'MannuVilasara') {
+      return NextResponse.json({ error: 'Admin access required' }, { status: 403 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const messageId = searchParams.get('id');
+    const action = searchParams.get('action'); // 'pin' or 'unpin'
+
+    if (!messageId || !['pin', 'unpin'].includes(action || '')) {
+      return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
+    }
+
+    // Read current entries
+    const entries = await readGuestbook();
+
+    // Find the message
+    const messageIndex = entries.findIndex((entry) => entry.id === messageId);
+
+    if (messageIndex === -1) {
+      return NextResponse.json({ error: 'Message not found' }, { status: 404 });
+    }
+
+    if (action === 'pin') {
+      // Check if already 3 pinned
+      const pinnedCount = entries.filter((entry) => entry.pinned).length;
+      if (pinnedCount >= 3) {
+        return NextResponse.json({ error: 'Maximum 3 pinned messages allowed' }, { status: 400 });
+      }
+      entries[messageIndex].pinned = true;
+    } else {
+      entries[messageIndex].pinned = false;
+    }
+
+    // Save back to KV
+    await writeGuestbook(entries);
+
+    // Return the updated entry
+    const updatedEntry = entries[messageIndex];
+    return NextResponse.json(updatedEntry);
+  } catch (error) {
+    console.error('Error updating guestbook entry:', error);
+    return NextResponse.json({ error: 'Failed to update message' }, { status: 500 });
+  }
+}
+
+// DELETE /api/guestbook - Delete a message (user or admin)
 export async function DELETE(request: NextRequest) {
   try {
     // Check authentication
@@ -135,13 +189,13 @@ export async function DELETE(request: NextRequest) {
     const messageId = searchParams.get('id');
 
     if (!messageId) {
-      return NextResponse.json({ error: 'Message ID is required' }, { status: 400 });
+      return NextResponse.json({ error: 'Message ID required' }, { status: 400 });
     }
 
     // Read current entries
     const entries = await readGuestbook();
 
-    // Find the message to delete
+    // Find the message
     const messageIndex = entries.findIndex((entry) => entry.id === messageId);
 
     if (messageIndex === -1) {
@@ -150,12 +204,12 @@ export async function DELETE(request: NextRequest) {
 
     const message = entries[messageIndex];
 
-    // Check if the authenticated user owns this message OR is the admin (MannuVilasara)
-    const isOwner = message.username === session.user.username;
+    // Check if user can delete this message (own message or admin)
     const isAdmin = session.user.username === 'MannuVilasara';
+    const isOwner = message.username === session.user.username;
 
     if (!isOwner && !isAdmin) {
-      return NextResponse.json({ error: 'You can only delete your own messages' }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized to delete this message' }, { status: 403 });
     }
 
     // Remove the message

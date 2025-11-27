@@ -11,7 +11,16 @@ import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Github, LogOut, Trash2, CheckCircle2, ArrowRight, Terminal } from 'lucide-react';
+import {
+  Loader2,
+  Github,
+  LogOut,
+  Trash2,
+  CheckCircle2,
+  ArrowRight,
+  Terminal,
+  Pin,
+} from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 // Zod Schema
@@ -29,6 +38,7 @@ type GuestbookEntry = {
   message: string;
   timestamp: string;
   verified?: boolean;
+  pinned?: boolean;
 };
 
 export default function Guestbook() {
@@ -123,6 +133,29 @@ export default function Guestbook() {
     } finally {
       setDeletingId(null);
       setEntryToDelete(null);
+    }
+  };
+
+  const togglePin = async (messageId: string, currentlyPinned: boolean) => {
+    try {
+      const action = currentlyPinned ? 'unpin' : 'pin';
+      const response = await fetch(`/api/guestbook?id=${messageId}&action=${action}`, {
+        method: 'PATCH',
+      });
+
+      if (response.ok) {
+        const updatedEntry = await response.json();
+        // Update local state with the returned entry
+        setEntries((prev) => prev.map((entry) => (entry.id === messageId ? updatedEntry : entry)));
+        // Re-fetch to ensure proper sorting
+        await fetchGuestbook();
+        toast.success(currentlyPinned ? 'Message unpinned.' : 'Message pinned.');
+      } else {
+        const error = await response.json();
+        toast.error(error.error || 'Failed to toggle pin.');
+      }
+    } catch (error) {
+      toast.error('Error toggling pin.');
     }
   };
 
@@ -273,6 +306,21 @@ export default function Guestbook() {
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold text-sm text-foreground">{entry.author}</span>
 
+                      {entry.pinned && (
+                        <div title="Pinned message">
+                          <Pin className="h-3 w-3 text-blue-600 fill-current" />
+                        </div>
+                      )}
+
+                      {entry.username === 'MannuVilasara' && (
+                        <Badge
+                          variant="secondary"
+                          className="bg-green-500/10 text-green-700 border-green-500/20 text-xs px-1.5 py-0.5"
+                        >
+                          Author
+                        </Badge>
+                      )}
+
                       {entry.verified && (
                         <div className="text-foreground" title="Verified User">
                           <CheckCircle2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 fill-foreground text-background" />
@@ -288,16 +336,29 @@ export default function Guestbook() {
                       </span>
                     </div>
 
-                    {/* Delete Action */}
-                    {session && (entry.username === session.user.username || isAdmin) && (
-                      <button
-                        onClick={() => deleteMessage(entry.id)}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-red-500/10 hover:text-red-600 rounded-md text-muted-foreground"
-                        title="Delete message"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
-                    )}
+                    {/* Actions */}
+                    <div className="flex items-center gap-1">
+                      {session?.user.username === 'MannuVilasara' && (
+                        <button
+                          onClick={() => togglePin(entry.id, entry.pinned ?? false)}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-blue-500/10 hover:text-blue-600 rounded-md text-muted-foreground"
+                          title={entry.pinned ? 'Unpin message' : 'Pin message'}
+                        >
+                          <Pin className={`h-3.5 w-3.5 ${entry.pinned ? 'fill-current' : ''}`} />
+                        </button>
+                      )}
+
+                      {/* Delete Action */}
+                      {session && (entry.username === session.user.username || isAdmin) && (
+                        <button
+                          onClick={() => deleteMessage(entry.id)}
+                          className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-red-500/10 hover:text-red-600 rounded-md text-muted-foreground"
+                          title="Delete message"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                   <p className="text-sm sm:text-[15px] leading-relaxed text-foreground/80 wrap-break-word whitespace-pre-wrap font-normal">
