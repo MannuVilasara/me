@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/mannuvilasara
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://mannu.live
+  * I am mannuvilasara (https://keybase.io/mannuvilasara) on keybase.
+  * I have a public key ASAUNC0hW4UJPS9wvG7ZfCq172Y7J8SW0Wat3CN8wrAMfAo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012014342d215b85093d2f70bc6ed97c2ab5ef663b27c496d166addc237cc2b00c7c0a",
+      "host": "keybase.io",
+      "kid": "012014342d215b85093d2f70bc6ed97c2ab5ef663b27c496d166addc237cc2b00c7c0a",
+      "uid": "263986dd930980a32e35f83691186519",
+      "username": "mannuvilasara"
+    },
+    "merkle_root": {
+      "ctime": 1764262272,
+      "hash": "1c02c7a8aebc300a480899dc3632e8595ccd5d70a78d60e836e80fd35f8bc77164f7e87725b357dee07536ac8cdbd70c7913f69d969d5935ed7761172fcceeec",
+      "hash_meta": "f484adfa6ba6ce3bd25d82645b145931a4c96d1dd08c80ce8055e5acdec1f4a7",
+      "seqno": 27256867
+    },
+    "service": {
+      "entropy": "25FgKddqGCQ0Wj+IbuOYqRCi",
+      "hostname": "mannu.live",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "6.5.1"
+  },
+  "ctime": 1764262335,
+  "expire_in": 504576000,
+  "prev": "e6d7fe259d9cc2f0749059ce47165ff6ff7cbdf36499a2ae31318913b10436e8",
+  "seqno": 7,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgFDQtIVuFCT0vcLxu2Xwqte9mOyfEltFmrdwjfMKwDHwKp3BheWxvYWTESpcCB8Qg5tf+JZ2cwvB0kFnORxZf9v98vfNkmaKuMTGJE7EENujEILwW3MbNLB8gcfJ4/ckCuFVeMWf9z3MaldJxC+/ks0wmAgHCo3NpZ8RAMUJNjpv4jfudMJL0Ft9KlTU6cTGS1aQNDTK43mcWUkAiwgGvbFYJhxfoZL3RiZjBZZUsEFrMJXGW4nwPi80RC6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEILEEfdJemOPO1xvYvsR7QrpP/wIOAgaaopwX7g0NVgpRo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/mannuvilasara
+
+==================================================================
