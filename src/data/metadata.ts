@@ -5,7 +5,7 @@ export const metadata = {
     template: '%s | Manpreet Singh',
   },
   description:
-    'Manpreet Singh — a passionate full stack developer & creative designer. Featuring web apps, UI experiments, and open source contributions.',
+    'Manpreet Singh — a passionate full stack developer & creative designer. Find me on GitHub as MannuVilasara. Featuring web apps, UI experiments, and open source contributions.',
   keywords: [
     'Manpreet Singh',
     'Manpreet Singh Portfolio',
@@ -49,7 +49,7 @@ export const metadata = {
   openGraph: {
     title: 'Manpreet Singh — Full Stack Developer & Designer',
     description:
-      'Explore the projects by Manpreet Singh — web apps, creative experiments & open source work.',
+      'Explore the projects by Manpreet Singh — web apps, creative experiments & open source work. Find me on GitHub as MannuVilasara.',
     url: 'https://mannu.live',
     siteName: 'Manpreet Singh — Full Stack Developer & Designer',
     images: [
@@ -67,7 +67,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Manpreet Singh — Full Stack Developer & Designer',
     description:
-      'Explore the projects by Manpreet Singh — web apps, creative experiments & open source work.',
+      'Explore the projects by Manpreet Singh — web apps, creative experiments & open source work. Find me on GitHub as MannuVilasara.',
     site: '@dev_mannuu', // replace with your Twitter handle if you have one
     creator: '@dev_mannuu',
     images: ['https://mannu.live/og.png'], // same OG image
