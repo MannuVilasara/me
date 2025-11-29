@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
-import {
-  LastFmImage,
-  LastFmRecentTracksResponse,
-} from '@/types/types';
+import { LastFmImage, LastFmRecentTracksResponse } from '@/types/types';
 
 const API_KEY = process.env.LASTFM_API_KEY!;
 const USERNAME = process.env.LASTFM_USERNAME!;
@@ -46,7 +43,10 @@ export async function GET() {
       source: 'lastfm',
     });
   } catch (error) {
-    console.error('Error fetching Last.fm now playing:', error instanceof Error ? error.message : 'Unknown error');
+    console.error(
+      'Error fetching Last.fm now playing:',
+      error instanceof Error ? error.message : 'Unknown error'
+    );
     return NextResponse.json({ isPlaying: false });
   }
 }
