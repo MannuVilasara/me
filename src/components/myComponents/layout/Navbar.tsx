@@ -113,9 +113,7 @@ export default function Navbar() {
                 href={href}
                 data-href={href}
                 className={`block py-2 text-sm font-medium transition-all duration-300 ${
-                  isActive
-                    ? 'text-foreground'
-                    : 'text-foreground hover:text-foreground/60'
+                  isActive ? 'text-foreground' : 'text-foreground hover:text-foreground/60'
                 }`}
                 onClick={() => setIsOpen(false)}
               >
