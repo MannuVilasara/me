@@ -3,18 +3,23 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, Coffee } from 'lucide-react';
+import { ChevronDown, Coffee, MoreHorizontal } from 'lucide-react';
 import { SwitchTheme } from './themeSwitch';
 
-const navItems = [
+const mainNavItems = [
+  { name: 'About', href: '/about' },
   { name: 'Projects', href: '/projects' },
   { name: 'Blog', href: '/blog' },
-  { name: 'About', href: '/about' },
+];
+
+const dropdownNavItems = [
   { name: 'Guestbook', href: '/guestbook' },
+  { name: 'Stats', href: '/stats' },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === '/';
 
@@ -29,8 +34,8 @@ export default function Navbar() {
 
       {/* Desktop nav links + theme switch */}
       <div className="hidden md:flex items-center space-x-6">
-        {/* Nav Links */}
-        {navItems.map(({ name, href }) => {
+        {/* Main Nav Links */}
+        {mainNavItems.map(({ name, href }) => {
           const isActive = pathname === href;
           return (
             <Link
@@ -48,12 +53,45 @@ export default function Navbar() {
           );
         })}
 
+        {/* Desktop dropdown for additional items */}
+        <div className="relative">
+          <button
+            onClick={() => setIsDesktopDropdownOpen(!isDesktopDropdownOpen)}
+            className="relative z-10 p-1 text-sm font-medium transition-all duration-300 text-foreground/70 hover:text-foreground flex items-center"
+            aria-label="More options"
+          >
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${isDesktopDropdownOpen ? 'rotate-180' : ''}`}
+            />
+          </button>
+
+          {isDesktopDropdownOpen && (
+            <div className="absolute top-full right-0 mt-2 bg-background border border-border rounded-md p-4 shadow-lg z-20 min-w-[120px]">
+              {dropdownNavItems.map(({ name, href }) => {
+                const isActive = pathname === href;
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    data-href={href}
+                    className={`block py-2 text-sm font-medium transition-all duration-300 ${
+                      isActive ? 'text-foreground' : 'text-foreground hover:text-foreground/60'
+                    }`}
+                    onClick={() => setIsDesktopDropdownOpen(false)}
+                  >
+                    {name}
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
         <SwitchTheme />
       </div>
 
       {/* Mobile menu button */}
       <div className="md:hidden flex items-center space-x-4">
-        <SwitchTheme />
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="relative z-10 p-2 transition-transform"
@@ -61,12 +99,13 @@ export default function Navbar() {
         >
           <ChevronDown className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </button>
+        <SwitchTheme />
       </div>
 
       {/* Mobile dropdown */}
       {isOpen && (
         <div className="md:hidden absolute top-full right-0 mt-2 bg-background border border-border rounded-md p-4 shadow-lg z-20">
-          {navItems.map(({ name, href }) => {
+          {[...mainNavItems, ...dropdownNavItems].map(({ name, href }) => {
             const isActive = pathname === href;
             return (
               <Link
@@ -75,7 +114,7 @@ export default function Navbar() {
                 data-href={href}
                 className={`block py-2 text-sm font-medium transition-all duration-300 ${
                   isActive
-                    ? 'text-foreground underline underline-offset-4 decoration-2'
+                    ? 'text-foreground'
                     : 'text-foreground hover:text-foreground/60'
                 }`}
                 onClick={() => setIsOpen(false)}
