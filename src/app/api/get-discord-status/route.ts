@@ -7,7 +7,7 @@ export async function GET() {
     const res = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_USER_ID}`);
     const data = await res.json();
     return NextResponse.json(data);
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch Discord data' }, { status: 500 });
   }
 }

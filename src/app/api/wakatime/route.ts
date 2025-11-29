@@ -1,23 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-interface WakatimeStats {
-  total_seconds: number;
-  total_projects: number;
-  total_languages: number;
-  total_editors: number;
-  total_operating_systems: number;
-  total_categories: number;
-  human_readable_total: string;
-  human_readable_daily_average: string;
-  best_day: {
-    date: string;
-    total_seconds: number;
-    human_readable_total: string;
-  };
-  daily_average_seconds: number;
-}
-
-export async function GET(request: NextRequest) {
+export async function GET() {
   const apiKey = process.env.WAKATIME_API_KEY;
   const BASE_URL = 'https://wakatime.com/api/v1';
 
@@ -42,7 +25,7 @@ export async function GET(request: NextRequest) {
 
     const data = await response.json();
     return NextResponse.json(data);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'An unexpected error occurred.' }, { status: 500 });
   }
 }

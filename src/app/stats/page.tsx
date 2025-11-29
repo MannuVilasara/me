@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Clock, Code2, Laptop, Terminal, Calendar, Activity, Zap, Cpu } from 'lucide-react';
+import { Clock, Code2, Terminal, Calendar, Activity, Zap, Cpu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type WakaTimeResult = {
@@ -109,7 +109,7 @@ export default function StatsPage() {
           .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
         let streakCount = 0;
-        let expectedDate = new Date(today);
+        const expectedDate = new Date(today);
 
         for (const contrib of relevantContributions) {
           const contribDate = new Date(contrib.date);

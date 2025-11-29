@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, Coffee, MoreHorizontal } from 'lucide-react';
+import { ChevronDown, Coffee } from 'lucide-react';
 import { SwitchTheme } from './themeSwitch';
 
 const mainNavItems = [

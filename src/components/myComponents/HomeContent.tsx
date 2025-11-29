@@ -3,7 +3,7 @@
 import { lazy, Suspense, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Copy, Check, Github, Instagram, Terminal } from 'lucide-react';
-import { FaDiscord, FaDev } from 'react-icons/fa';
+import { FaDiscord } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 
 // Dynamically import heavy animation libraries

@@ -134,7 +134,7 @@ export default function OnekoCat({ enabled = true, catImage = '/oneko/oneko.gif'
       Math.floor(Math.random() * 200) === 0 &&
       catStateRef.current.idleAnimation === null
     ) {
-      let availableIdleAnimations = ['sleeping', 'scratchSelf'];
+      const availableIdleAnimations = ['sleeping', 'scratchSelf'];
       if (catStateRef.current.nekoPosX < 32) {
         availableIdleAnimations.push('scratchWallW');
       }
