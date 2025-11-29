@@ -13,7 +13,6 @@ import {
   Code2,
   Sparkles,
   BadgeCheck,
-  MessageCircle,
 } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
@@ -347,7 +346,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                                 src={getImageUrl(activity.assets.large_image)!}
                                 alt="Activity Asset"
                                 className="w-20 h-20 rounded-xl object-cover grayscale-[0.2] cursor-help"
-                                onError={(e) => {
+                                onError={() => {
                                   // Large image failed to load - could add fallback here
                                 }}
                               />
@@ -365,7 +364,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                                   src={getImageUrl(activity.assets.small_image)!}
                                   alt="Small Asset"
                                   className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full border-[3px] border-card bg-card object-cover cursor-help"
-                                  onError={(e) => {
+                                  onError={() => {
                                     // Small image failed to load - could add fallback here
                                   }}
                                 />

@@ -1,7 +1,6 @@
 'use client';
 import useSWR from 'swr';
 
-const DISCORD_USER_ID = '786926252811485186';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function DiscordStatusInline() {

@@ -64,7 +64,7 @@ export function GlobalModalProvider({ children }: GlobalModalProviderProps) {
           } else {
             setDiffError('Failed to load diff');
           }
-        } catch (err) {
+        } catch {
           setDiffError('Network error');
         } finally {
           setDiffLoading(false);

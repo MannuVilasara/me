@@ -11,16 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Badge } from '@/components/ui/badge';
-import {
-  Loader2,
-  Github,
-  LogOut,
-  Trash2,
-  CheckCircle2,
-  ArrowRight,
-  Terminal,
-  Pin,
-} from 'lucide-react';
+import { Loader2, Github, Trash2, CheckCircle2, ArrowRight, Terminal, Pin } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 // Zod Schema
@@ -71,8 +62,8 @@ export default function Guestbook() {
         const data = await response.json();
         setEntries(data);
       }
-    } catch (error) {
-      console.error('Failed to load guestbook:', error);
+    } catch {
+      console.error('Failed to load guestbook');
     } finally {
       setIsLoading(false);
     }
@@ -96,7 +87,7 @@ export default function Guestbook() {
         const error = await response.json();
         toast.error(error.error || 'Failed to post.');
       }
-    } catch (error) {
+    } catch {
       toast.error('Something went wrong.');
     } finally {
       setIsSubmitting(false);
@@ -128,7 +119,7 @@ export default function Guestbook() {
       } else {
         toast.error('Failed to delete message.');
       }
-    } catch (error) {
+    } catch {
       toast.error('Error deleting message.');
     } finally {
       setDeletingId(null);
@@ -154,7 +145,7 @@ export default function Guestbook() {
         const error = await response.json();
         toast.error(error.error || 'Failed to toggle pin.');
       }
-    } catch (error) {
+    } catch {
       toast.error('Error toggling pin.');
     }
   };
