@@ -82,8 +82,5 @@
     "Firefox >= 88",
     "Safari >= 14",
     "Edge >= 90"
-  ],
-  "trustedDependencies": [
-    "unrs-resolver"
   ]
 }
