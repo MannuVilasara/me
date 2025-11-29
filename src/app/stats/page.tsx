@@ -1,16 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import {
-  Clock,
-  Code2,
-  Laptop,
-  Terminal,
-  Calendar,
-  Activity,
-  Zap,
-  TrendingUp,
-  Cpu,
-} from 'lucide-react';
+import { Clock, Code2, Laptop, Terminal, Calendar, Activity, Zap, Cpu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
@@ -18,33 +8,68 @@ export const metadata: Metadata = {
   description: 'A deep dive into my coding habits, tools, and development statistics.',
 };
 
-// --- Data ---
-const STATS = {
-  total_coding_time: '2,450 hrs',
-  daily_average: '6 hrs 32 mins',
-  best_day: { date: 'Nov 24, 2024', time: '14 hrs 12 mins' },
-  current_streak: '14 Days',
+type WakaTimeResult = {
+  data?: {
+    human_readable_total: string;
+    human_readable_daily_average: string;
+    best_day: {
+      date: string;
+      text: string;
+    };
+    languages?: any[];
+    editors?: any[];
+    operating_systems?: any[];
+  };
 };
 
-const LANGUAGES = [
-  { name: 'TypeScript', percent: 65, time: '1,592 hrs' },
-  { name: 'Rust', percent: 15, time: '367 hrs' },
-  { name: 'Python', percent: 10, time: '245 hrs' },
-  { name: 'HTML/CSS', percent: 8, time: '196 hrs' },
-  { name: 'Go', percent: 2, time: '49 hrs' },
-];
+async function getWakaTime() {
+  try {
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/wakatime`);
+    if (!res.ok) throw new Error('Failed to fetch');
+    const json = await res.json();
+    return json as WakaTimeResult;
+  } catch (err) {
+    console.error('Failed to fetch wakatime:', err);
+    return null;
+  }
+}
 
-const EDITORS = [
-  { name: 'VS Code', percent: 80 },
-  { name: 'Neovim', percent: 15 },
-  { name: 'Zed', percent: 5 },
-];
+async function getGitHubStreak() {
+  try {
+    const res = await fetch('https://github-contributions.vercel.app/api/v1/MannuVilasara');
+    if (!res.ok) throw new Error('Failed to fetch GitHub contributions');
+    const data = await res.json();
+    const contributions = data.contributions;
+    const today = new Date().toISOString().split('T')[0];
 
-const OS = [
-  { name: 'Mac', percent: 60 },
-  { name: 'Linux (Arch)', percent: 30 },
-  { name: 'Windows', percent: 10 },
-];
+    // Filter contributions up to today and sort descending (most recent first)
+    const relevantContributions = contributions
+      .filter((c: any) => c.date <= today)
+      .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    let streak = 0;
+    let expectedDate = new Date(today);
+
+    for (const contrib of relevantContributions) {
+      const contribDate = new Date(contrib.date);
+      // Check if this is the expected consecutive date
+      if (contribDate.getTime() === expectedDate.getTime() && contrib.intensity !== '0') {
+        streak++;
+        expectedDate.setDate(expectedDate.getDate() - 1);
+      } else if (contribDate.getTime() < expectedDate.getTime()) {
+        // Gap in dates, stop
+        break;
+      }
+      // If contribDate > expectedDate, skip (future date, but we filtered)
+    }
+
+    return streak;
+  } catch (err) {
+    console.error('Failed to fetch GitHub streak:', err);
+    return null;
+  }
+}
 
 // --- Components ---
 
@@ -87,62 +112,40 @@ const ProgressBar = ({ label, percent, rightLabel }: any) => (
   </div>
 );
 
-// 3. Custom SVG Area Chart (Monochrome Activity)
-const ActivityChart = () => {
-  // Mock data points for a smooth curve
-  const points = [
-    10, 25, 15, 35, 20, 45, 30, 55, 40, 60, 35, 50, 65, 45, 70, 55, 80, 40, 60, 50, 75, 55, 85, 60,
-    70, 50, 65, 40, 30, 20,
-  ];
-  const max = Math.max(...points);
-  const width = 100;
-  const height = 40;
-
-  // Create SVG path string
-  const pathData = points
-    .map((p, i) => {
-      const x = (i / (points.length - 1)) * width;
-      const y = height - (p / max) * height;
-      return `${i === 0 ? 'M' : 'L'} ${x},${y}`;
-    })
-    .join(' ');
-
-  return (
-    <div className="relative w-full h-24 sm:h-32 mt-auto">
-      <svg
-        viewBox={`0 0 ${width} ${height}`}
-        preserveAspectRatio="none"
-        className="w-full h-full overflow-visible"
-      >
-        {/* Gradient Definition */}
-        <defs>
-          <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="currentColor" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-
-        {/* Fill Area */}
-        <path
-          d={`${pathData} L ${width},${height} L 0,${height} Z`}
-          fill="url(#chartGradient)"
-          className="text-zinc-500 dark:text-zinc-400"
-        />
-
-        {/* Stroke Line */}
-        <path
-          d={pathData}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.5"
-          className="text-zinc-800 dark:text-zinc-200 vector-effect-non-scaling-stroke"
-        />
-      </svg>
-    </div>
-  );
-};
-
-export default function StatsPage() {
+export default async function StatsPage() {
+  const data = await getWakaTime();
+  const statsData = data?.data;
+  if (!statsData) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <main className="flex-grow max-w-6xl mx-auto w-full space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="container mx-auto p-4">
+            <h1 className="text-4xl font-bold mb-6">Development Stats</h1>
+            <p className="text-muted-foreground mb-8">
+              We're currently not able to connect to the WakaTime API. Please try again later.
+            </p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+  const githubStreak = await getGitHubStreak();
+  const STATS_DATA = {
+    total_coding_time: statsData.human_readable_total,
+    daily_average: statsData.human_readable_daily_average,
+    best_day: {
+      date: new Date(statsData.best_day.date).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      }),
+      time: statsData.best_day.text,
+    },
+    current_streak: `${githubStreak || 0} Days`,
+  };
+  const LANG_DATA = statsData.languages || [];
+  const EDITORS_DATA = statsData.editors || [];
+  const OS_DATA = statsData.operating_systems || [];
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-grow max-w-6xl mx-auto w-full space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -156,22 +159,29 @@ export default function StatsPage() {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
-          {/* 1. Total Coding Time (Hero) */}
           <BentoCard
-            title="Total Time Coding"
+            title="Last 7 Days Coding Time"
             icon={Clock}
             className="lg:col-span-2 lg:row-span-1 bg-zinc-100/50 dark:bg-zinc-900/30"
           >
             <div className="flex flex-col justify-center h-full gap-2">
               <div className="text-5xl sm:text-6xl font-black tracking-tighter text-foreground">
-                {STATS.total_coding_time.split(' ')[0]}
+                {typeof STATS_DATA.total_coding_time === 'string'
+                  ? STATS_DATA.total_coding_time.split(' ')[0]
+                  : STATS_DATA.total_coding_time}
                 <span className="text-2xl sm:text-3xl text-muted-foreground font-light ml-2">
                   hrs
                 </span>
               </div>
               <p className="text-sm text-muted-foreground/80">
-                Since Jan 1, 2023 • That's about{' '}
-                <span className="font-medium text-foreground">102 days</span> of pure coding.
+                Last 7 days • That's about{' '}
+                <span className="font-medium text-foreground">
+                  {Math.round(
+                    (parseFloat(STATS_DATA.total_coding_time?.split(' ')[0] || '0') / 7) * 10
+                  ) / 10}{' '}
+                  hrs/day
+                </span>{' '}
+                average.
               </p>
             </div>
           </BentoCard>
@@ -179,9 +189,9 @@ export default function StatsPage() {
           {/* 2. Best Day */}
           <BentoCard title="Best Day" icon={Zap} className="lg:col-span-1">
             <div className="flex flex-col justify-end h-full gap-1">
-              <div className="text-3xl font-bold tracking-tight">{STATS.best_day.time}</div>
+              <div className="text-3xl font-bold tracking-tight">{STATS_DATA.best_day?.time}</div>
               <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider">
-                {STATS.best_day.date}
+                {STATS_DATA.best_day?.date}
               </div>
             </div>
           </BentoCard>
@@ -189,30 +199,16 @@ export default function StatsPage() {
           {/* 3. Daily Average */}
           <BentoCard title="Daily Avg" icon={Activity} className="lg:col-span-1">
             <div className="flex flex-col justify-end h-full gap-1">
-              <div className="text-3xl font-bold tracking-tight">{STATS.daily_average}</div>
+              <div className="text-3xl font-bold tracking-tight">{STATS_DATA.daily_average}</div>
               <div className="text-xs text-muted-foreground">Consistent effort over time</div>
             </div>
           </BentoCard>
 
-          {/* 4. Activity Graph (Wide) */}
-          <BentoCard
-            title="Coding Activity (30 Days)"
-            icon={TrendingUp}
-            className="sm:col-span-2 lg:col-span-3 min-h-[200px]"
-          >
-            <div className="flex flex-col h-full justify-between">
-              <div className="text-sm text-muted-foreground mb-4 max-w-sm">
-                Activity levels based on commit volume and coding hours recorded.
-              </div>
-              <ActivityChart />
-            </div>
-          </BentoCard>
-
-          {/* 5. Streak */}
+          {/* 4. Streak */}
           <BentoCard title="Current Streak" icon={Calendar} className="lg:col-span-1">
             <div className="flex flex-col items-center justify-center h-full gap-2">
               <div className="text-5xl font-black tracking-tighter">
-                {STATS.current_streak.split(' ')[0]}
+                {STATS_DATA.current_streak?.split(' ')[0]}
               </div>
               <div className="text-sm text-muted-foreground uppercase tracking-widest font-medium">
                 Days
@@ -226,13 +222,15 @@ export default function StatsPage() {
             icon={Code2}
             className="sm:col-span-2 lg:col-span-2 lg:row-span-2"
           >
-            <div className="space-y-4 mt-auto">
-              {LANGUAGES.map((lang) => (
+            <div className="space-y-6 mt-4">
+              {LANG_DATA.slice(0, 5).map((lang) => (
                 <ProgressBar
                   key={lang.name}
                   label={lang.name}
-                  percent={lang.percent}
-                  rightLabel={lang.time}
+                  percent={Math.round(lang.percent || 0)}
+                  rightLabel={
+                    lang.time || lang.text || `${Math.round((lang.percent || 0) * 10) / 10}%`
+                  }
                 />
               ))}
             </div>
@@ -241,16 +239,20 @@ export default function StatsPage() {
           {/* 7. Editors */}
           <BentoCard title="Editors" icon={Terminal} className="sm:col-span-1 lg:col-span-1">
             <div className="space-y-4 mt-auto">
-              {EDITORS.map((editor) => (
+              {EDITORS_DATA.map((editor) => (
                 <ProgressBar key={editor.name} label={editor.name} percent={editor.percent} />
               ))}
             </div>
           </BentoCard>
 
           {/* 8. OS */}
-          <BentoCard title="System" icon={Cpu} className="sm:col-span-1 lg:col-span-1">
-            <div className="space-y-4 mt-auto">
-              {OS.map((os) => (
+          <BentoCard
+            title="System"
+            icon={Cpu}
+            className="sm:col-span-1 lg:col-span-1 justify-start"
+          >
+            <div className="space-y-4 mt-6">
+              {OS_DATA.map((os) => (
                 <ProgressBar key={os.name} label={os.name} percent={os.percent} />
               ))}
             </div>

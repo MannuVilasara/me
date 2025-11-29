@@ -71,12 +71,12 @@ export function CommandMenuProvider({ children }: CommandMenuProviderProps) {
               openNowPlayingModal();
             }
             break;
-          case 'c':
-            if (!open) {
-              e.preventDefault();
-              openCommitDiffModal();
-            }
-            break;
+          // case 'c':
+          //   if (!open) {
+          //     e.preventDefault();
+          //     openCommitDiffModal();
+          //   }
+          //   break;
         }
       }
     };
