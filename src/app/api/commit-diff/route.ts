@@ -1,9 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  GitHubCommit,
-  GitHubFile,
-  CommitDiffResponse,
-} from '@/types/types';
+import { GitHubCommit, GitHubFile, CommitDiffResponse } from '@/types/types';
 
 // Simple in-memory cache
 const cache = new Map<string, { data: CommitDiffResponse; timestamp: number }>();

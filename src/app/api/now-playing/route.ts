@@ -138,7 +138,10 @@ export async function GET() {
     // Neither service is playing
     return NextResponse.json({ isPlaying: false });
   } catch (error) {
-    console.error('Error fetching now playing:', error instanceof Error ? error.message : String(error));
+    console.error(
+      'Error fetching now playing:',
+      error instanceof Error ? error.message : String(error)
+    );
     return NextResponse.json({ isPlaying: false });
   }
 }
