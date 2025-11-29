@@ -1,12 +1,8 @@
-import React from 'react';
-import { Metadata } from 'next';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import { Clock, Code2, Laptop, Terminal, Calendar, Activity, Zap, Cpu } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-export const metadata: Metadata = {
-  title: 'Stats — Manpreet Singh',
-  description: 'A deep dive into my coding habits, tools, and development statistics.',
-};
 
 type WakaTimeResult = {
   data?: {
@@ -22,54 +18,31 @@ type WakaTimeResult = {
   };
 };
 
-async function getWakaTime() {
-  try {
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/wakatime`);
-    if (!res.ok) throw new Error('Failed to fetch');
-    const json = await res.json();
-    return json as WakaTimeResult;
-  } catch (err) {
-    console.error('Failed to fetch wakatime:', err);
-    return null;
-  }
-}
+// Helper for skeleton animation
+const Skeleton = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
+  <div
+    className={cn('animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800', className)}
+    style={style}
+  />
+);
 
-async function getGitHubStreak() {
-  try {
-    const res = await fetch('https://github-contributions.vercel.app/api/v1/MannuVilasara');
-    if (!res.ok) throw new Error('Failed to fetch GitHub contributions');
-    const data = await res.json();
-    const contributions = data.contributions;
-    const today = new Date().toISOString().split('T')[0];
-
-    // Filter contributions up to today and sort descending (most recent first)
-    const relevantContributions = contributions
-      .filter((c: any) => c.date <= today)
-      .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-    let streak = 0;
-    let expectedDate = new Date(today);
-
-    for (const contrib of relevantContributions) {
-      const contribDate = new Date(contrib.date);
-      // Check if this is the expected consecutive date
-      if (contribDate.getTime() === expectedDate.getTime() && contrib.intensity !== '0') {
-        streak++;
-        expectedDate.setDate(expectedDate.getDate() - 1);
-      } else if (contribDate.getTime() < expectedDate.getTime()) {
-        // Gap in dates, stop
-        break;
-      }
-      // If contribDate > expectedDate, skip (future date, but we filtered)
-    }
-
-    return streak;
-  } catch (err) {
-    console.error('Failed to fetch GitHub streak:', err);
-    return null;
-  }
-}
+// Reusing the layout structure for perfect alignment
+const BentoSkeleton = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) => (
+  <div
+    className={cn(
+      'group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/40 bg-zinc-50/50 p-6 dark:bg-zinc-900/20',
+      className
+    )}
+  >
+    {children}
+  </div>
+);
 
 // --- Components ---
 
@@ -112,13 +85,144 @@ const ProgressBar = ({ label, percent, rightLabel }: any) => (
   </div>
 );
 
-export default async function StatsPage() {
-  const data = await getWakaTime();
-  const statsData = data?.data;
+export default function StatsPage() {
+  const [wakaData, setWakaData] = useState<WakaTimeResult | null>(null);
+  const [streak, setStreak] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const wakaRes = await fetch('/api/wakatime');
+        if (!wakaRes.ok) throw new Error('Failed to fetch WakaTime');
+        const wakaJson = await wakaRes.json();
+        setWakaData(wakaJson);
+
+        const streakRes = await fetch('/api/github-contributions');
+        if (!streakRes.ok) throw new Error('Failed to fetch GitHub contributions');
+        const streakData = await streakRes.json();
+        const contributions = streakData.contributions;
+        const today = new Date().toISOString().split('T')[0];
+
+        const relevantContributions = contributions
+          .filter((c: any) => c.date <= today)
+          .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+        let streakCount = 0;
+        let expectedDate = new Date(today);
+
+        for (const contrib of relevantContributions) {
+          const contribDate = new Date(contrib.date);
+          if (contribDate.getTime() === expectedDate.getTime() && contrib.intensity !== '0') {
+            streakCount++;
+            expectedDate.setDate(expectedDate.getDate() - 1);
+          } else if (contribDate.getTime() < expectedDate.getTime()) {
+            break;
+          }
+        }
+
+        setStreak(streakCount);
+      } catch (err) {
+        console.error('Failed to fetch data:', err);
+        setWakaData(null);
+        setStreak(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <main className="grow max-w-6xl mx-auto w-full space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="container mx-auto p-4">
+            <Skeleton className="h-10 w-64 mb-6" />
+            <Skeleton className="h-5 w-96 mb-8" />
+          </div>
+
+          {/* Bento Grid Skeleton */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[minmax(180px,auto)]">
+            {/* Total Coding Time */}
+            <BentoSkeleton className="lg:col-span-2 lg:row-span-1">
+              <div className="flex flex-col justify-center h-full gap-2">
+                <Skeleton className="h-16 w-32" />
+                <Skeleton className="h-4 w-48" />
+              </div>
+            </BentoSkeleton>
+
+            {/* Best Day */}
+            <BentoSkeleton>
+              <div className="flex flex-col justify-end h-full gap-1">
+                <Skeleton className="h-8 w-20" />
+                <Skeleton className="h-3 w-24" />
+              </div>
+            </BentoSkeleton>
+
+            {/* Daily Average */}
+            <BentoSkeleton>
+              <div className="flex flex-col justify-end h-full gap-1">
+                <Skeleton className="h-8 w-20" />
+                <Skeleton className="h-3 w-32" />
+              </div>
+            </BentoSkeleton>
+
+            {/* Streak */}
+            <BentoSkeleton>
+              <div className="flex flex-col items-center justify-center h-full gap-2">
+                <Skeleton className="h-12 w-16" />
+                <Skeleton className="h-4 w-12" />
+              </div>
+            </BentoSkeleton>
+
+            {/* Languages */}
+            <BentoSkeleton className="sm:col-span-2 lg:col-span-2 lg:row-span-2">
+              <div className="space-y-6 mt-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-2 w-full" />
+                  </div>
+                ))}
+              </div>
+            </BentoSkeleton>
+
+            {/* Editors */}
+            <BentoSkeleton>
+              <div className="space-y-4 mt-auto">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-4 w-16" />
+                    <Skeleton className="h-2 w-full" />
+                  </div>
+                ))}
+              </div>
+            </BentoSkeleton>
+
+            {/* OS */}
+            <BentoSkeleton>
+              <div className="space-y-4 mt-6">
+                {Array.from({ length: 2 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-4 w-16" />
+                    <Skeleton className="h-2 w-full" />
+                  </div>
+                ))}
+              </div>
+            </BentoSkeleton>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  const statsData = wakaData?.data;
   if (!statsData) {
     return (
       <div className="flex flex-col min-h-screen">
-        <main className="flex-grow max-w-6xl mx-auto w-full space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <main className="grow max-w-6xl mx-auto w-full space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <div className="container mx-auto p-4">
             <h1 className="text-4xl font-bold mb-6">Development Stats</h1>
             <p className="text-muted-foreground mb-8">
@@ -129,7 +233,7 @@ export default async function StatsPage() {
       </div>
     );
   }
-  const githubStreak = await getGitHubStreak();
+
   const STATS_DATA = {
     total_coding_time: statsData.human_readable_total,
     daily_average: statsData.human_readable_daily_average,
@@ -141,14 +245,14 @@ export default async function StatsPage() {
       }),
       time: statsData.best_day.text,
     },
-    current_streak: `${githubStreak || 0} Days`,
+    current_streak: `${streak || 0} Days`,
   };
   const LANG_DATA = statsData.languages || [];
   const EDITORS_DATA = statsData.editors || [];
   const OS_DATA = statsData.operating_systems || [];
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-grow max-w-6xl mx-auto w-full space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <main className="grow max-w-6xl mx-auto w-full space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
         {/* Header */}
         <div className="container mx-auto p-4">
           <h1 className="text-4xl font-bold mb-6">Development Stats</h1>
