@@ -1,4 +1,12 @@
 import { NextResponse } from 'next/server';
+import {
+  SpotifyAccessTokenResponse,
+  SpotifyArtist,
+  SpotifyNowPlayingResponse,
+  LastFmImage,
+  LastFmRecentTracksResponse,
+  NowPlayingResponse,
+} from '@/types/types';
 
 const client_id = process.env.SPOTIFY_CLIENT_ID!;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET!;
@@ -8,7 +16,7 @@ const basic = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
 
-async function getAccessToken() {
+async function getAccessToken(): Promise<SpotifyAccessTokenResponse> {
   const response = await fetch(TOKEN_ENDPOINT, {
     method: 'POST',
     headers: {
@@ -24,7 +32,7 @@ async function getAccessToken() {
   return response.json();
 }
 
-async function getSpotifyNowPlaying() {
+async function getSpotifyNowPlaying(): Promise<NowPlayingResponse | null> {
   try {
     const { access_token } = await getAccessToken();
 
@@ -39,7 +47,7 @@ async function getSpotifyNowPlaying() {
       return null;
     }
 
-    const song = await response.json();
+    const song: SpotifyNowPlayingResponse = await response.json();
 
     if (!song.is_playing) {
       return null;
@@ -48,7 +56,7 @@ async function getSpotifyNowPlaying() {
     return {
       isPlaying: true,
       title: song.item.name,
-      artist: song.item.artists.map((artist: any) => artist.name).join(', '),
+      artist: song.item.artists.map((artist: SpotifyArtist) => artist.name).join(', '),
       album: song.item.album.name,
       albumImageUrl: song.item.album.images[0].url,
       songUrl: song.item.external_urls.spotify,
@@ -63,7 +71,7 @@ async function getSpotifyNowPlaying() {
   }
 }
 
-async function getLastfmNowPlaying() {
+async function getLastfmNowPlaying(): Promise<NowPlayingResponse | null> {
   try {
     const API_KEY = process.env.LASTFM_API_KEY!;
     const USERNAME = process.env.LASTFM_USERNAME!;
@@ -76,7 +84,7 @@ async function getLastfmNowPlaying() {
       throw new Error(`Last.fm API returned ${response.status}`);
     }
 
-    const data = await response.json();
+    const data: LastFmRecentTracksResponse = await response.json();
 
     if (!data.recenttracks?.track?.length) {
       return null;
@@ -97,9 +105,9 @@ async function getLastfmNowPlaying() {
       artist: track.artist['#text'],
       album: track.album['#text'] || 'Unknown Album',
       albumImageUrl:
-        track.image?.find((img: any) => img.size === 'large')?.['#text'] ||
-        track.image?.find((img: any) => img.size === 'medium')?.['#text'] ||
-        track.image?.find((img: any) => img.size === 'small')?.['#text'] ||
+        track.image?.find((img: LastFmImage) => img.size === 'large')?.['#text'] ||
+        track.image?.find((img: LastFmImage) => img.size === 'medium')?.['#text'] ||
+        track.image?.find((img: LastFmImage) => img.size === 'small')?.['#text'] ||
         null,
       songUrl: track.url,
       source: 'lastfm',
@@ -129,8 +137,8 @@ export async function GET() {
 
     // Neither service is playing
     return NextResponse.json({ isPlaying: false });
-  } catch (error: any) {
-    console.error('Error fetching now playing:', error.message);
+  } catch (error) {
+    console.error('Error fetching now playing:', error instanceof Error ? error.message : String(error));
     return NextResponse.json({ isPlaying: false });
   }
 }

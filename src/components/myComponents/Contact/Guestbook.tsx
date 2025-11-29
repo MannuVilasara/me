@@ -19,18 +19,7 @@ const messageSchema = z.object({
   message: z.string().min(1, 'Message is required').max(500, 'Message too long'),
 });
 
-type MessageForm = z.infer<typeof messageSchema>;
-
-type GuestbookEntry = {
-  id: string;
-  author: string;
-  username?: string;
-  avatar?: string;
-  message: string;
-  timestamp: string;
-  verified?: boolean;
-  pinned?: boolean;
-};
+import { GuestbookEntry, MessageForm } from '@/types/types';
 
 export default function Guestbook() {
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);

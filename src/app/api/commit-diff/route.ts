@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
+import {
+  GitHubCommit,
+  GitHubFile,
+  CommitDiffResponse,
+} from '@/types/types';
 
 // Simple in-memory cache
-const cache = new Map<string, { data: any; timestamp: number }>();
+const cache = new Map<string, { data: CommitDiffResponse; timestamp: number }>();
 const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
 
 export async function GET(request: NextRequest) {
@@ -47,7 +52,7 @@ export async function GET(request: NextRequest) {
       throw new Error(`GitHub API error: ${response.status}`);
     }
 
-    const commit = await response.json();
+    const commit: GitHubCommit = await response.json();
 
     // Get the diff
     const diffResponse = await fetch(
@@ -90,7 +95,7 @@ export async function GET(request: NextRequest) {
       date: commit.commit.author.date,
       diff: truncatedDiff,
       files:
-        commit.files?.map((file: any) => ({
+        commit.files?.map((file: GitHubFile) => ({
           filename: file.filename,
           status: file.status,
           additions: file.additions,

@@ -3,20 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, Code2, Terminal, Calendar, Activity, Zap, Cpu } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-type WakaTimeResult = {
-  data?: {
-    human_readable_total: string;
-    human_readable_daily_average: string;
-    best_day: {
-      date: string;
-      text: string;
-    };
-    languages?: any[];
-    editors?: any[];
-    operating_systems?: any[];
-  };
-};
+import {
+  WakaTimeResult,
+  GitHubContribution,
+  GitHubContributionsResponse,
+  BentoCardProps,
+  ProgressBarProps,
+} from '@/types/types';
 
 // Helper for skeleton animation
 const Skeleton = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
@@ -47,7 +40,7 @@ const BentoSkeleton = ({
 // --- Components ---
 
 // 1. Base Card Component for Bento Grid
-const BentoCard = ({ children, className, title, icon: Icon }: any) => (
+const BentoCard = ({ children, className, title, icon: Icon }: BentoCardProps) => (
   <div
     className={cn(
       'group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border/40 bg-zinc-50/50 p-6 dark:bg-zinc-900/20 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all duration-300',
@@ -66,7 +59,7 @@ const BentoCard = ({ children, className, title, icon: Icon }: any) => (
 );
 
 // 2. Minimal Progress Bar
-const ProgressBar = ({ label, percent, rightLabel }: any) => (
+const ProgressBar = ({ label, percent, rightLabel }: ProgressBarProps) => (
   <div className="group/bar">
     <div className="flex justify-between text-xs mb-1.5">
       <span className="font-medium text-foreground/80 group-hover/bar:text-foreground transition-colors">
@@ -100,13 +93,16 @@ export default function StatsPage() {
 
         const streakRes = await fetch('/api/github-contributions');
         if (!streakRes.ok) throw new Error('Failed to fetch GitHub contributions');
-        const streakData = await streakRes.json();
+        const streakData: GitHubContributionsResponse = await streakRes.json();
         const contributions = streakData.contributions;
         const today = new Date().toISOString().split('T')[0];
 
         const relevantContributions = contributions
-          .filter((c: any) => c.date <= today)
-          .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          .filter((c: GitHubContribution) => c.date <= today)
+          .sort(
+            (a: GitHubContribution, b: GitHubContribution) =>
+              new Date(b.date).getTime() - new Date(a.date).getTime()
+          );
 
         let streakCount = 0;
         const expectedDate = new Date(today);
