@@ -15,12 +15,7 @@ import {
   BadgeCheck,
 } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-
-interface DiscordModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  data: any;
-}
+import { DiscordActivity, DiscordModalProps } from '@/types/types';
 
 export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
   if (!isOpen || !data?.data) return null;
@@ -30,8 +25,8 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
   const discordStatus = data.data.discord_status;
 
   // Filter out custom status (type 4) from the main list, and save it for the header
-  const customStatus = rawActivities.find((a: any) => a.type === 4);
-  const activities = rawActivities.filter((a: any) => a.type !== 4);
+  const customStatus = rawActivities.find((a: DiscordActivity) => a.type === 4);
+  const activities = rawActivities.filter((a: DiscordActivity) => a.type !== 4);
 
   // --- Helpers ---
 
@@ -151,7 +146,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
     if (user.avatar) {
       return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`;
     }
-    const defaultAvatarIndex = (user.discriminator || '0000') % 5;
+    const defaultAvatarIndex = (parseInt(user.discriminator || '0000', 10) || 0) % 5;
     return `https://cdn.discordapp.com/embed/avatars/${defaultAvatarIndex}.png`;
   };
 
@@ -251,7 +246,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                 className="w-28 h-28 rounded-full border-[6px] border-background bg-background object-cover shadow-sm"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  const defaultIndex = (user.discriminator || '0000') % 5;
+                  const defaultIndex = (parseInt(user.discriminator || '0000', 10) || 0) % 5;
                   target.src = `https://cdn.discordapp.com/embed/avatars/${defaultIndex}.png`;
                 }}
               />
@@ -333,7 +328,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                 Current Activity
               </h5>
 
-              {activities.map((activity: any, index: number) => (
+              {activities.map((activity: DiscordActivity, index: number) => (
                 <div key={index} className="relative group">
                   <div className="flex gap-4 p-3 rounded-xl bg-card border border-border shadow-sm">
                     {/* Large Asset */}

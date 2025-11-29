@@ -35,7 +35,7 @@ const ActivityCard = ({
   className?: string;
   onClick?: () => void;
   href?: string;
-  icon: any;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
   label: string;
   children: React.ReactNode;
   actionIcon?: boolean;

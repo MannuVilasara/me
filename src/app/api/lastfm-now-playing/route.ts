@@ -1,4 +1,8 @@
 import { NextResponse } from 'next/server';
+import {
+  LastFmImage,
+  LastFmRecentTracksResponse,
+} from '@/types/types';
 
 const API_KEY = process.env.LASTFM_API_KEY!;
 const USERNAME = process.env.LASTFM_USERNAME!;
@@ -13,7 +17,7 @@ export async function GET() {
       throw new Error(`Last.fm API returned ${response.status}`);
     }
 
-    const data = await response.json();
+    const data: LastFmRecentTracksResponse = await response.json();
 
     if (!data.recenttracks?.track?.length) {
       return NextResponse.json({ isPlaying: false });
@@ -34,15 +38,15 @@ export async function GET() {
       artist: track.artist['#text'],
       album: track.album['#text'] || 'Unknown Album',
       albumImageUrl:
-        track.image?.find((img: any) => img.size === 'large')?.['#text'] ||
-        track.image?.find((img: any) => img.size === 'medium')?.['#text'] ||
-        track.image?.find((img: any) => img.size === 'small')?.['#text'] ||
+        track.image?.find((img: LastFmImage) => img.size === 'large')?.['#text'] ||
+        track.image?.find((img: LastFmImage) => img.size === 'medium')?.['#text'] ||
+        track.image?.find((img: LastFmImage) => img.size === 'small')?.['#text'] ||
         null,
       songUrl: track.url,
       source: 'lastfm',
     });
-  } catch (error: any) {
-    console.error('Error fetching Last.fm now playing:', error.message);
+  } catch (error) {
+    console.error('Error fetching Last.fm now playing:', error instanceof Error ? error.message : 'Unknown error');
     return NextResponse.json({ isPlaying: false });
   }
 }

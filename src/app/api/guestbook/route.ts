@@ -3,21 +3,11 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { kv } from '@/lib/kv';
 import { z } from 'zod';
+import { GuestbookEntry } from '@/types/types';
 
 const messageSchema = z.object({
   message: z.string().min(1).max(500),
 });
-
-type GuestbookEntry = {
-  id: string;
-  author: string;
-  username?: string;
-  avatar?: string;
-  message: string;
-  timestamp: string;
-  verified?: boolean;
-  pinned?: boolean;
-};
 
 // Helper function to read guestbook
 async function readGuestbook(): Promise<GuestbookEntry[]> {
