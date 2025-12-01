@@ -139,7 +139,49 @@ export default function Guestbook() {
     }
   };
 
-  if (!mounted) return null;
+  // Full page skeleton while mounting
+  if (!mounted) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8 sm:py-8">
+        {/* Header Skeleton */}
+        <div className="mb-12 space-y-2">
+          <div className="h-10 w-48 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+          <div className="h-4 w-full max-w-md animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+        </div>
+
+        {/* Authentication / Input Area Skeleton */}
+        <div className="mb-16">
+          <div className="border border-dashed border-border rounded-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-muted/5">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full animate-pulse bg-zinc-200 dark:bg-zinc-800" />
+              <div className="space-y-2">
+                <div className="h-4 w-28 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+                <div className="h-3 w-48 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+              </div>
+            </div>
+            <div className="h-10 w-24 rounded-md animate-pulse bg-zinc-200 dark:bg-zinc-800" />
+          </div>
+        </div>
+
+        {/* Message Feed Skeleton */}
+        <div className="space-y-0 divide-y divide-border/40">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="py-6 first:pt-0 flex gap-3 sm:gap-4 px-2 -mx-2">
+              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full shrink-0 animate-pulse bg-zinc-200 dark:bg-zinc-800" />
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="h-4 w-24 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+                  <div className="h-3 w-16 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+                </div>
+                <div className="h-4 w-full animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+                <div className="h-4 w-3/4 animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   const isAdmin = session?.user?.username === 'MannuVilasara';
 
