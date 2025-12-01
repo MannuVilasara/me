@@ -88,14 +88,20 @@ const ActivityCard = ({
 };
 
 export default function Activities() {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   const light_url = '/github-contributions-light.svg';
   const dark_url = '/github-contributions-dark.svg';
 
-  const [graphUrl, setGraphUrl] = useState<string>(theme === 'light' ? light_url : dark_url);
+  const [mounted, setMounted] = useState(false);
+  const [graphUrl, setGraphUrl] = useState<string>(dark_url);
   const [imageError, setImageError] = useState<boolean>(true);
   const [onekoEnabled, setOnekoEnabled] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
+
+  // Handle mounting to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const checkDesktop = () => setIsDesktop(window.matchMedia('(min-width: 768px)').matches);
@@ -124,15 +130,17 @@ export default function Activities() {
   };
 
   useEffect(() => {
+    if (!mounted) return;
+
     setImageError(true);
     const img = new Image();
-    img.src = theme === 'dark' ? dark_url : light_url;
+    img.src = resolvedTheme === 'dark' ? dark_url : light_url;
     img.onload = () => {
       setGraphUrl(img.src);
       setImageError(false);
     };
     img.onerror = () => setImageError(true);
-  }, [theme]);
+  }, [resolvedTheme, mounted]);
 
   return (
     <section className="mt-24 space-y-6">
@@ -247,7 +255,9 @@ export default function Activities() {
             </div>
 
             <div className="p-2 overflow-hidden">
-              {!imageError ? (
+              {!mounted ? (
+                <div className="h-[120px] animate-pulse rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+              ) : !imageError ? (
                 <img
                   src={graphUrl}
                   className="w-full h-auto rounded-lg opacity-80 group-hover:opacity-100 transition-opacity duration-500 saturate-0 group-hover:saturate-100"

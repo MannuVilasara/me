@@ -66,18 +66,20 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <section className="px-5 sm:px-6 lg:px-8 py-1">
-        <h1 className="text-3xl font-bold text-center mb-8">Projects Showcase</h1>
-        <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
-          Explore my portfolio of web applications, creative experiments, and open-source
-          contributions built with modern technologies.
-        </p>
-        <main className="relative left-1/2 -ml-[50vw] w-screen max-w-none px-0">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <ProjectSection />
-          </div>
-        </main>
-      </section>
+      <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
+        {/* Header */}
+        <div className="mb-12 space-y-2">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+            Projects
+          </h1>
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-lg">
+            A collection of things I&apos;ve built. Click to expand and learn more.
+          </p>
+        </div>
+
+        {/* Projects List */}
+        <ProjectSection />
+      </div>
     </>
   );
 }
