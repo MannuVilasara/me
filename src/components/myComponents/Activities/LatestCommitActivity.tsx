@@ -44,7 +44,7 @@ export default function LatestCommitActivity() {
           <span className="font-mono text-[10px] sm:text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-500/10 dark:bg-blue-400/10 px-1.5 py-0.5 rounded border border-blue-500/20">
             #{shortSha}
           </span>
-          {date && <span className="text-[10px] text-muted-foreground/50 font-mono">{date}</span>}
+          {date && <span className="text-[10px] text-muted-foreground font-mono">{date}</span>}
         </div>
       </div>
 
