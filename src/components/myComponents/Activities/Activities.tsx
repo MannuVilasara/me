@@ -43,7 +43,7 @@ const ActivityCard = ({
   const content = (
     <>
       <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2 text-muted-foreground/60 group-hover:text-muted-foreground transition-colors">
+        <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors">
           <Icon size={13} className="shrink-0" />
           <span className="text-[10px] font-semibold uppercase tracking-widest">{label}</span>
         </div>
@@ -240,8 +240,8 @@ export default function Activities() {
           <div className="absolute inset-0 bg-linear-to-b from-transparent to-background/5 pointer-events-none" />
           <div className="p-1 rounded-2xl border transition-all duration-300 backdrop-blur-sm overflow-hidden bg-white border-zinc-200 dark:bg-zinc-900/30 dark:border-zinc-800/50">
             <div className="flex items-center gap-2 px-4 py-3 border-b border-border/20 mb-2">
-              <Github size={13} className="text-muted-foreground/60" />
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60">
+              <Github size={13} className="text-muted-foreground" />
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
                 Contributions
               </span>
             </div>

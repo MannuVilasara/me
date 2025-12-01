@@ -110,7 +110,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <main className="grow">{children}</main>
                     <Footer />
                   </div>
-                  <FloatingTerminal />
+                  <div className="hidden md:block">
+                    <FloatingTerminal />
+                  </div>
                   <Toaster
                     position="bottom-right"
                     richColors

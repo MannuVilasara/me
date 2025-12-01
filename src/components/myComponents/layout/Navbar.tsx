@@ -26,7 +26,11 @@ export default function Navbar() {
   return (
     <header className="flex items-center justify-between mb-12 px-4 mono relative">
       {/* Left logo */}
-      <Link className="relative z-10 transition-all duration-300 hover:rotate-12" href="/">
+      <Link
+        className="relative z-10 transition-all duration-300 hover:rotate-12"
+        href="/"
+        aria-label="Home"
+      >
         <Coffee
           className={`w-4 h-4 transition-colors duration-300 ${isHomePage ? 'text-orange-500' : 'text-foreground hover:text-foreground/60'}`}
         />
