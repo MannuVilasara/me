@@ -1,6 +1,6 @@
 import React from 'react';
 import { projects } from '@/data/projects';
-import { ProjectSection } from '@/components/myComponents/stats';
+import ProjectSection from '@/components/myComponents/projects/ProjectSection';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
