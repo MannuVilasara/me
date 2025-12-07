@@ -244,6 +244,8 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
               <Image
                 src={getAvatarUrl()}
                 alt={user.username}
+                width={112}
+                height={112}
                 className="w-28 h-28 rounded-full border-[6px] border-background bg-background object-cover shadow-sm"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
@@ -272,6 +274,8 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                             <Image
                               src={`https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png`}
                               alt={customStatus.emoji.name}
+                              width={16}
+                              height={16}
                               className="w-4 h-4 inline-block"
                             />
                           ) : (
@@ -296,6 +300,8 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                         <Image
                           src={`https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png`}
                           alt={customStatus.emoji.name}
+                          width={16}
+                          height={16}
                           className="w-4 h-4 inline-block"
                         />
                       ) : (
@@ -341,6 +347,8 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                               <Image
                                 src={getImageUrl(activity.assets.large_image)!}
                                 alt="Activity Asset"
+                                width={80}
+                                height={80}
                                 className="w-20 h-20 rounded-xl object-cover grayscale-[0.2] cursor-help"
                                 onError={() => {
                                   // Large image failed to load - could add fallback here
@@ -359,6 +367,8 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                                 <Image
                                   src={getImageUrl(activity.assets.small_image)!}
                                   alt="Small Asset"
+                                  width={32}
+                                  height={32}
                                   className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full border-[3px] border-card bg-card object-cover cursor-help"
                                   onError={() => {
                                     // Small image failed to load - could add fallback here
