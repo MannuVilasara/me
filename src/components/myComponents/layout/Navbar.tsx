@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDown, Coffee } from 'lucide-react';
@@ -22,6 +22,23 @@ export default function Navbar() {
   const [isDesktopDropdownOpen, setIsDesktopDropdownOpen] = useState(false);
   const pathname = usePathname();
   const isHomePage = pathname === '/';
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDesktopDropdownOpen(false);
+      }
+    }
+
+    if (isDesktopDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDesktopDropdownOpen]);
 
   return (
     <header className="flex items-center justify-between mb-12 px-4 mono relative">
@@ -70,7 +87,10 @@ export default function Navbar() {
           </button>
 
           {isDesktopDropdownOpen && (
-            <div className="absolute top-full right-0 mt-2 bg-background border border-border rounded-md p-4 shadow-lg z-20 min-w-[120px]">
+            <div
+              ref={dropdownRef}
+              className="absolute top-full right-0 mt-2 bg-background border border-border rounded-md p-4 shadow-lg z-20 min-w-[120px]"
+            >
               {dropdownNavItems.map(({ name, href }) => {
                 const isActive = pathname === href;
                 return (
