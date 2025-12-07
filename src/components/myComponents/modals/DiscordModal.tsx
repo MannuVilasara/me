@@ -14,6 +14,7 @@ import {
   Sparkles,
   BadgeCheck,
 } from 'lucide-react';
+import Image from 'next/image';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { DiscordActivity, DiscordModalProps } from '@/types/types';
 
@@ -240,7 +241,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
           {/* Avatar & Status */}
           <div className="flex justify-between items-end -mt-14 mb-3">
             <div className="relative">
-              <img
+              <Image
                 src={getAvatarUrl()}
                 alt={user.username}
                 className="w-28 h-28 rounded-full border-[6px] border-background bg-background object-cover shadow-sm"
@@ -268,7 +269,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                       {customStatus.emoji && (
                         <span>
                           {customStatus.emoji.id ? (
-                            <img
+                            <Image
                               src={`https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png`}
                               alt={customStatus.emoji.name}
                               className="w-4 h-4 inline-block"
@@ -292,7 +293,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                   {customStatus.emoji && (
                     <span>
                       {customStatus.emoji.id ? (
-                        <img
+                        <Image
                           src={`https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.png`}
                           alt={customStatus.emoji.name}
                           className="w-4 h-4 inline-block"
@@ -337,7 +338,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                         <div className="relative">
                           <Tooltip>
                             <TooltipTrigger asChild>
-                              <img
+                              <Image
                                 src={getImageUrl(activity.assets.large_image)!}
                                 alt="Activity Asset"
                                 className="w-20 h-20 rounded-xl object-cover grayscale-[0.2] cursor-help"
@@ -355,7 +356,7 @@ export function DiscordModal({ isOpen, onClose, data }: DiscordModalProps) {
                           {activity.assets?.small_image && (
                             <Tooltip>
                               <TooltipTrigger asChild>
-                                <img
+                                <Image
                                   src={getImageUrl(activity.assets.small_image)!}
                                   alt="Small Asset"
                                   className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full border-[3px] border-card bg-card object-cover cursor-help"
