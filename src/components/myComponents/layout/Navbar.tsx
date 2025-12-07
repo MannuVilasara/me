@@ -23,10 +23,16 @@ export default function Navbar() {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
         setIsDesktopDropdownOpen(false);
       }
     }
@@ -77,6 +83,7 @@ export default function Navbar() {
         {/* Desktop dropdown for additional items */}
         <div className="relative">
           <button
+            ref={buttonRef}
             onClick={() => setIsDesktopDropdownOpen(!isDesktopDropdownOpen)}
             className="relative z-10 p-1 text-sm font-medium transition-all duration-300 text-foreground/70 hover:text-foreground flex items-center"
             aria-label="More options"
