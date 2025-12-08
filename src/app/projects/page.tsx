@@ -68,11 +68,11 @@ export default function Page() {
       />
       <div className="max-w-3xl mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
-        <div className="mb-12 space-y-2">
+        <div className="mb-12 space-y-2 text-center">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
             Projects
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-lg">
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
             A collection of things I&apos;ve built. Click to expand and learn more.
           </p>
         </div>
