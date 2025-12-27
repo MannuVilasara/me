@@ -11,7 +11,7 @@ export default function CustomCursor() {
   const [isDesktop, setIsDesktop] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const dotsRef = useRef<(HTMLSpanElement | null)[]>([]); // Array of refs for spans
-  
+
   // Data state refs to persist across renders without causing re-renders
   const mousePosition = useRef({ x: 0, y: 0 });
   const dotsData = useRef<Dot[]>([]);
@@ -78,12 +78,12 @@ export default function CustomCursor() {
 
     // Initialize dots data
     dotsData.current = Array.from({ length: AMOUNT }, (_, i) => new Dot(i));
-    
+
     // Initialize positions to center
     const { innerWidth, innerHeight } = window;
-    dotsData.current.forEach(d => { 
-        d.x = innerWidth / 2; 
-        d.y = innerHeight / 2; 
+    dotsData.current.forEach((d) => {
+      d.x = innerWidth / 2;
+      d.y = innerHeight / 2;
     });
 
     // Reset mouse position to center initially too so it doesn't fly in from 0,0
@@ -118,14 +118,14 @@ export default function CustomCursor() {
 
       dotsData.current.forEach((dot, index) => {
         let nextDot = dotsData.current[index + 1] || dotsData.current[0];
-        
+
         dot.update();
 
         if (!idle.current || index <= SINE_DOTS) {
           // Exact logic from Svelte snippet
           dot.x = x;
           dot.y = y;
-          
+
           const dx = (nextDot.x - x) * 0.35;
           const dy = (nextDot.y - y) * 0.35;
           x += dx;
@@ -164,11 +164,7 @@ export default function CustomCursor() {
       >
         <defs>
           <filter id="goo">
-            <feGaussianBlur
-              in="SourceGraphic"
-              stdDeviation="6"
-              result="blur"
-            />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
             <feColorMatrix
               in="blur"
               mode="matrix"
@@ -187,7 +183,9 @@ export default function CustomCursor() {
         {Array.from({ length: AMOUNT }).map((_, i) => (
           <span
             key={i}
-            ref={(el) => { dotsRef.current[i] = el; }}
+            ref={(el) => {
+              dotsRef.current[i] = el;
+            }}
             className="absolute block h-[26px] w-[26px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white will-change-transform"
           />
         ))}
