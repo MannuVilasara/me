@@ -10,6 +10,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { Oneko } from '../components/myComponents/Oneko';
 import { CommandMenuProvider } from '@/components/CommandMenuProvider';
 import FloatingTerminal from '@/components/myComponents/FloatingTerminal';
+import CustomCursor from '@/components/ui/CustomCursor';
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -130,6 +131,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </ThemeProvider>
           </Providers>
           <Analytics />
+          <CustomCursor />
         </body>
       </html>
     </>
