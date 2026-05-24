@@ -37,11 +37,13 @@ export async function GET() {
     const commits: GitHubCommit[] = await res.json();
 
     // Find the first commit that is not by GitHub Action
-    const data = commits.find((commit) =>
-      !commit.commit.author.name.toLowerCase().includes('action') &&
-      !commit.commit.author.name.toLowerCase().includes('bot') &&
-      commit.commit.author.email !== 'action@github.com'
-    ) || commits[0];
+    const data =
+      commits.find(
+        (commit) =>
+          !commit.commit.author.name.toLowerCase().includes('action') &&
+          !commit.commit.author.name.toLowerCase().includes('bot') &&
+          commit.commit.author.email !== 'action@github.com'
+      ) || commits[0];
 
     return NextResponse.json({
       sha: data.sha,
