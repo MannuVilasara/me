@@ -30,8 +30,8 @@ export default function LatestCommitActivity() {
 
   const shortSha = data?.sha?.substring(0, 7) || '???????';
   const message = data?.message?.split('\n')[0] || 'No commit message';
-  const date = data?.commit?.author?.date
-    ? new Date(data.commit.author.date).toLocaleDateString(undefined, {
+  const date = data?.date
+    ? new Date(data.date).toLocaleDateString(undefined, {
         month: 'short',
         day: 'numeric',
       })

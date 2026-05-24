@@ -12,10 +12,7 @@ const mainNavItems = [
   { name: 'Blog', href: '/blog' },
 ];
 
-const dropdownNavItems = [
-  { name: 'Guestbook', href: '/guestbook' },
-  { name: 'Stats', href: '/stats' },
-];
+const dropdownNavItems = [{ name: 'Guestbook', href: '/guestbook' }];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

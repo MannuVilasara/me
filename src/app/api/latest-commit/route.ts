@@ -1,6 +1,21 @@
 import { NextResponse } from 'next/server';
 
-const GITHUB_API_URL = 'https://api.github.com/repos/MannuVilasara/me/commits/main';
+interface GitHubCommit {
+  sha: string;
+  html_url: string;
+  commit: {
+    message: string;
+    author: {
+      name: string;
+      email: string;
+      date: string;
+    };
+  };
+}
+
+const GITHUB_API_URL = 'https://api.github.com/repos/MannuVilasara/me/commits';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
@@ -19,7 +34,14 @@ export async function GET() {
       throw new Error(`GitHub API returned ${res.status}`);
     }
 
-    const data = await res.json();
+    const commits: GitHubCommit[] = await res.json();
+
+    // Find the first commit that is not by GitHub Action
+    const data = commits.find((commit) =>
+      !commit.commit.author.name.toLowerCase().includes('action') &&
+      !commit.commit.author.name.toLowerCase().includes('bot') &&
+      commit.commit.author.email !== 'action@github.com'
+    ) || commits[0];
 
     return NextResponse.json({
       sha: data.sha,
