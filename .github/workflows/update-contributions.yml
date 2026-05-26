@@ -18,11 +18,11 @@ jobs:
 
       - name: Download light theme contribution graph
         run: |
-          curl -L "https://github.com/MannuVilasara/MannuVilasara/blob/output/pacman-contribution-graph.svg?raw=true" -o public/github-contributions-light.svg
+          curl -L "https://github.com/MannuVilasara/MannuVilasara/blob/output/galaga-contribution-graph.svg?raw=true" -o public/github-contributions-light.svg
 
       - name: Download dark theme contribution graph
         run: |
-          curl -L "https://github.com/MannuVilasara/MannuVilasara/blob/output/pacman-contribution-graph-dark.svg?raw=true" -o public/github-contributions-dark.svg
+          curl -L "https://github.com/MannuVilasara/MannuVilasara/blob/output/galaga-contribution-graph-dark.svg?raw=true" -o public/github-contributions-dark.svg
 
       - name: Check for changes
         id: verify-changed-files
