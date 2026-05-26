@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Github, Trash2, CheckCircle2, ArrowRight, Terminal, Pin } from 'lucide-react';
+import { Loader2, Github, Trash2, CheckCircle2, ArrowRight, Terminal, Pin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 // Zod Schema
@@ -24,6 +24,8 @@ import { GuestbookEntry, MessageForm } from '@/types/types';
 export default function Guestbook() {
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const entriesPerPage = 5;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -70,6 +72,7 @@ export default function Guestbook() {
       if (response.ok) {
         const newEntry = await response.json();
         setEntries((prev) => [newEntry, ...prev]);
+        setCurrentPage(1);
         form.reset();
         toast.success('Message posted.');
       } else {
@@ -184,6 +187,9 @@ export default function Guestbook() {
   }
 
   const isAdmin = session?.user?.username === 'MannuVilasara';
+
+  const totalPages = Math.ceil(entries.length / entriesPerPage);
+  const currentEntries = entries.slice((currentPage - 1) * entriesPerPage, currentPage * entriesPerPage);
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 sm:py-8 animate-in fade-in duration-700">
@@ -308,14 +314,15 @@ export default function Guestbook() {
             No entries yet. Be the first.
           </div>
         ) : (
-          <div className="flex flex-col gap-0 divide-y divide-border/40">
-            {entries.map((entry) => (
-              <div
-                key={entry.id}
-                className="group py-6 first:pt-0 flex gap-3 sm:gap-4 transition-colors hover:bg-muted/5 px-2 -mx-2 rounded-md"
-              >
+          <>
+            <div className="flex flex-col gap-0 divide-y divide-border/40">
+              {currentEntries.map((entry) => (
+                <div
+                  key={entry.id}
+                  className="group py-6 first:pt-0 flex gap-3 sm:gap-4 transition-colors hover:bg-muted/5 px-2 sm:px-4 -mx-2 sm:-mx-4 rounded-xl"
+                >
                 {/* Avatar */}
-                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 border border-border/50 shrink-0">
+                <Avatar className="h-10 w-10 border border-border/50 shrink-0">
                   <AvatarImage src={entry.avatar} alt={entry.author} />
                   <AvatarFallback className="bg-muted text-muted-foreground text-xs">
                     {entry.author?.[0]}
@@ -324,7 +331,7 @@ export default function Guestbook() {
 
                 {/* Content */}
                 <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-start sm:items-center justify-between gap-2">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold text-sm text-foreground">{entry.author}</span>
 
@@ -349,9 +356,9 @@ export default function Guestbook() {
                         </div>
                       )}
 
-                      <span className="text-xs text-muted-foreground/60 select-none">•</span>
+                      <span className="text-xs text-muted-foreground/60 select-none hidden sm:inline">•</span>
                       <span
-                        className="text-xs text-muted-foreground"
+                        className="text-xs text-muted-foreground block sm:inline w-full sm:w-auto mt-0.5 sm:mt-0"
                         title={new Date(entry.timestamp).toLocaleString()}
                       >
                         {formatDistanceToNow(new Date(entry.timestamp), { addSuffix: true })}
@@ -359,11 +366,11 @@ export default function Guestbook() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity shrink-0">
                       {session?.user.username === 'MannuVilasara' && (
                         <button
                           onClick={() => togglePin(entry.id, entry.pinned ?? false)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-blue-500/10 hover:text-blue-600 rounded-md text-muted-foreground"
+                          className="p-1.5 hover:bg-blue-500/10 hover:text-blue-600 rounded-md text-muted-foreground transition-colors"
                           title={entry.pinned ? 'Unpin message' : 'Pin message'}
                         >
                           <Pin className={`h-3.5 w-3.5 ${entry.pinned ? 'fill-current' : ''}`} />
@@ -374,7 +381,7 @@ export default function Guestbook() {
                       {session && (entry.username === session.user.username || isAdmin) && (
                         <button
                           onClick={() => deleteMessage(entry.id)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 hover:bg-red-500/10 hover:text-red-600 rounded-md text-muted-foreground"
+                          className="p-1.5 hover:bg-red-500/10 hover:text-red-600 rounded-md text-muted-foreground transition-colors"
                           title="Delete message"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -383,13 +390,45 @@ export default function Guestbook() {
                     </div>
                   </div>
 
-                  <p className="text-sm sm:text-[15px] leading-relaxed text-foreground/80 wrap-break-word whitespace-pre-wrap font-normal">
+                  <p className="text-[14px] sm:text-[15px] leading-relaxed text-foreground/80 break-words whitespace-pre-wrap font-normal mt-1">
                     {entry.message}
                   </p>
                 </div>
               </div>
             ))}
           </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between pt-6 mt-6 border-t border-border/40">
+              <span className="text-[11px] sm:text-xs text-muted-foreground font-medium">
+                Showing {(currentPage - 1) * entriesPerPage + 1} to {Math.min(currentPage * entriesPerPage, entries.length)} of {entries.length}
+              </span>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="h-8 px-2 sm:px-3 text-xs shadow-sm bg-background/50 hover:bg-background"
+                >
+                  <ChevronLeft className="h-4 w-4 sm:mr-1" />
+                  <span className="hidden sm:inline">Prev</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="h-8 px-2 sm:px-3 text-xs shadow-sm bg-background/50 hover:bg-background"
+                >
+                  <span className="hidden sm:inline">Next</span>
+                  <ChevronRight className="h-4 w-4 sm:ml-1" />
+                </Button>
+              </div>
+            </div>
+          )}
+        </>
         )}
       </div>
 
