@@ -87,14 +87,14 @@ const ActivityCard = ({
   );
 };
 
+import { ArcadeRenderer } from 'pacman-contribution-graph';
+
 export default function Activities() {
   const { resolvedTheme } = useTheme();
-  const light_url = '/github-contributions-light.svg';
-  const dark_url = '/github-contributions-dark.svg';
-
+  
   const [mounted, setMounted] = useState(false);
-  const [graphUrl, setGraphUrl] = useState<string>(dark_url);
-  const [imageError, setImageError] = useState<boolean>(true);
+  const [graphSvg, setGraphSvg] = useState<string>('');
+  const [error, setError] = useState<boolean>(false);
   const [onekoEnabled, setOnekoEnabled] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -132,14 +132,49 @@ export default function Activities() {
   useEffect(() => {
     if (!mounted) return;
 
-    setImageError(true);
-    const img = new Image();
-    img.src = resolvedTheme === 'dark' ? dark_url : light_url;
-    img.onload = () => {
-      setGraphUrl(img.src);
-      setImageError(false);
-    };
-    img.onerror = () => setImageError(true);
+    try {
+      const cacheKey = `pacman-svg-${resolvedTheme}`;
+      const cacheTimeKey = `pacman-time-${resolvedTheme}`;
+      const cachedSvg = localStorage.getItem(cacheKey);
+      const cachedTime = localStorage.getItem(cacheTimeKey);
+      
+      const now = Date.now();
+      // Cache for 24 hours (86400000 ms)
+      if (cachedSvg && cachedTime && (now - parseInt(cachedTime, 10)) < 86400000) {
+        setGraphSvg(cachedSvg);
+        setError(false);
+        return;
+      }
+
+      const renderer = new ArcadeRenderer({
+        game: 'pacman',
+        username: 'MannuVilasara',
+        platform: 'github',
+        gameTheme: resolvedTheme === 'dark' ? 'github-dark' : 'github',
+        playerStyle: 'opportunistic',
+        svgCallback: (svg: string) => {
+          // The generated SVG lacks a viewBox, making it crop instead of scale.
+          // We inject a viewBox so it becomes perfectly responsive!
+          const responsiveSvg = svg.replace(
+            /<svg\s+width="(\d+)"\s+height="(\d+)"/,
+            '<svg viewBox="0 0 $1 $2" width="100%" height="100%"'
+          );
+          setGraphSvg(responsiveSvg);
+          setError(false);
+          
+          try {
+            localStorage.setItem(cacheKey, responsiveSvg);
+            localStorage.setItem(cacheTimeKey, now.toString());
+          } catch (e) {
+            console.warn('Could not cache pacman SVG (might exceed quota)', e);
+          }
+        },
+      });
+      renderer.start();
+    } catch (err) {
+      console.error(err);
+      setError(true);
+    }
   }, [resolvedTheme, mounted]);
 
   return (
@@ -254,20 +289,19 @@ export default function Activities() {
               </span>
             </div>
 
-            <div className="p-2 overflow-hidden">
-              {!mounted ? (
-                <div className="h-[120px] animate-pulse rounded-lg bg-zinc-200 dark:bg-zinc-800" />
-              ) : !imageError ? (
-                <img
-                  src={graphUrl}
-                  className="w-full h-auto rounded-lg opacity-80 group-hover:opacity-100 transition-opacity duration-500 saturate-0 group-hover:saturate-100"
-                  alt="GitHub Contributions"
-                />
-              ) : (
-                <div className="h-[120px] flex flex-col items-center justify-center text-center text-muted-foreground space-y-2 bg-muted/5 rounded-lg border border-dashed border-border/30">
+            <div className="p-2 overflow-hidden flex justify-center">
+              {!mounted || !graphSvg ? (
+                <div className="h-[120px] w-full animate-pulse rounded-lg bg-zinc-200 dark:bg-zinc-800" />
+              ) : error ? (
+                <div className="h-[120px] w-full flex flex-col items-center justify-center text-center text-muted-foreground space-y-2 bg-muted/5 rounded-lg border border-dashed border-border/30">
                   <Github className="h-6 w-6 opacity-20" />
                   <p className="text-[10px] font-mono">Graph unavailable</p>
                 </div>
+              ) : (
+                <div 
+                  className="w-full h-auto rounded-lg [&_svg]:w-full [&_svg]:h-auto opacity-80 group-hover:opacity-100 transition-opacity duration-500 saturate-0 group-hover:saturate-100"
+                  dangerouslySetInnerHTML={{ __html: graphSvg }} 
+                />
               )}
             </div>
           </div>
