@@ -91,7 +91,7 @@ import { ArcadeRenderer } from 'pacman-contribution-graph';
 
 export default function Activities() {
   const { resolvedTheme } = useTheme();
-  
+
   const [mounted, setMounted] = useState(false);
   const [graphSvg, setGraphSvg] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
@@ -137,10 +137,10 @@ export default function Activities() {
       const cacheTimeKey = `pacman-time-${resolvedTheme}`;
       const cachedSvg = localStorage.getItem(cacheKey);
       const cachedTime = localStorage.getItem(cacheTimeKey);
-      
+
       const now = Date.now();
       // Cache for 24 hours (86400000 ms)
-      if (cachedSvg && cachedTime && (now - parseInt(cachedTime, 10)) < 86400000) {
+      if (cachedSvg && cachedTime && now - parseInt(cachedTime, 10) < 86400000) {
         setGraphSvg(cachedSvg);
         setError(false);
         return;
@@ -161,7 +161,7 @@ export default function Activities() {
           );
           setGraphSvg(responsiveSvg);
           setError(false);
-          
+
           try {
             localStorage.setItem(cacheKey, responsiveSvg);
             localStorage.setItem(cacheTimeKey, now.toString());
@@ -298,9 +298,9 @@ export default function Activities() {
                   <p className="text-[10px] font-mono">Graph unavailable</p>
                 </div>
               ) : (
-                <div 
+                <div
                   className="w-full h-auto rounded-lg [&_svg]:w-full [&_svg]:h-auto opacity-80 group-hover:opacity-100 transition-opacity duration-500 saturate-0 group-hover:saturate-100"
-                  dangerouslySetInnerHTML={{ __html: graphSvg }} 
+                  dangerouslySetInnerHTML={{ __html: graphSvg }}
                 />
               )}
             </div>

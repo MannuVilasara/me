@@ -6,10 +6,10 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 export default function CustomCursor() {
   const [isDesktop, setIsDesktop] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  
+
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  
+
   const springConfig = { damping: 25, stiffness: 100, mass: 1 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
@@ -19,7 +19,7 @@ export default function CustomCursor() {
 
     const mediaQuery = window.matchMedia('(pointer: fine)');
     setIsDesktop(mediaQuery.matches);
-    
+
     const handleChange = (e: MediaQueryListEvent) => {
       setIsDesktop(e.matches);
     };
@@ -42,7 +42,7 @@ export default function CustomCursor() {
       const clickable = target.closest(
         'a, button, [role="button"], input[type="button"], input[type="submit"]'
       );
-      
+
       const isPointer = window.getComputedStyle(target).cursor === 'pointer';
 
       if (clickable || isPointer) {
