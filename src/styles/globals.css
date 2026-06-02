@@ -141,7 +141,7 @@
     *,
     *::before,
     *::after {
-      cursor: none !important;
+      /* cursor: none !important; */
     }
   }
 
