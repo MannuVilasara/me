@@ -38,8 +38,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     '@type': 'Person',
     name: 'Manpreet Singh',
     alternateName: 'Mannu Vilasara',
-    url: 'https://mannu.live',
-    image: 'https://mannu.live/og.png',
+    url: 'https://mannu.tech',
+    image: 'https://mannu.tech/og.png',
     jobTitle: 'Full Stack Developer',
     worksFor: {
       '@type': 'Organization',
@@ -60,7 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Manpreet Singh Portfolio',
-    url: 'https://mannu.live',
+    url: 'https://mannu.tech',
     description:
       'Full Stack Developer & Designer portfolio featuring web apps, UI experiments, and open source contributions.',
     author: {

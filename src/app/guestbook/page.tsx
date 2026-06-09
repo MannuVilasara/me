@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     title: 'Guestbook — Manpreet Singh',
     description:
       'Leave a message in my digital guestbook. Share your thoughts or just say hello! Find me on GitHub as MannuVilasara.',
-    url: 'https:///guestbook',
+    url: 'https://mannu.tech/guestbook',
     siteName: 'Manpreet Singh Portfolio',
     images: [
       {
-        url: 'https:///og?title=Guestbook%20%E2%80%94%20Manpreet%20Singh&description=Leave%20a%20message%20in%20my%20digital%20guestbook',
+        url: 'https://mannu.tech/og?title=Guestbook%20%E2%80%94%20Manpreet%20Singh&description=Leave%20a%20message%20in%20my%20digital%20guestbook',
         width: 1200,
         height: 630,
         alt: 'Manpreet Singh Guestbook',
@@ -41,11 +41,11 @@ export const metadata: Metadata = {
     title: 'Guestbook — Manpreet Singh',
     description: 'Leave a message in my digital guestbook. Find me on GitHub as MannuVilasara.',
     images: [
-      'https:///og?title=Guestbook%20%E2%80%94%20Manpreet%20Singh&description=Leave%20a%20message%20in%20my%20digital%20guestbook',
+      'https://mannu.tech/og?title=Guestbook%20%E2%80%94%20Manpreet%20Singh&description=Leave%20a%20message%20in%20my%20digital%20guestbook',
     ],
   },
   alternates: {
-    canonical: 'https:///guestbook',
+    canonical: 'https://mannu.tech/guestbook',
   },
 };
 
@@ -56,17 +56,17 @@ export default function GuestbookPage() {
     name: 'Guestbook — Manpreet Singh',
     description:
       'Leave a message in my digital guestbook. Share your thoughts, feedback, or just say hello!',
-    url: 'https:///guestbook',
+    url: 'https://mannu.tech/guestbook',
     author: {
       '@type': 'Person',
       name: 'Manpreet Singh',
-      url: 'https://',
+      url: 'https://mannu.tech',
     },
     mainEntity: {
       '@type': 'ContactPage',
       name: 'Guestbook',
       description: 'Digital guestbook for Manpreet Singh',
-      url: 'https:///guestbook',
+      url: 'https://mannu.tech/guestbook',
     },
   };
 

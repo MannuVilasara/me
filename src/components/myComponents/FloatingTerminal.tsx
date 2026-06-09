@@ -51,7 +51,7 @@ Currently focused on building scalable web applications and learning about syste
   "email": "mannuvilasara@gmail.com",
   "github": "https://github.com/MannuVilasara",
   "twitter": "https://twitter.com/dev_mannuu",
-  "website": "https://",
+  "website": "https://mannu.tech",
   "discord": "dev_mannu",
   "location": "India",
   "timezone": "IST (UTC+5:30)",

@@ -1,6 +1,6 @@
 import { getBlogPosts } from '@/lib/getBlogs';
 
-export const baseUrl = 'https://';
+export const baseUrl = 'https://mannu.tech';
 
 export default async function sitemap() {
   const blogs = getBlogPosts().map((post) => ({

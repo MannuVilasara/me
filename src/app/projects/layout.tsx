@@ -8,11 +8,11 @@ export const metadata: Metadata = {
     title: 'Projects — Manpreet Singh',
     description:
       'Browse my portfolio of web applications, creative experiments, and open-source contributions.',
-    url: 'https:///projects',
+    url: 'https://mannu.tech/projects',
     type: 'website',
   },
   alternates: {
-    canonical: 'https:///projects',
+    canonical: 'https://mannu.tech/projects',
   },
 };
 
