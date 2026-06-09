@@ -1,5 +1,5 @@
 export const metadata = {
-  metadataBase: new URL('https://mannu.live'),
+  metadataBase: new URL('https://'),
   title: {
     default: 'Manpreet Singh — Full Stack Developer & Designer',
     template: '%s | Manpreet Singh',
@@ -42,7 +42,7 @@ export const metadata = {
     'Web Apps',
     'DevOps',
   ],
-  authors: [{ name: 'Manpreet Singh', url: 'https://mannu.live' }],
+  authors: [{ name: 'Manpreet Singh', url: 'https://' }],
   creator: 'Manpreet Singh',
   publisher: 'Manpreet Singh',
   robots: 'index, follow',
@@ -50,11 +50,11 @@ export const metadata = {
     title: 'Manpreet Singh — Full Stack Developer & Designer',
     description:
       'Explore the projects by Manpreet Singh — web apps, creative experiments & open source work. Find me on GitHub as MannuVilasara.',
-    url: 'https://mannu.live',
+    url: 'https://',
     siteName: 'Manpreet Singh — Full Stack Developer & Designer',
     images: [
       {
-        url: 'https://mannu.live/og.png', // replace with your OG image URL
+        url: 'https:///og.png', // replace with your OG image URL
         width: 1200,
         height: 630,
         alt: 'Manpreet Singh — Full Stack Developer & Designer',
@@ -70,12 +70,12 @@ export const metadata = {
       'Explore the projects by Manpreet Singh — web apps, creative experiments & open source work. Find me on GitHub as MannuVilasara.',
     site: '@dev_mannuu', // replace with your Twitter handle if you have one
     creator: '@dev_mannuu',
-    images: ['https://mannu.live/og.png'], // same OG image
+    images: ['https:///og.png'], // same OG image
   },
   alternates: {
-    canonical: 'https://mannu.live',
+    canonical: 'https://',
     types: {
-      'application/rss+xml': 'https://mannu.live/rss',
+      'application/rss+xml': 'https:///rss',
     },
   },
   // verification: {

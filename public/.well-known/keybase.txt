@@ -4,7 +4,7 @@ https://keybase.io/mannuvilasara
 
 I hereby claim:
 
-  * I am an admin of https://mannu.live
+  * I am an admin of https://mannu.tech
   * I am mannuvilasara (https://keybase.io/mannuvilasara) on keybase.
   * I have a public key ASAUNC0hW4UJPS9wvG7ZfCq172Y7J8SW0Wat3CN8wrAMfAo
 
@@ -27,7 +27,7 @@ To do so, I am signing this object:
     },
     "service": {
       "entropy": "25FgKddqGCQ0Wj+IbuOYqRCi",
-      "hostname": "mannu.live",
+      "hostname": "mannu.tech",
       "protocol": "https:"
     },
     "type": "web_service_binding",

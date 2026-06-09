@@ -6,4 +6,4 @@ Allow: /
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://mannu.live/sitemap.xml
+Sitemap: https://mannu.tech/sitemap.xml

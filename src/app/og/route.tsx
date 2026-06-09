@@ -57,7 +57,7 @@ export async function GET(request: Request) {
               marginTop: '12px',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center' }}>🌐 mannu.live</div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>🌐 </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>📍 India</div>
           </div>
         </div>

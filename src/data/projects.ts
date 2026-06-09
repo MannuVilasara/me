@@ -100,7 +100,7 @@ const projects: Project[] = [
     id: 7,
     title: 'Appwrite Blog',
     href: 'https://github.com/MannuVilasara/appwrite-blog',
-    live: 'https://appwrite-blog.mannu.live/',
+    live: 'https://appwrite-blog./',
     createdAt: '12-07-2024',
     description:
       'A blog platform built with Appwrite, featuring user authentication, real-time content updates, and a responsive design.',
@@ -112,7 +112,7 @@ const projects: Project[] = [
     id: 8,
     title: 'Portfolio (Old Version)',
     href: 'https://github.com/MannuVilasara/me/tree/beta',
-    live: 'https://beta.mannu.live/',
+    live: 'https://beta./',
     createdAt: '04-05-2024',
     description:
       'An older version of my personal portfolio website, showcasing my skills and projects. It was built with Next.js and features a modern design.',

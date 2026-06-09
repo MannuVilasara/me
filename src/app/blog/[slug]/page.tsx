@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: BlogPageProps) {
   const { title, publishedAt: publishedTime, summary: description, image } = post.metadata;
   const ogImage = image
     ? image
-    : `https://mannu.live/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
+    : `https:///og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {
     title,
@@ -70,13 +70,13 @@ export default async function Blog({ params }: BlogPageProps) {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://mannu.live',
+        item: 'https://',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Blog',
-        item: 'https://mannu.live/blog',
+        item: 'https:///blog',
       },
       {
         '@type': 'ListItem',
@@ -96,12 +96,12 @@ export default async function Blog({ params }: BlogPageProps) {
     description: post.metadata.summary,
     image: post.metadata.image
       ? `${baseUrl}${post.metadata.image}`
-      : `https://mannu.live/og?title=${encodeURIComponent(post.metadata.title)}&description=${encodeURIComponent(post.metadata.summary)}`,
+      : `https:///og?title=${encodeURIComponent(post.metadata.title)}&description=${encodeURIComponent(post.metadata.summary)}`,
     url: `${baseUrl}/blog/${post.slug}`,
     author: {
       '@type': 'Person',
       name: 'Manpreet Singh',
-      url: 'https://mannu.live',
+      url: 'https://',
     },
   };
 

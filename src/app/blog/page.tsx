@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     title: 'Blog — Manpreet Singh',
     description:
       'Read articles about web development, programming, and technology by Manpreet Singh.',
-    url: 'https://mannu.live/blog',
+    url: 'https:///blog',
     siteName: 'Manpreet Singh Portfolio',
     images: [
       {
-        url: 'https://mannu.live/og?title=Blog%20%E2%80%94%20Manpreet%20Singh&description=Read%20articles%20about%20web%20development%2C%20programming%2C%20and%20technology',
+        url: 'https:///og?title=Blog%20%E2%80%94%20Manpreet%20Singh&description=Read%20articles%20about%20web%20development%2C%20programming%2C%20and%20technology',
         width: 1200,
         height: 630,
         alt: 'Manpreet Singh Blog',
@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     title: 'Blog — Manpreet Singh',
     description: 'Read articles about web development, programming, and technology.',
     images: [
-      'https://mannu.live/og?title=Blog%20%E2%80%94%20Manpreet%20Singh&description=Read%20articles%20about%20web%20development%2C%20programming%2C%20and%20technology',
+      'https:///og?title=Blog%20%E2%80%94%20Manpreet%20Singh&description=Read%20articles%20about%20web%20development%2C%20programming%2C%20and%20technology',
     ],
   },
   alternates: {
-    canonical: 'https://mannu.live/blog',
+    canonical: 'https:///blog',
   },
 };
 
@@ -45,13 +45,13 @@ export default function Page() {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://mannu.live',
+        item: 'https://',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Blog',
-        item: 'https://mannu.live/blog',
+        item: 'https:///blog',
       },
     ],
   };

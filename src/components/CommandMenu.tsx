@@ -84,7 +84,7 @@ export function CommandMenu({
           break;
         case 'p':
           if (shiftKey) {
-            runCommand(() => window.open('https://mannu.live', '_blank'));
+            runCommand(() => window.open('https://', '_blank'));
           } else {
             runCommand(() => router.push('/projects'));
           }
@@ -290,7 +290,7 @@ export function CommandMenu({
             <CommandShortcut>⌘⇧D</CommandShortcut>
           </CommandItem>
           <CommandItem
-            onSelect={() => runCommand(() => window.open('https://mannu.live', '_blank'))}
+            onSelect={() => runCommand(() => window.open('https://', '_blank'))}
           >
             <Globe size={16} className="mr-2 text-muted-foreground" />
             <span className="font-mono">Portfolio</span>

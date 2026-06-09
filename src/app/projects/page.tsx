@@ -11,11 +11,11 @@ export const metadata: Metadata = {
     title: 'Projects — Manpreet Singh',
     description:
       'Explore my portfolio of web applications, creative experiments, and open-source contributions.',
-    url: 'https://mannu.live/projects',
+    url: 'https:///projects',
     siteName: 'Manpreet Singh Portfolio',
     images: [
       {
-        url: 'https://mannu.live/og?title=Projects%20%E2%80%94%20Manpreet%20Singh&description=Explore%20my%20portfolio%20of%20web%20applications%20and%20open-source%20contributions',
+        url: 'https:///og?title=Projects%20%E2%80%94%20Manpreet%20Singh&description=Explore%20my%20portfolio%20of%20web%20applications%20and%20open-source%20contributions',
         width: 1200,
         height: 630,
         alt: 'Manpreet Singh Projects',
@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     title: 'Projects — Manpreet Singh',
     description: 'Explore my portfolio of web applications and open-source contributions.',
     images: [
-      'https://mannu.live/og?title=Projects%20%E2%80%94%20Manpreet%20Singh&description=Explore%20my%20portfolio%20of%20web%20applications%20and%20open-source%20contributions',
+      'https:///og?title=Projects%20%E2%80%94%20Manpreet%20Singh&description=Explore%20my%20portfolio%20of%20web%20applications%20and%20open-source%20contributions',
     ],
   },
   alternates: {
-    canonical: 'https://mannu.live/projects',
+    canonical: 'https:///projects',
   },
 };
 
@@ -44,17 +44,17 @@ export default function Page() {
     name: 'Projects Showcase',
     description:
       'Portfolio of web applications, creative experiments, and open-source contributions built with modern technologies.',
-    url: 'https://mannu.live/projects',
+    url: 'https:///projects',
     author: {
       '@type': 'Person',
       name: 'Manpreet Singh',
-      url: 'https://mannu.live',
+      url: 'https://',
     },
     hasPart: projects.map((project) => ({
       '@type': 'CreativeWork',
       name: project.title,
       description: project.description,
-      url: project.live || project.href || 'https://mannu.live/projects',
+      url: project.live || project.href || 'https:///projects',
       dateCreated: project.createdAt,
       keywords: project.badge.join(', '),
     })),

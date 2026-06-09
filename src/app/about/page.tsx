@@ -11,11 +11,11 @@ export const metadata: Metadata = {
     title: 'About Me — Manpreet Singh',
     description:
       'Learn more about Manpreet Singh, a Full Stack Developer passionate about building scalable web applications.',
-    url: 'https://mannu.live/about',
+    url: 'https:///about',
     siteName: 'Manpreet Singh Portfolio',
     images: [
       {
-        url: 'https://mannu.live/og?title=About%20Me%20%E2%80%94%20Manpreet%20Singh&description=Learn%20more%20about%20Manpreet%20Singh%2C%20a%20Full%20Stack%20Developer',
+        url: 'https:///og?title=About%20Me%20%E2%80%94%20Manpreet%20Singh&description=Learn%20more%20about%20Manpreet%20Singh%2C%20a%20Full%20Stack%20Developer',
         width: 1200,
         height: 630,
         alt: 'About Manpreet Singh',
@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     title: 'About Me — Manpreet Singh',
     description: 'Learn more about Manpreet Singh, a Full Stack Developer.',
     images: [
-      'https://mannu.live/og?title=About%20Me%20%E2%80%94%20Manpreet%20Singh&description=Learn%20more%20about%20Manpreet%20Singh%2C%20a%20Full%20Stack%20Developer',
+      'https:///og?title=About%20Me%20%E2%80%94%20Manpreet%20Singh&description=Learn%20more%20about%20Manpreet%20Singh%2C%20a%20Full%20Stack%20Developer',
     ],
   },
   alternates: {
-    canonical: 'https://mannu.live/about',
+    canonical: 'https:///about',
   },
 };
 
@@ -46,13 +46,13 @@ export default function page() {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://mannu.live',
+        item: 'https://',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'About',
-        item: 'https://mannu.live/about',
+        item: 'https:///about',
       },
     ],
   };

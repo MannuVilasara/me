@@ -148,12 +148,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **Live Site**: [https://mannu.live](https://mannu.live)
+- **Live Site**: [https://mannu.tech](https://mannu.tech)
 - **GitHub**: [@MannuVilasara](https://github.com/MannuVilasara)
 - **Twitter**: [@dev_mannuu](https://twitter.com/dev_mannuu)
 
 ---
 
-**Built with ❤️ by [Manpreet Singh](https://mannu.live)**
+**Built with ❤️ by [Manpreet Singh](https://mannu.tech)**
 
 [⭐ Star this repo](https://github.com/MannuVilasara/me/stargazers) • [🐛 Report Bug](https://github.com/MannuVilasara/me/issues) • [💡 Request Feature](https://github.com/MannuVilasara/me/issues)

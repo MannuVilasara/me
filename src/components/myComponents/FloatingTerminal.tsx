@@ -51,7 +51,7 @@ Currently focused on building scalable web applications and learning about syste
   "email": "mannuvilasara@gmail.com",
   "github": "https://github.com/MannuVilasara",
   "twitter": "https://twitter.com/dev_mannuu",
-  "website": "https://mannu.live",
+  "website": "https://",
   "discord": "dev_mannu",
   "location": "India",
   "timezone": "IST (UTC+5:30)",
@@ -171,7 +171,7 @@ export default function FloatingTerminal() {
         break;
 
       case 'whoami':
-        newHistory.push({ type: 'output', content: 'guest_user@mannu.live' });
+        newHistory.push({ type: 'output', content: 'guest_user@' });
         break;
 
       case 'date':
@@ -205,7 +205,7 @@ export default function FloatingTerminal() {
               </div> */}
               {/* System Info */}
               <div className="space-y-1 flex-1">
-                <div className="text-cyan-400 font-bold">guest@mannu.live</div>
+                <div className="text-cyan-400 font-bold">guest@</div>
                 <div className="text-zinc-400">────────────────────────</div>
                 <div className="grid grid-cols-[120px_1fr] gap-2">
                   <span className="text-blue-400">OS:</span>
@@ -230,7 +230,7 @@ export default function FloatingTerminal() {
                   <span>React DOM</span>
 
                   <span className="text-blue-400">Terminal:</span>
-                  <span>mannu.live</span>
+                  <span></span>
 
                   <span className="text-blue-400">CPU:</span>
                   <span>Intel Core i7-13620H (14) @ 2.5GHz</span>
@@ -379,7 +379,7 @@ export default function FloatingTerminal() {
               </div>
               <div className="text-zinc-400 text-xs font-medium flex items-center gap-1.5">
                 <Terminal size={12} />
-                <span>guest@mannu.live:~</span>
+                <span>guest@:~</span>
               </div>
               <div className="w-10" /> {/* Spacer for centering */}
             </div>
