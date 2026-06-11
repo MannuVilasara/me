@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 export default function ResumePage() {
   useEffect(() => {
@@ -13,11 +13,7 @@ export default function ResumePage() {
 
   return (
     <div className="fixed inset-0 z-[9999] w-screen h-screen bg-zinc-100 dark:bg-zinc-900">
-      <iframe
-        src="/resume.pdf"
-        className="w-full h-full border-0"
-        title="Resume PDF"
-      />
+      <iframe src="/resume.pdf" className="w-full h-full border-0" title="Resume PDF" />
     </div>
   );
 }
