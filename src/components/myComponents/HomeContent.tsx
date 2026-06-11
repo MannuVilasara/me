@@ -77,7 +77,11 @@ export default function HomeContent() {
               experiences and robust backend systems.
             </p>
             <p>
-              Beyond full-stack, I also have a strong passion for <span className="font-semibold text-foreground">DevOps</span> and <span className="font-semibold text-foreground">Platform Engineering</span>. I love building infrastructure, automating workflows, and scaling systems, and I'm actively looking to deep dive further into the platform ecosystem!
+              Beyond full-stack, I also have a strong passion for{' '}
+              <span className="font-semibold text-foreground">DevOps</span> and{' '}
+              <span className="font-semibold text-foreground">Platform Engineering</span>. I love
+              building infrastructure, automating workflows, and scaling systems, and I'm actively
+              looking to deep dive further into the platform ecosystem!
             </p>
           </div>
 
