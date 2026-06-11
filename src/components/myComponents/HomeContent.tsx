@@ -70,11 +70,16 @@ export default function HomeContent() {
               }}
             />
           </div>
-          <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-            I work with latest technologies to build scalable and efficient web applications. My
-            expertise lies in full-stack development, with a focus on creating seamless user
-            experiences and robust backend systems.
-          </p>
+          <div className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed space-y-4">
+            <p>
+              I work with latest technologies to build scalable and efficient web applications. My
+              expertise lies in full-stack development, with a focus on creating seamless user
+              experiences and robust backend systems.
+            </p>
+            <p>
+              Beyond full-stack, I also have a strong passion for <span className="font-semibold text-foreground">DevOps</span> and <span className="font-semibold text-foreground">Platform Engineering</span>. I love building infrastructure, automating workflows, and scaling systems, and I'm actively looking to deep dive further into the platform ecosystem!
+            </p>
+          </div>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
             {/* NPX Card */}
