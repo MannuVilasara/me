@@ -126,7 +126,7 @@ const projects: Project[] = [
     features: ['Automatic label assignment', 'Customizable rules', 'GitHub Actions integration'],
     badge: ['Node.js', 'Typescript', 'GitHub Actions'],
     // image: '/projects/auto-labeler.png',
-  }
+  },
 ];
 
 export { projects };

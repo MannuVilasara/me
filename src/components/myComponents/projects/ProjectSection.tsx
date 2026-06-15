@@ -13,7 +13,10 @@ export default function ProjectGrid() {
           title={project.title}
           description={project.description}
           longDescription={project.description}
-          image={project.image || 'https://img.magnific.com/free-psd/3d-rendered-purple-notebook-icon-with-bookmark_84443-56810.jpg'}
+          image={
+            project.image ||
+            'https://img.magnific.com/free-psd/3d-rendered-purple-notebook-icon-with-bookmark_84443-56810.jpg'
+          }
           tags={project.badge}
           link={project.live}
           github={project.href}
