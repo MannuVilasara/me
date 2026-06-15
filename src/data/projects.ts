@@ -13,6 +13,37 @@ export interface Project {
 const projects: Project[] = [
   {
     id: 1,
+    title: 'GitHub Actions Visualizer',
+    href: '',
+    createdAt: '29-05-2026',
+    description:
+      'Visualize GitHub Actions with live run updates, waterfall trace to identify slow steps, and detailed logs. Users can install the GitHub app on up to 5 repositories for free to track their actions.',
+    features: [
+      'Live run updates',
+      'Waterfall trace for step performance',
+      'Detailed execution logs',
+      'GitHub App integration (5 repos free)',
+    ],
+    badge: ['Next.js', 'GitHub App', 'Tailwind CSS', 'Go-lang', 'Redis'],
+    image: '/projects/github-actions-visualizer.png',
+  },
+  {
+    id: 2,
+    title: 'Campus Kiosk',
+    href: '',
+    createdAt: '21-02-2026',
+    description:
+      'A campus kiosk application for colleges providing staff information, a 360-degree campus tour, timetables, block information, and navigation. Built with Electron featuring seamless in-app updates to avoid manual GitHub downloads.',
+    features: [
+      'Staff information directory',
+      'Interactive 360-degree campus tour',
+      'Timetable and block navigation',
+      'Seamless in-app updates',
+    ],
+    badge: ['Electron', 'React', 'Node.js', 'Auto-Updater'],
+  },
+  {
+    id: 3,
     title: 'CyberSuite',
     href: 'https://github.com/MannuVilasara/cybersuite',
     createdAt: '15-11-2025',
@@ -29,7 +60,7 @@ const projects: Project[] = [
     image: '/projects/secureauth.jpg',
   },
   {
-    id: 2,
+    id: 4,
     title: 'Educlinic Campus',
     live: 'https://campus.educlinic.org/',
     createdAt: '30-10-2024',
@@ -44,7 +75,7 @@ const projects: Project[] = [
     image: '/projects/educlinic.png',
   },
   {
-    id: 3,
+    id: 5,
     title: 'Portfolio',
     href: 'https://github.com/MannuVilasara/me',
     live: '/',
@@ -60,7 +91,7 @@ const projects: Project[] = [
     image: '/projects/portfolio.png',
   },
   {
-    id: 4,
+    id: 6,
     title: 'Fit-Ai',
     href: 'https://github.com/MannuVilasara/disease-detector',
     createdAt: '30-06-2025',
@@ -75,7 +106,7 @@ const projects: Project[] = [
     // image: '/projects/fit-ai.png',
   },
   {
-    id: 5,
+    id: 7,
     title: 'git-auto',
     href: 'https://github.com/MannuVilasara/git-auto',
     createdAt: '10-07-2025',
@@ -86,7 +117,7 @@ const projects: Project[] = [
     // image: '/projects/git-auto.png',
   },
   {
-    id: 6,
+    id: 8,
     title: 'Auto-Labeler',
     href: 'https://github.com/MannuVilasara/auto-labeler',
     createdAt: '10-07-2025',
@@ -95,31 +126,7 @@ const projects: Project[] = [
     features: ['Automatic label assignment', 'Customizable rules', 'GitHub Actions integration'],
     badge: ['Node.js', 'Typescript', 'GitHub Actions'],
     // image: '/projects/auto-labeler.png',
-  },
-  {
-    id: 7,
-    title: 'Appwrite Blog',
-    href: 'https://github.com/MannuVilasara/appwrite-blog',
-    live: 'https://appwrite-blog./',
-    createdAt: '12-07-2024',
-    description:
-      'A blog platform built with Appwrite, featuring user authentication, real-time content updates, and a responsive design.',
-    features: ['User authentication', 'Real-time content updates', 'Rich text editor'],
-    badge: ['Appwrite', 'React', 'Redux-toolkit', 'Vite'],
-    // image: '/projects/blog.png',
-  },
-  {
-    id: 8,
-    title: 'Portfolio (Old Version)',
-    href: 'https://github.com/MannuVilasara/me/tree/beta',
-    live: 'https://beta./',
-    createdAt: '04-05-2024',
-    description:
-      'An older version of my personal portfolio website, showcasing my skills and projects. It was built with Next.js and features a modern design.',
-    features: ['Responsive design', 'Spotify API integration'],
-    badge: ['Next.js', 'Typescript', 'Tailwind CSS'],
-    // image: '/projects/portfolio-old.png',
-  },
+  }
 ];
 
 export { projects };

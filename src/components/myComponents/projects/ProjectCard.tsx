@@ -55,7 +55,7 @@ const ProjectCard = ({
   const currentTheme = mounted ? (theme === 'system' ? systemTheme : theme) : 'dark';
   const isDark = currentTheme === 'dark';
 
-  const displayImage = image || 'https://via.placeholder.com/800x450?text=Project+Showcase';
+  const displayImage = image || 'https://img.magnific.com/free-psd/3d-rendered-purple-notebook-icon-with-bookmark_84443-56810.jpg';
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -106,6 +106,9 @@ const ProjectCard = ({
               src={displayImage}
               alt={title}
               onLoad={() => setImageLoaded(true)}
+              onError={(e) => {
+                e.currentTarget.src = 'https://img.magnific.com/free-psd/3d-rendered-purple-notebook-icon-with-bookmark_84443-56810.jpg';
+              }}
               className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 ${
                 imageLoaded ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'
               }`}
@@ -189,7 +192,14 @@ const ProjectCard = ({
 
               {/* Left Column - Image */}
               <div className="w-full md:w-1/2 aspect-video md:aspect-auto md:min-h-full relative overflow-hidden bg-black/10 shrink-0">
-                <img src={displayImage} alt={title} className="w-full h-full object-cover" />
+                <img 
+                  src={displayImage} 
+                  alt={title} 
+                  className="w-full h-full object-cover" 
+                  onError={(e) => {
+                    e.currentTarget.src = 'https://img.magnific.com/free-psd/3d-rendered-purple-notebook-icon-with-bookmark_84443-56810.jpg';
+                  }}
+                />
                 <div
                   className={`absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r ${isDark ? 'from-[#0a0a0c] via-[#0a0a0c]/40 to-transparent' : 'from-[#fafafa] via-[#fafafa]/40 to-transparent'}`}
                 />
