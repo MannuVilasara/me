@@ -217,13 +217,11 @@ test('已有项留空不覆盖，中途失败保留已保存项并可仅重试�
   const client = await session(app);
   let meta = await client.meta();
   const response = await client.save(
-    meta.fields
-      .slice(1)
-      .map((field: any) => ({
-        credential: field.credential,
-        revision: field.revision,
-        value: 'FAKE_BATCH',
-      }))
+    meta.fields.slice(1).map((field: any) => ({
+      credential: field.credential,
+      revision: field.revision,
+      value: 'FAKE_BATCH',
+    }))
   );
   const result = await response.json();
   assert.equal(result.status, 'partial');
@@ -239,13 +237,11 @@ test('已有项留空不覆盖，中途失败保留已保存项并可仅重试�
   fail = false;
   meta = await client.meta();
   const retry = await client.save(
-    meta.fields
-      .slice(2)
-      .map((field: any) => ({
-        credential: field.credential,
-        revision: field.revision,
-        value: 'FAKE_RETRY',
-      }))
+    meta.fields.slice(2).map((field: any) => ({
+      credential: field.credential,
+      revision: field.revision,
+      value: 'FAKE_RETRY',
+    }))
   );
   assert.equal((await retry.json()).status, 'saved');
   assert.equal(m.values.get(fields[1].credential), 'FAKE_BATCH');
