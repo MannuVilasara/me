@@ -30,12 +30,12 @@
 
 先区分借鉴风格、保留固定框架与精准还原。风格参考提取业务焦点、字体对比、留白、比例和图像用途，按当前业务重组内容；不要复制无关营销模块或作品展示外框。
 
-| 参考用途 | 使用方式 |
-| --- | --- |
-| 自由探索 | 无参考也可执行，从任务与领域入口选择视觉方向 |
+| 参考用途                         | 使用方式                                                                                                         |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 自由探索                         | 无参考也可执行，从任务与领域入口选择视觉方向                                                                     |
 | 只保留导航、侧边栏或现有页面框架 | 先用 [工具](tools.md) 的 `shoot.mjs` 截取当前页面真实画面作为参考图传入（`--ref`），写清固定范围与允许变化的区域 |
-| 借鉴风格 | 传入实际参考图，说明借鉴的设计关系与允许变化的内容；未实际传入图片时只能称为文字提炼参考 |
-| 精准还原 | 完整截图用于测量与整体对照；只有确需素材重绘时才将相应图片送入生图工具 |
+| 借鉴风格                         | 传入实际参考图，说明借鉴的设计关系与允许变化的内容；未实际传入图片时只能称为文字提炼参考                         |
+| 精准还原                         | 完整截图用于测量与整体对照；只有确需素材重绘时才将相应图片送入生图工具                                           |
 
 在生成或实现前明确组件与素材边界：
 
@@ -46,12 +46,12 @@
 
 先理解用户的浏览与操作顺序，结合已选领域入口确定视觉手法，再组织内容：
 
-| 界面 | 设计重点 |
-| --- | --- |
-| 品牌官网与说服型页面 | 主视觉与文字的关系，跨区块节奏和一致的品牌表达 |
-| 后台与产品工作区 | 核心判断与操作突出，主分析、辅助指标、待办和记录有不同分量；特色来自信息组织与组件细节 |
-| 移动产品 | 内容、导航与主操作比例适当，小空间中仍保留清楚的字体和状态层级 |
-| 游戏与游玩界面 | 世界观通过插画、配色和图标进入界面，任务、数值与控件保持可读可操作 |
+| 界面                 | 设计重点                                                                               |
+| -------------------- | -------------------------------------------------------------------------------------- |
+| 品牌官网与说服型页面 | 主视觉与文字的关系，跨区块节奏和一致的品牌表达                                         |
+| 后台与产品工作区     | 核心判断与操作突出，主分析、辅助指标、待办和记录有不同分量；特色来自信息组织与组件细节 |
+| 移动产品             | 内容、导航与主操作比例适当，小空间中仍保留清楚的字体和状态层级                         |
+| 游戏与游玩界面       | 世界观通过插画、配色和图标进入界面，任务、数值与控件保持可读可操作                     |
 
 展示数据可用表格或图表，反复浏览同类对象用稳定列表，需要比较时才并列。不要把“侧栏＋指标卡＋折线＋表格”当成默认答案，也不为避开模板禁用合理组件。允许有目的的大小对比、非对称、错位、重叠与特殊裁切，说明它们如何通过布局、遮罩、字体或独立素材实现，以及窄屏如何处理。
 
@@ -81,13 +81,13 @@
 <1. 调性与页面形态> UI design (<输出尺寸，如 1536x1024>) inside a clean rounded desktop window, Simplified Chinese interface for <产品领域简述>. Delicate small-scale desktop proportions, petite typography, and generous open whitespace. <2. 画布底色范围与无彩色控件骨架> with <3. 导航与主体布局结构>, anchored by <4. 单个低明度重色锚点与 5% 单点高亮色（按产品气质在对应范围内自选，或沿用存量品牌色）>, featuring <5. 2–3 个匹配业务的图形化微组件（非核心项保持浅灰或斜纹）>, clean abstract icons, no third-party brand logos.
 ```
 
-| 填空槽位 | 范围与洞察原则（不写死单一套餐） | 英文表达结构与可选范围 |
-| --- | --- | --- |
-| **1. `<调性与页面形态>`** | 按当前页面承担的真实角色定调；完整落地页长图须写明“从顶栏到页脚的桌面纵向长图”，防止被画成手机屏或海报 | 工作台与数据大盘：`Sleek, high-craft SaaS dashboard` / `Crisp modern analytics workspace`<br>开发与诊断工具：`Minimal, precision developer workbench`<br>品牌官网首屏：`High-taste modern landing page hero`<br>完整桌面落地页长图（`1024x1536`）：`Full-length desktop landing page UI design (1024x1536 vertical scroll view from top navbar to footer)`<br>独立模块：`Focused UI component module` |
-| **2. `<画布底色范围与无彩色骨架>`** | **新建项目**按产品气质在纯净白、暖亚麻纸白、冷石白或深邃炭黑/曜石黑等低彩度底色范围内选择，并声明**哑光黑/炭灰交互控件＋中性浅灰辅助元素**；**存量项目**直接填既有底色与视觉变量 | 新建浅色／画报底色范围：`Spacious <pure-white / warm archival paper / cool stone-white / soft sand-linen> canvas with matte-black active controls and soft neutral-gray secondary elements`<br>新建深色／影院底色范围：`Deep <obsidian / carbon-slate / matte-espresso> canvas with subtle hairline borders and muted gray secondary elements`<br>存量项目继承：`Existing <存量底色描述> canvas preserving the project's <存量主辅色与组件特征> visual tokens` |
-| **3. `<导航与主体布局结构>`** | 工作区按浏览顺序选结构，不默认套 Bento 卡片墙；落地页按 [说服型骨架](direction-persuasion.md) 选首屏骨架与跨屏节奏，不默认左右对半切分 | 工作区结构：`a slim icon rail and open analytical workspace` / `a compact left sidebar and asymmetric modules` / `a narrow left queue and continuous right inspection stage` / `an unboxed flow structured by 1px hairline dividers`<br>落地页多样首屏与跨屏结构：`centered sculptural hero object with generous surrounding space` / `full-bleed editorial visual stage with overlaid display typography` / `oversized architectural typography spanning the grid` / `product interface or tactile instrument as the hero stage`，向下衔接 `staggered editorial narrative flow, frameless spec list, and signature closing CTA carrier with footer` |
-| **4. `<单个重色锚点与单点高亮范围>`** | 全图只设 **1 处**重色重心（哑光黑或契合产品气质的**低明度浓郁深色区块/主视觉载体**），搭配 **5% 单峰/单点强调色**；或直接沿用存量品牌色 | 单张重色聚焦卡／主视觉载体：`a single <matte-obsidian / deep low-value tone fitting the domain> spotlight card (or hero showcase stage) and subtle <contrasting or tonal modern accent> pills`<br>右侧独立面板＋单柱高亮：`a sleek dark-charcoal <virtual card / inspector> panel and a single <modern accent hue> highlighted peak column`<br>深色通栏点睛区块（长页适用）：`one deep <low-value domain hue> contrast section anchoring the vertical rhythm, with a single <accent hue> primary CTA pill`<br>存量品牌色继承：`one <存量品牌主色描述> focal card with restrained matching highlights` |
-| **5. `<2–3 个图形化微组件>`** | 按页面要回答的问题任选 2–3 项；工作区图表非核心项退回浅灰或斜纹灰，落地页选用契合品类的实样、图解或凭据载体 | 工作区数据构件：`one refined primary figure with muted gray decimals` / `vertical pill-shaped capsule charts where most bars are soft diagonal-hatched gray and only one peak bar is highlighted` / `a horizontal segmented capsule bar` / `a circular tick-marked radial dial` / `a clean visual node routing flow` / `compact aligned rows with subtle status pills`<br>落地页叙事与实证构件：`staggered editorial photography and anatomical diagram callouts` / `frameless hairline specification ledger` / `tactile interactive product micro-cards or audio/hardware controls` / `a ticket-style or terminal-command closing CTA block and monumental wordmark footer` |
+| 填空槽位                              | 范围与洞察原则（不写死单一套餐）                                                                                                                                                 | 英文表达结构与可选范围                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1. `<调性与页面形态>`**             | 按当前页面承担的真实角色定调；完整落地页长图须写明“从顶栏到页脚的桌面纵向长图”，防止被画成手机屏或海报                                                                           | 工作台与数据大盘：`Sleek, high-craft SaaS dashboard` / `Crisp modern analytics workspace`<br>开发与诊断工具：`Minimal, precision developer workbench`<br>品牌官网首屏：`High-taste modern landing page hero`<br>完整桌面落地页长图（`1024x1536`）：`Full-length desktop landing page UI design (1024x1536 vertical scroll view from top navbar to footer)`<br>独立模块：`Focused UI component module`                                                                                                                                                                                                                                                                        |
+| **2. `<画布底色范围与无彩色骨架>`**   | **新建项目**按产品气质在纯净白、暖亚麻纸白、冷石白或深邃炭黑/曜石黑等低彩度底色范围内选择，并声明**哑光黑/炭灰交互控件＋中性浅灰辅助元素**；**存量项目**直接填既有底色与视觉变量 | 新建浅色／画报底色范围：`Spacious <pure-white / warm archival paper / cool stone-white / soft sand-linen> canvas with matte-black active controls and soft neutral-gray secondary elements`<br>新建深色／影院底色范围：`Deep <obsidian / carbon-slate / matte-espresso> canvas with subtle hairline borders and muted gray secondary elements`<br>存量项目继承：`Existing <存量底色描述> canvas preserving the project's <存量主辅色与组件特征> visual tokens`                                                                                                                                                                                                               |
+| **3. `<导航与主体布局结构>`**         | 工作区按浏览顺序选结构，不默认套 Bento 卡片墙；落地页按 [说服型骨架](direction-persuasion.md) 选首屏骨架与跨屏节奏，不默认左右对半切分                                           | 工作区结构：`a slim icon rail and open analytical workspace` / `a compact left sidebar and asymmetric modules` / `a narrow left queue and continuous right inspection stage` / `an unboxed flow structured by 1px hairline dividers`<br>落地页多样首屏与跨屏结构：`centered sculptural hero object with generous surrounding space` / `full-bleed editorial visual stage with overlaid display typography` / `oversized architectural typography spanning the grid` / `product interface or tactile instrument as the hero stage`，向下衔接 `staggered editorial narrative flow, frameless spec list, and signature closing CTA carrier with footer`                         |
+| **4. `<单个重色锚点与单点高亮范围>`** | 全图只设 **1 处**重色重心（哑光黑或契合产品气质的**低明度浓郁深色区块/主视觉载体**），搭配 **5% 单峰/单点强调色**；或直接沿用存量品牌色                                          | 单张重色聚焦卡／主视觉载体：`a single <matte-obsidian / deep low-value tone fitting the domain> spotlight card (or hero showcase stage) and subtle <contrasting or tonal modern accent> pills`<br>右侧独立面板＋单柱高亮：`a sleek dark-charcoal <virtual card / inspector> panel and a single <modern accent hue> highlighted peak column`<br>深色通栏点睛区块（长页适用）：`one deep <low-value domain hue> contrast section anchoring the vertical rhythm, with a single <accent hue> primary CTA pill`<br>存量品牌色继承：`one <存量品牌主色描述> focal card with restrained matching highlights`                                                                        |
+| **5. `<2–3 个图形化微组件>`**         | 按页面要回答的问题任选 2–3 项；工作区图表非核心项退回浅灰或斜纹灰，落地页选用契合品类的实样、图解或凭据载体                                                                      | 工作区数据构件：`one refined primary figure with muted gray decimals` / `vertical pill-shaped capsule charts where most bars are soft diagonal-hatched gray and only one peak bar is highlighted` / `a horizontal segmented capsule bar` / `a circular tick-marked radial dial` / `a clean visual node routing flow` / `compact aligned rows with subtle status pills`<br>落地页叙事与实证构件：`staggered editorial photography and anatomical diagram callouts` / `frameless hairline specification ledger` / `tactile interactive product micro-cards or audio/hardware controls` / `a ticket-style or terminal-command closing CTA block and monumental wordmark footer` |
 
 - 类比应描述体验或组织方式，而非堆叠风格名。若“杂志”“生活方式”带入无关静物、纸纹或口号，移除歧义，不继续堆修饰词。
 - 参考字体拆成字形、字重、比例与间距，不把英文字体类别直接翻译为中文宋体或手写字。没有既有规范时选择少量自洽规则，不把某一套配色、材质或字体固定为所有产品的套餐。

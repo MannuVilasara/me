@@ -5,7 +5,15 @@ name: tests
 on:
   push:
     branches: [main]
-    paths: ["scripts/**", "tests/**", "assets/**", "references/**", "SKILL.md", ".github/workflows/tests.yml"]
+    paths:
+      [
+        'scripts/**',
+        'tests/**',
+        'assets/**',
+        'references/**',
+        'SKILL.md',
+        '.github/workflows/tests.yml',
+      ]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -54,7 +62,7 @@ jobs:
           node-version: 22
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
       - name: 运行非浏览器测试
         shell: bash
         run: |
@@ -77,13 +85,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: "linux · chrome", os: ubuntu-latest }
-          - { name: "linux · chrome · GBK", os: ubuntu-latest, locale: zh_CN.GBK }
-          - { name: "windows · chrome · 深色主题", os: windows-latest, theme: dark, node: 24 }
-          - { name: "windows · edge", os: windows-latest, browser: edge }
+          - { name: 'linux · chrome', os: ubuntu-latest }
+          - { name: 'linux · chrome · GBK', os: ubuntu-latest, locale: zh_CN.GBK }
+          - { name: 'windows · chrome · 深色主题', os: windows-latest, theme: dark, node: 24 }
+          - { name: 'windows · edge', os: windows-latest, browser: edge }
     env:
       # 托管机器只有两个核、用软件渲染，抓不住 0.36 秒的反馈，那一条实时取帧的测试只在本机跑。
-      OIL_SHOOT_SLOW_HOST: "1"
+      OIL_SHOOT_SLOW_HOST: '1'
     steps:
       - name: 换行符保持原样
         run: git config --global core.autocrlf false
@@ -93,7 +101,7 @@ jobs:
           node-version: ${{ matrix.node || 22 }}
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
       - name: Linux：装 ffmpeg，放开 Chrome 沙箱要用的用户命名空间
         if: runner.os == 'Linux'
         run: |

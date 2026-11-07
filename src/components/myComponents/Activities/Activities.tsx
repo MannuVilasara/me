@@ -3,14 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
-import {
-  BookOpen,
-  Monitor,
-  Zap,
-  Cat,
-  PenTool,
-  Github,
-} from 'lucide-react';
+import { BookOpen, Monitor, Zap, Cat, PenTool, Github } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ArcadeRenderer } from 'pacman-contribution-graph';
 
@@ -110,9 +103,14 @@ export default function Activities() {
         <div className="p-4 rounded-xl border border-border/60 bg-card/40 backdrop-blur-xs flex flex-col justify-between min-h-[92px]">
           <div className="flex items-center gap-1.5 text-muted-foreground mb-2">
             <BookOpen className="h-3.5 w-3.5" />
-            <span className="font-mono text-[10px] uppercase tracking-wider font-medium">Reading</span>
+            <span className="font-mono text-[10px] uppercase tracking-wider font-medium">
+              Reading
+            </span>
           </div>
-          <div className="text-xs font-medium text-foreground italic truncate" title="Lord of the Mysteries">
+          <div
+            className="text-xs font-medium text-foreground italic truncate"
+            title="Lord of the Mysteries"
+          >
             "Lord of the Mysteries"
           </div>
         </div>
@@ -121,9 +119,14 @@ export default function Activities() {
         <div className="p-4 rounded-xl border border-border/60 bg-card/40 backdrop-blur-xs flex flex-col justify-between min-h-[92px]">
           <div className="flex items-center gap-1.5 text-muted-foreground mb-2">
             <Monitor className="h-3.5 w-3.5" />
-            <span className="font-mono text-[10px] uppercase tracking-wider font-medium">Exploring</span>
+            <span className="font-mono text-[10px] uppercase tracking-wider font-medium">
+              Exploring
+            </span>
           </div>
-          <div className="text-xs font-medium text-foreground italic truncate" title="Distributed Consensus">
+          <div
+            className="text-xs font-medium text-foreground italic truncate"
+            title="Distributed Consensus"
+          >
             "Distributed Consensus 👒"
           </div>
         </div>
@@ -132,9 +135,14 @@ export default function Activities() {
         <div className="p-4 rounded-xl border border-border/60 bg-card/40 backdrop-blur-xs flex flex-col justify-between min-h-[92px]">
           <div className="flex items-center gap-1.5 text-muted-foreground mb-2">
             <Zap className="h-3.5 w-3.5 text-amber-500" />
-            <span className="font-mono text-[10px] uppercase tracking-wider font-medium">Focus</span>
+            <span className="font-mono text-[10px] uppercase tracking-wider font-medium">
+              Focus
+            </span>
           </div>
-          <div className="text-xs font-medium text-foreground truncate" title="Platform Craft & Next.js">
+          <div
+            className="text-xs font-medium text-foreground truncate"
+            title="Platform Craft & Next.js"
+          >
             Platform Craft & Next.js
           </div>
         </div>
@@ -144,7 +152,9 @@ export default function Activities() {
           <div className="flex flex-col justify-between h-full">
             <div className="flex items-center gap-1.5 text-muted-foreground">
               <Cat className="h-3.5 w-3.5" />
-              <span className="font-mono text-[10px] uppercase tracking-wider font-medium">Oneko</span>
+              <span className="font-mono text-[10px] uppercase tracking-wider font-medium">
+                Oneko
+              </span>
             </div>
             <span className="text-xs font-medium text-foreground">Desktop Cat</span>
           </div>

@@ -10,11 +10,11 @@
 - `delivery.selected`：使用哪种媒体和渲染器。
 - `runtime.controller`：输入如何控制媒体时间。
 
-| `time_control` | `runtime.controller` | 行为 |
-|---|---|---|
-| `scrub` | `frame-scrub` | 输入值持续映射到帧或时间 |
-| `segment-play` | `segment-playback` | 输入选择相邻状态，片段按时间播放 |
-| `autonomous` | `autonomous-playback` | 媒体时间自行推进 |
+| `time_control` | `runtime.controller`  | 行为                             |
+| -------------- | --------------------- | -------------------------------- |
+| `scrub`        | `frame-scrub`         | 输入值持续映射到帧或时间         |
+| `segment-play` | `segment-playback`    | 输入选择相邻状态，片段按时间播放 |
+| `autonomous`   | `autonomous-playback` | 媒体时间自行推进                 |
 
 不要根据 `scroll`、分页布局或视频格式猜控制器。滚动既可以 scrub，也可以触发片段播放。
 

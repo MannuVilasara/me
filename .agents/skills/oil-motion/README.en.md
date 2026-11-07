@@ -88,11 +88,11 @@ Once processed, the browser never regenerates video during interaction — it se
 
 The agent first locks a Concept Contract — subject, style, motion, background ownership, input, time control, and continuity — without expanding the request. Background ownership decides whether the scene is baked into video; parameter space and device budget decide the media format; time control separately decides the runtime controller.
 
-| Use case | Common format | Why |
-| --- | --- | --- |
-| Scene narratives, camera moves, environmental light, ground contact | Baked all-keyframe MP4 | Background and subject are generated in the same video; best continuity, no keying risk |
-| Transparent reuse: small, circular, 2D, or frequently-seeked motion | Alpha WebP sprite sheet | Keying happens during the build; random access stays responsive |
-| Transparent reuse: large, long, one-dimensional scroll motion | All-keyframe chroma MP4 | WebGL keys it at runtime while video compression avoids a huge RGBA atlas |
+| Use case                                                            | Common format           | Why                                                                                     |
+| ------------------------------------------------------------------- | ----------------------- | --------------------------------------------------------------------------------------- |
+| Scene narratives, camera moves, environmental light, ground contact | Baked all-keyframe MP4  | Background and subject are generated in the same video; best continuity, no keying risk |
+| Transparent reuse: small, circular, 2D, or frequently-seeked motion | Alpha WebP sprite sheet | Keying happens during the build; random access stays responsive                         |
+| Transparent reuse: large, long, one-dimensional scroll motion       | All-keyframe chroma MP4 | WebGL keys it at runtime while video compression avoids a huge RGBA atlas               |
 
 The agent runs the budget check and implements only the selected primary route. Before batch generation, a pilot must pass and produce a hashed approval record. Chained clips verify both the generation-input handoff and the decoded output seam.
 

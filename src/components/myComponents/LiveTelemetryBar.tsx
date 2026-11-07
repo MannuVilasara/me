@@ -3,14 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { motion } from 'framer-motion';
-import {
-  Music,
-  GitCommit,
-  Clock,
-  Sun,
-  Moon,
-  ArrowUpRight,
-} from 'lucide-react';
+import { Music, GitCommit, Clock, Sun, Moon, ArrowUpRight } from 'lucide-react';
 import { FaDiscord } from 'react-icons/fa';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -185,9 +178,7 @@ export default function LiveTelemetryBar() {
               {isPlaying ? nowPlayingData?.title : 'Offline playlist'}
             </div>
             <p className="text-[11px] text-muted-foreground truncate">
-              {isPlaying
-                ? nowPlayingData?.artist
-                : 'Spotify / Last.fm'}
+              {isPlaying ? nowPlayingData?.artist : 'Spotify / Last.fm'}
             </p>
           </div>
         </motion.div>

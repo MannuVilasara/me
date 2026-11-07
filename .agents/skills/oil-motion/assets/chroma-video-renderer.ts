@@ -1,6 +1,6 @@
 export type ChromaKeyingParameters = {
-  algorithm: "dominance-v2";
-  mode: "green" | "magenta";
+  algorithm: 'dominance-v2';
+  mode: 'green' | 'magenta';
   keyColor: [number, number, number];
   similarity: number;
   smoothness: number;
@@ -101,20 +101,15 @@ void main() {
 }
 `;
 
-const clamp = (value: number, min: number, max: number) =>
-  Math.min(max, Math.max(min, value));
+const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-function compileShader(
-  gl: WebGLRenderingContext,
-  type: number,
-  source: string,
-) {
+function compileShader(gl: WebGLRenderingContext, type: number, source: string) {
   const shader = gl.createShader(type);
-  if (!shader) throw new Error("无法创建 WebGL Shader");
+  if (!shader) throw new Error('无法创建 WebGL Shader');
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    const message = gl.getShaderInfoLog(shader) ?? "未知 Shader 编译错误";
+    const message = gl.getShaderInfoLog(shader) ?? '未知 Shader 编译错误';
     gl.deleteShader(shader);
     throw new Error(message);
   }
@@ -123,7 +118,7 @@ function compileShader(
 
 function createProgram(gl: WebGLRenderingContext) {
   const program = gl.createProgram();
-  if (!program) throw new Error("无法创建 WebGL Program");
+  if (!program) throw new Error('无法创建 WebGL Program');
   const vertex = compileShader(gl, gl.VERTEX_SHADER, VERTEX_SHADER);
   const fragment = compileShader(gl, gl.FRAGMENT_SHADER, FRAGMENT_SHADER);
   gl.attachShader(program, vertex);
@@ -132,35 +127,31 @@ function createProgram(gl: WebGLRenderingContext) {
   gl.deleteShader(vertex);
   gl.deleteShader(fragment);
   if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    const message = gl.getProgramInfoLog(program) ?? "未知 WebGL 链接错误";
+    const message = gl.getProgramInfoLog(program) ?? '未知 WebGL 链接错误';
     gl.deleteProgram(program);
     throw new Error(message);
   }
   return program;
 }
 
-function requiredLocation(
-  value: WebGLUniformLocation | null,
-  name: string,
-): WebGLUniformLocation {
+function requiredLocation(value: WebGLUniformLocation | null, name: string): WebGLUniformLocation {
   if (value === null) throw new Error(`缺少 WebGL 变量：${name}`);
   return value;
 }
 
 export function createChromaVideoRenderer(
-  options: ChromaVideoRendererOptions,
+  options: ChromaVideoRendererOptions
 ): ChromaVideoRenderer {
   const { video, canvas } = options;
   const frameCount = Math.max(1, Math.floor(options.frameCount));
   const fps = Math.max(1, options.fps);
   const legacyKeyColor = options.keyColor ?? [0, 255, 0];
   const keying: ChromaKeyingParameters = options.keying ?? {
-    algorithm: "dominance-v2",
+    algorithm: 'dominance-v2',
     mode:
-      legacyKeyColor[0] >= legacyKeyColor[1] + 40 &&
-      legacyKeyColor[2] >= legacyKeyColor[1] + 40
-        ? "magenta"
-        : "green",
+      legacyKeyColor[0] >= legacyKeyColor[1] + 40 && legacyKeyColor[2] >= legacyKeyColor[1] + 40
+        ? 'magenta'
+        : 'green',
     keyColor: legacyKeyColor,
     similarity: options.similarity ?? 0.12,
     smoothness: options.smoothness ?? 0.06,
@@ -170,74 +161,65 @@ export function createChromaVideoRenderer(
     spillEnd: 0.06,
     spill: options.spill ?? 1,
   };
-  if (keying.algorithm !== "dominance-v2") {
+  if (keying.algorithm !== 'dominance-v2') {
     throw new Error(`不支持的色键算法：${keying.algorithm}`);
   }
   const maxDpr = options.maxDpr ?? 2;
-  const gl = canvas.getContext("webgl", {
+  const gl = canvas.getContext('webgl', {
     alpha: true,
     antialias: false,
     premultipliedAlpha: true,
     preserveDrawingBuffer: false,
   });
-  if (!gl) throw new Error("当前浏览器无法创建 WebGL 绿幕渲染器");
+  if (!gl) throw new Error('当前浏览器无法创建 WebGL 绿幕渲染器');
 
   const program = createProgram(gl);
-  const positionLocation = gl.getAttribLocation(program, "aPosition");
-  if (positionLocation < 0) throw new Error("缺少 WebGL 顶点位置变量");
-  const uvScaleLocation = requiredLocation(
-    gl.getUniformLocation(program, "uUvScale"),
-    "uUvScale",
-  );
+  const positionLocation = gl.getAttribLocation(program, 'aPosition');
+  if (positionLocation < 0) throw new Error('缺少 WebGL 顶点位置变量');
+  const uvScaleLocation = requiredLocation(gl.getUniformLocation(program, 'uUvScale'), 'uUvScale');
   const uvOffsetLocation = requiredLocation(
-    gl.getUniformLocation(program, "uUvOffset"),
-    "uUvOffset",
+    gl.getUniformLocation(program, 'uUvOffset'),
+    'uUvOffset'
   );
   const keyColorLocation = requiredLocation(
-    gl.getUniformLocation(program, "uKeyColor"),
-    "uKeyColor",
+    gl.getUniformLocation(program, 'uKeyColor'),
+    'uKeyColor'
   );
   const similarityLocation = requiredLocation(
-    gl.getUniformLocation(program, "uSimilarity"),
-    "uSimilarity",
+    gl.getUniformLocation(program, 'uSimilarity'),
+    'uSimilarity'
   );
   const smoothnessLocation = requiredLocation(
-    gl.getUniformLocation(program, "uSmoothness"),
-    "uSmoothness",
+    gl.getUniformLocation(program, 'uSmoothness'),
+    'uSmoothness'
   );
-  const keyModeLocation = requiredLocation(
-    gl.getUniformLocation(program, "uKeyMode"),
-    "uKeyMode",
-  );
+  const keyModeLocation = requiredLocation(gl.getUniformLocation(program, 'uKeyMode'), 'uKeyMode');
   const dominanceStartLocation = requiredLocation(
-    gl.getUniformLocation(program, "uDominanceStart"),
-    "uDominanceStart",
+    gl.getUniformLocation(program, 'uDominanceStart'),
+    'uDominanceStart'
   );
   const dominanceEndLocation = requiredLocation(
-    gl.getUniformLocation(program, "uDominanceEnd"),
-    "uDominanceEnd",
+    gl.getUniformLocation(program, 'uDominanceEnd'),
+    'uDominanceEnd'
   );
   const spillStartLocation = requiredLocation(
-    gl.getUniformLocation(program, "uSpillStart"),
-    "uSpillStart",
+    gl.getUniformLocation(program, 'uSpillStart'),
+    'uSpillStart'
   );
   const spillEndLocation = requiredLocation(
-    gl.getUniformLocation(program, "uSpillEnd"),
-    "uSpillEnd",
+    gl.getUniformLocation(program, 'uSpillEnd'),
+    'uSpillEnd'
   );
-  const spillLocation = requiredLocation(
-    gl.getUniformLocation(program, "uSpill"),
-    "uSpill",
-  );
+  const spillLocation = requiredLocation(gl.getUniformLocation(program, 'uSpill'), 'uSpill');
 
   const buffer = gl.createBuffer();
   const texture = gl.createTexture();
-  if (!buffer || !texture) throw new Error("无法创建 WebGL 缓冲区");
+  if (!buffer || !texture) throw new Error('无法创建 WebGL 缓冲区');
   gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
   gl.bufferData(
     gl.ARRAY_BUFFER,
     new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-    gl.STATIC_DRAW,
+    gl.STATIC_DRAW
   );
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -290,24 +272,17 @@ export function createChromaVideoRenderer(
     gl.enableVertexAttribArray(positionLocation);
     gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
     gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texImage2D(
-      gl.TEXTURE_2D,
-      0,
-      gl.RGBA,
-      gl.RGBA,
-      gl.UNSIGNED_BYTE,
-      video,
-    );
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
     updateCoverTransform();
     gl.uniform3f(
       keyColorLocation,
       keying.keyColor[0] / 255,
       keying.keyColor[1] / 255,
-      keying.keyColor[2] / 255,
+      keying.keyColor[2] / 255
     );
     gl.uniform1f(similarityLocation, keying.similarity);
     gl.uniform1f(smoothnessLocation, keying.smoothness);
-    gl.uniform1f(keyModeLocation, keying.mode === "magenta" ? 1 : 0);
+    gl.uniform1f(keyModeLocation, keying.mode === 'magenta' ? 1 : 0);
     gl.uniform1f(dominanceStartLocation, keying.dominanceStart);
     gl.uniform1f(dominanceEndLocation, keying.dominanceEnd);
     gl.uniform1f(spillStartLocation, keying.spillStart);
@@ -349,13 +324,11 @@ export function createChromaVideoRenderer(
       pendingFrame === null ||
       !Number.isFinite(video.duration) ||
       video.duration <= 0
-    ) return;
+    )
+      return;
     const nextFrame = pendingFrame;
     pendingFrame = null;
-    const nextTime = Math.min(
-      nextFrame / fps,
-      Math.max(0, video.duration - 1 / fps),
-    );
+    const nextTime = Math.min(nextFrame / fps, Math.max(0, video.duration - 1 / fps));
     if (Math.abs(video.currentTime - nextTime) <= 1 / (fps * 2)) {
       draw();
       options.onFrame?.(nextFrame, 0);
@@ -402,12 +375,12 @@ export function createChromaVideoRenderer(
   resizeObserver.observe(canvas);
   video.muted = true;
   video.playsInline = true;
-  video.preload = "auto";
-  video.addEventListener("loadeddata", handleLoaded);
-  video.addEventListener("seeked", handleSeeked);
-  video.addEventListener("error", handleVideoError);
-  canvas.addEventListener("webglcontextlost", handleContextLost);
-  canvas.addEventListener("webglcontextrestored", handleContextRestored);
+  video.preload = 'auto';
+  video.addEventListener('loadeddata', handleLoaded);
+  video.addEventListener('seeked', handleSeeked);
+  video.addEventListener('error', handleVideoError);
+  canvas.addEventListener('webglcontextlost', handleContextLost);
+  canvas.addEventListener('webglcontextrestored', handleContextRestored);
   if (video.readyState >= video.HAVE_CURRENT_DATA) handleLoaded();
 
   return {
@@ -430,11 +403,11 @@ export function createChromaVideoRenderer(
       live = false;
       cancelLiveFrame();
       resizeObserver.disconnect();
-      video.removeEventListener("loadeddata", handleLoaded);
-      video.removeEventListener("seeked", handleSeeked);
-      video.removeEventListener("error", handleVideoError);
-      canvas.removeEventListener("webglcontextlost", handleContextLost);
-      canvas.removeEventListener("webglcontextrestored", handleContextRestored);
+      video.removeEventListener('loadeddata', handleLoaded);
+      video.removeEventListener('seeked', handleSeeked);
+      video.removeEventListener('error', handleVideoError);
+      canvas.removeEventListener('webglcontextlost', handleContextLost);
+      canvas.removeEventListener('webglcontextrestored', handleContextRestored);
       gl.deleteTexture(texture);
       gl.deleteBuffer(buffer);
       gl.deleteProgram(program);

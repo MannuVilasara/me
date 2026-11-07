@@ -73,9 +73,17 @@ const renderer = createChromaVideoRenderer({
 ```
 
 ```css
-.motion-stage { background: var(--page-background); }
-.motion-source { display: none; }
-.motion-canvas { width: 100%; height: 100%; display: block; }
+.motion-stage {
+  background: var(--page-background);
+}
+.motion-source {
+  display: none;
+}
+.motion-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 ```
 
 ## 加载与降级

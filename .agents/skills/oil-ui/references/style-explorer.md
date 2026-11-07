@@ -14,20 +14,17 @@
 
 ```json
 {
-  "candidates": [
-    {"source": "a.html"},
-    {"source": "b.html"}
-  ]
+  "candidates": [{ "source": "a.html" }, { "source": "b.html" }]
 }
 ```
 
-| 特殊情况 | 在 manifest 里加 |
-| --- | --- |
-| 固定画布的界面 | 顶层或候选里加 `"nativeViewport": "宽x高"` |
-| 自己写的可操作小样 | 候选加 `"interactive": true` |
+| 特殊情况                 | 在 manifest 里加                                               |
+| ------------------------ | -------------------------------------------------------------- |
+| 固定画布的界面           | 顶层或候选里加 `"nativeViewport": "宽x高"`                     |
+| 自己写的可操作小样       | 候选加 `"interactive": true`                                   |
 | 需要启动服务才能看的页面 | 候选加 `"kind": "url"` 和本机 `url`；顶层可加 `serve` 启动说明 |
-| 改动已有页面 | 把现状也放进来，并加 `"baseline": true` |
-| 只有截图 | 候选加 `"kind": "image"`，`source` 指向截图 |
+| 改动已有页面             | 把现状也放进来，并加 `"baseline": true`                        |
+| 只有截图                 | 候选加 `"kind": "image"`，`source` 指向截图                    |
 
 HTML 和图片候选只需填写 `source`；本机地址候选按上表填写 `url`。候选来自方向卡时，每个候选再填 `name`、`concept`（北极星那一句）、`typography`、`palette`（色值数组）和 `traits`，对比页把它们和画面一起展示，用户靠这些挑选；省略的项不显示。其他字段写法见生成器的 `--help`。
 

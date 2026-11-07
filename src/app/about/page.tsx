@@ -74,13 +74,20 @@ export default function AboutPage() {
 
           <div className="text-sm sm:text-base text-foreground/85 leading-relaxed space-y-4">
             <p>
-              I'm Manpreet Singh (known online as <strong>MannuVilasara</strong>). I build web software with an emphasis on clarity, tactile motion, and dependable engineering.
+              I'm Manpreet Singh (known online as <strong>MannuVilasara</strong>). I build web
+              software with an emphasis on clarity, tactile motion, and dependable engineering.
             </p>
             <p>
-              My journey started with building client-side web experiments—obsessing over font sizing, layout stability, and how subtle easing curves can make an application feel human. As the systems I worked on grew, I found myself drawn toward what happens behind the screen: container lifecycles, automated testing matrixes, CI/CD pipelines, and data storage.
+              My journey started with building client-side web experiments—obsessing over font
+              sizing, layout stability, and how subtle easing curves can make an application feel
+              human. As the systems I worked on grew, I found myself drawn toward what happens
+              behind the screen: container lifecycles, automated testing matrixes, CI/CD pipelines,
+              and data storage.
             </p>
             <p>
-              Today, I operate across both realms: crafting responsive frontends with Next.js and TypeScript, while building reproducible platform workflows with Docker, GitHub Actions, and Linux.
+              Today, I operate across both realms: crafting responsive frontends with Next.js and
+              TypeScript, while building reproducible platform workflows with Docker, GitHub
+              Actions, and Linux.
             </p>
           </div>
 
@@ -98,7 +105,8 @@ export default function AboutPage() {
                   Tactile Restraint
                 </span>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Interfaces should not scream for attention. Good design reduces friction, avoids layout shift, and respects natural user flow.
+                  Interfaces should not scream for attention. Good design reduces friction, avoids
+                  layout shift, and respects natural user flow.
                 </p>
               </div>
               <div className="p-4 rounded-xl bg-muted/40 border border-border/40 space-y-1.5">
@@ -106,7 +114,8 @@ export default function AboutPage() {
                   Deterministic Automation
                 </span>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  If a manual step can fail in deployment, automate it. Workflows should be testable, repeatable, and documented in code.
+                  If a manual step can fail in deployment, automate it. Workflows should be
+                  testable, repeatable, and documented in code.
                 </p>
               </div>
             </div>
@@ -181,11 +190,12 @@ export default function AboutPage() {
 
         {/* Outside of Code */}
         <section className="border-t border-border/50 pt-8 pb-4">
-          <h2 className="text-xl font-bold tracking-tight text-foreground mb-3">
-            Outside of Code
-          </h2>
+          <h2 className="text-xl font-bold tracking-tight text-foreground mb-3">Outside of Code</h2>
           <p className="text-sm text-foreground/80 leading-relaxed">
-            When I'm away from the terminal, I enjoy diving into fantasy web serials like <em>Lord of the Mysteries</em>, experimenting with Linux window managers, and listening to ambient instrumental music. I'm always open to talking about platform architecture, open source projects, or good books.
+            When I'm away from the terminal, I enjoy diving into fantasy web serials like{' '}
+            <em>Lord of the Mysteries</em>, experimenting with Linux window managers, and listening
+            to ambient instrumental music. I'm always open to talking about platform architecture,
+            open source projects, or good books.
           </p>
         </section>
       </div>

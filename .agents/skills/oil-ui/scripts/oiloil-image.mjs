@@ -9,7 +9,12 @@ import { fileURLToPath } from 'node:url';
 const ACCOUNT = 'https://ui.oiloil.org/account/?tab=images';
 const LOGIN = 'npx github:oil-oil/oil-cli login';
 const MIME_EXT = { 'image/png': '.png', 'image/jpeg': '.jpg', 'image/webp': '.webp' };
-const EXT_MIME = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp' };
+const EXT_MIME = {
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+};
 const MAX_REF = 2 * 1024 * 1024;
 const HELP = `用法：node <skill>/scripts/oiloil-image.mjs <image|balance|status> [选项]
 需要 Node 22+，无第三方依赖。image 使用 oiloil 积分生图；加 --ref 则改图。
@@ -59,13 +64,20 @@ OIL_API 仍只用于画廊、oil CLI 和更新检查，不改变图像 API 地�
 成功写到标准输出，说明和错误写到标准错误，不打印堆栈。`;
 
 class CliError extends Error {
-  constructor(code, message) { super(message); this.code = code; }
+  constructor(code, message) {
+    super(message);
+    this.code = code;
+  }
 }
-const usage = message => { throw new CliError(2, `${message}。用 node <skill>/scripts/oiloil-image.mjs --help 查看用法。`); };
-const quoted = value => JSON.stringify(value);
+const usage = (message) => {
+  throw new CliError(2, `${message}。用 node <skill>/scripts/oiloil-image.mjs --help 查看用法。`);
+};
+const quoted = (value) => JSON.stringify(value);
 export function shellQuote(value, platform = process.platform) {
   const text = String(value);
-  return platform === 'win32' ? `'${text.replaceAll("'", "''")}'` : `'${text.replaceAll("'", "'\\''")}'`;
+  return platform === 'win32'
+    ? `'${text.replaceAll("'", "''")}'`
+    : `'${text.replaceAll("'", "'\\''")}'`;
 }
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -74,18 +86,25 @@ export function parseArgs(argv) {
   const flags = argv.slice(0, argv.includes('--') ? argv.indexOf('--') : argv.length);
   if (!argv.length || flags.includes('--help') || flags.includes('-h')) return { help: true };
   const aliases = { p: 'prompt', s: 'size', o: 'out', r: 'ref', b: 'background' };
-  const opts = {}, words = [];
-  let command, literal = false;
+  const opts = {},
+    words = [];
+  let command,
+    literal = false;
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
-    if (!literal && arg === '--') { literal = true; continue; }
+    if (!literal && arg === '--') {
+      literal = true;
+      continue;
+    }
     if (!literal && arg.startsWith('-')) {
       const match = arg.match(/^(?:--([a-z-]+)|-([psorb]))(?:=(.*))?$/s);
       const key = match && (match[1] ?? aliases[match[2]]);
-      if (!['prompt', 'size', 'out', 'ref', 'background', 'timeout'].includes(key)) usage(`不支持选项 ${arg}`);
+      if (!['prompt', 'size', 'out', 'ref', 'background', 'timeout'].includes(key))
+        usage(`不支持选项 ${arg}`);
       if (key in opts) usage(`--${key} 只能写一次${key === 'ref' ? '，参考图仅支持一张' : ''}`);
       const value = match[3] ?? argv[++i];
-      if (!value?.trim() || (match[3] === undefined && value.startsWith('-'))) usage(`--${key} 缺少值`);
+      if (!value?.trim() || (match[3] === undefined && value.startsWith('-')))
+        usage(`--${key} 缺少值`);
       opts[key] = value;
     } else if (!command) {
       if (!['image', 'balance', 'status'].includes(arg)) usage(`未知命令 ${arg}`);
@@ -94,13 +113,16 @@ export function parseArgs(argv) {
   }
   if (!command) usage('缺少 image、balance 或 status 子命令');
   if (command === 'status') {
-    if (Object.keys(opts).some(key => !['timeout', 'out'].includes(key))) usage('status 只接受一个幂等键、--out 和 --timeout');
-    if (words.length !== 1 || !UUID_RE.test(words[0])) usage('status 需要一个有效的 image 请求幂等键');
+    if (Object.keys(opts).some((key) => !['timeout', 'out'].includes(key)))
+      usage('status 只接受一个幂等键、--out 和 --timeout');
+    if (words.length !== 1 || !UUID_RE.test(words[0]))
+      usage('status 需要一个有效的 image 请求幂等键');
     if (opts.out && /[\\/]$/.test(opts.out)) usage('--out 应为文件路径');
     if (opts.out) opts.out = path.resolve(opts.out);
     opts.key = words[0];
   } else if (command === 'balance') {
-    if (words.length || Object.keys(opts).some(key => key !== 'timeout')) usage('balance 只接受 --timeout');
+    if (words.length || Object.keys(opts).some((key) => key !== 'timeout'))
+      usage('balance 只接受 --timeout');
   } else {
     if (opts.prompt && words.length) usage('说明文字请用位置参数或 --prompt 中的一种');
     opts.prompt = (opts.prompt ?? words.join(' ')).trim();
@@ -109,50 +131,80 @@ export function parseArgs(argv) {
     const dimensions = size.match(/^([1-9]\d*)\s*[X×]\s*([1-9]\d*)$/);
     if (!['1K', '2K', '4K'].includes(size) && !dimensions) usage('--size 应为 1K、2K、4K 或 宽x高');
     if (dimensions) {
-      const width = Number(dimensions[1]), height = Number(dimensions[2]);
+      const width = Number(dimensions[1]),
+        height = Number(dimensions[2]);
       const pixels = width * height;
-      if (width % 16 !== 0 || height % 16 !== 0 || Math.max(width, height) > 3840
-        || Math.max(width, height) / Math.min(width, height) > 3
-        || pixels < 655360 || pixels > 8294400) {
-        usage('自定义 --size 需满足：宽高为 16 的倍数，长边不超过 3840，比例不超过 3:1，总像素为 655360..8294400');
+      if (
+        width % 16 !== 0 ||
+        height % 16 !== 0 ||
+        Math.max(width, height) > 3840 ||
+        Math.max(width, height) / Math.min(width, height) > 3 ||
+        pixels < 655360 ||
+        pixels > 8294400
+      ) {
+        usage(
+          '自定义 --size 需满足：宽高为 16 的倍数，长边不超过 3840，比例不超过 3:1，总像素为 655360..8294400'
+        );
       }
     }
     opts.size = dimensions ? `${dimensions[1]}x${dimensions[2]}` : size;
     if (opts.background !== undefined) {
       const bg = opts.background.trim().toLowerCase();
       opts.background = bg === '透明' ? 'transparent' : bg;
-      if (!['transparent', 'opaque', 'auto'].includes(opts.background)) usage('--background 应为 transparent、opaque 或 auto');
+      if (!['transparent', 'opaque', 'auto'].includes(opts.background))
+        usage('--background 应为 transparent、opaque 或 auto');
     }
     if (opts.out && /[\\/]$/.test(opts.out)) usage('--out 应为文件路径');
     opts.out = path.resolve(opts.out ?? 'assets/generated.png');
   }
   opts.timeout = Number(opts.timeout ?? (command === 'image' ? 120000 : 10000));
-  if (!Number.isInteger(opts.timeout) || opts.timeout < 1 || opts.timeout > 900000) usage('--timeout 应为 1..900000 的整数');
+  if (!Number.isInteger(opts.timeout) || opts.timeout < 1 || opts.timeout > 900000)
+    usage('--timeout 应为 1..900000 的整数');
   return { command, opts };
 }
 
-export function tokenConfigPath(env = process.env, platform = process.platform, home = os.homedir()) {
+export function tokenConfigPath(
+  env = process.env,
+  platform = process.platform,
+  home = os.homedir()
+) {
   const p = platform === 'win32' ? path.win32 : path.posix;
-  const root = platform === 'win32'
-    ? env.APPDATA || p.join(home, 'AppData', 'Roaming')
-    : env.XDG_CONFIG_HOME || p.join(home, '.config');
+  const root =
+    platform === 'win32'
+      ? env.APPDATA || p.join(home, 'AppData', 'Roaming')
+      : env.XDG_CONFIG_HOME || p.join(home, '.config');
   return p.join(root, 'oil', 'config.json');
 }
 
-export async function readOilToken(env = process.env, platform = process.platform, home = os.homedir()) {
+export async function readOilToken(
+  env = process.env,
+  platform = process.platform,
+  home = os.homedir()
+) {
   if (env.OIL_TOKEN?.trim()) return env.OIL_TOKEN.trim();
   try {
     const config = JSON.parse(await fs.readFile(tokenConfigPath(env, platform, home), 'utf8'));
     return typeof config?.token === 'string' ? config.token.trim() : '';
-  } catch { return ''; }
+  } catch {
+    return '';
+  }
 }
 
 function apiRoot() {
   try {
     const url = new URL(process.env.OIL_IMAGE_API?.trim() || 'https://api.oiloil.org');
-    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash) throw new Error();
+    if (
+      !['http:', 'https:'].includes(url.protocol) ||
+      url.username ||
+      url.password ||
+      url.search ||
+      url.hash
+    )
+      throw new Error();
     return url.href.replace(/\/+$/, '');
-  } catch { usage('OIL_IMAGE_API 应为不带凭据、查询参数或片段的 HTTP(S) 根地址'); }
+  } catch {
+    usage('OIL_IMAGE_API 应为不带凭据、查询参数或片段的 HTTP(S) 根地址');
+  }
 }
 
 async function referenceImage(file) {
@@ -162,9 +214,13 @@ async function referenceImage(file) {
     if (info.size > MAX_REF) usage('oiloil 参考图上限为 2 MiB，请缩小图片或去掉 --ref');
     const bytes = await fs.readFile(file);
     if (bytes.length > MAX_REF) usage('oiloil 参考图上限为 2 MiB，请缩小图片或去掉 --ref');
-    const mime = bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) ? 'image/png'
-      : bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255 ? 'image/jpeg'
-        : bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP' ? 'image/webp' : null;
+    const mime = bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
+      ? 'image/png'
+      : bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255
+        ? 'image/jpeg'
+        : bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP'
+          ? 'image/webp'
+          : null;
     if (!mime) usage('--ref 仅支持 PNG、JPEG 或 WebP 文件');
     return `data:${mime};base64,${bytes.toString('base64')}`;
   } catch (error) {
@@ -178,12 +234,17 @@ async function prepareOutput(out, idempotencyKey) {
   let dir, handle, requestHandle;
   try {
     await fs.mkdir(path.dirname(out), { recursive: true });
-    const info = await fs.lstat(out).catch(error => { if (error.code !== 'ENOENT') throw error; });
+    const info = await fs.lstat(out).catch((error) => {
+      if (error.code !== 'ENOENT') throw error;
+    });
     if (info?.isDirectory()) usage('--out 应为文件路径');
     dir = await fs.mkdtemp(path.join(os.tmpdir(), 'oiloil-image-'));
     const requestFile = path.join(dir, 'request.json');
     requestHandle = await fs.open(requestFile, 'wx', 0o600);
-    await requestHandle.writeFile(JSON.stringify({ endpoint: 'images', idempotency_key: idempotencyKey }), 'utf8');
+    await requestHandle.writeFile(
+      JSON.stringify({ endpoint: 'images', idempotency_key: idempotencyKey }),
+      'utf8'
+    );
     await requestHandle.sync();
     await requestHandle.close();
     requestHandle = undefined;
@@ -195,19 +256,29 @@ async function prepareOutput(out, idempotencyKey) {
     await handle?.close().catch(() => {});
     if (dir) await fs.rm(dir, { recursive: true, force: true }).catch(() => {});
     if (error instanceof CliError) throw error;
-    throw new CliError(1, '无法准备输出或恢复目录，请检查 --out 和临时目录的权限及可用空间；本次未发送生成请求。');
+    throw new CliError(
+      1,
+      '无法准备输出或恢复目录，请检查 --out 和临时目录的权限及可用空间；本次未发送生成请求。'
+    );
   }
 }
 
 async function request(command, opts, token, root, recovery) {
   let response, raw;
-  const endpoint = command === 'image' ? 'images' : command === 'balance' ? 'credits' : `requests/${opts.key}?endpoint=images`;
+  const endpoint =
+    command === 'image'
+      ? 'images'
+      : command === 'balance'
+        ? 'credits'
+        : `requests/${opts.key}?endpoint=images`;
   try {
     response = await fetch(`${root}/v1/${endpoint}`, {
       method: command === 'image' ? 'POST' : 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
-        ...(command === 'image' ? { 'Content-Type': 'application/json', 'Idempotency-Key': opts.idempotencyKey } : {}),
+        ...(command === 'image'
+          ? { 'Content-Type': 'application/json', 'Idempotency-Key': opts.idempotencyKey }
+          : {}),
       },
       ...(command === 'image' ? { body: JSON.stringify(opts.body) } : {}),
       signal: AbortSignal.timeout(opts.timeout),
@@ -216,31 +287,55 @@ async function request(command, opts, token, root, recovery) {
     raw = await response.text();
   } catch {
     if (recovery) recovery.statusRequired = true;
-    throw new CliError(6, command === 'image'
-      ? `连接 oiloil 失败或请求超时，暂时没有拿到图片，无法确认本次是否扣费。请用随后给出的 status 命令查询原请求，或到 ${ACCOUNT} 核对记录；不要直接重新生成。`
-      : command === 'status'
-        ? '连接 oiloil 失败或请求超时，暂时无法查询原请求状态。请检查网络后用同一命令重试；不要重新生图。'
-        : `连接 oiloil 失败或请求超时，暂时无法查询余额。请检查网络后重试，或到 ${ACCOUNT} 查看；任务照常继续。`);
+    throw new CliError(
+      6,
+      command === 'image'
+        ? `连接 oiloil 失败或请求超时，暂时没有拿到图片，无法确认本次是否扣费。请用随后给出的 status 命令查询原请求，或到 ${ACCOUNT} 核对记录；不要直接重新生成。`
+        : command === 'status'
+          ? '连接 oiloil 失败或请求超时，暂时无法查询原请求状态。请检查网络后用同一命令重试；不要重新生图。'
+          : `连接 oiloil 失败或请求超时，暂时无法查询余额。请检查网络后重试，或到 ${ACCOUNT} 查看；任务照常继续。`
+    );
   }
-  if (response.status === 401) throw new CliError(5, `oiloil 登录状态已失效。可运行 ${LOGIN} 重新登录，并在 ${ACCOUNT} 查看余额或充值；任务照常继续，合适时友好提示一次即可。`);
-  if (response.status === 402) throw new CliError(4, `oiloil 余额不足，本次生图未开始。可在 ${ACCOUNT} 充值；任务照常继续，合适时友好提示一次即可。`);
+  if (response.status === 401)
+    throw new CliError(
+      5,
+      `oiloil 登录状态已失效。可运行 ${LOGIN} 重新登录，并在 ${ACCOUNT} 查看余额或充值；任务照常继续，合适时友好提示一次即可。`
+    );
+  if (response.status === 402)
+    throw new CliError(
+      4,
+      `oiloil 余额不足，本次生图未开始。可在 ${ACCOUNT} 充值；任务照常继续，合适时友好提示一次即可。`
+    );
   if (command === 'status' && response.status === 404) {
-    throw new CliError(7, '未找到这个 image 请求。请核对幂等键；不要重新生图，必要时到账户页核对记录。');
+    throw new CliError(
+      7,
+      '未找到这个 image 请求。请核对幂等键；不要重新生图，必要时到账户页核对记录。'
+    );
   }
   if (response.status === 400) {
     let detail = '';
     try {
       const result = JSON.parse(raw);
-      if (typeof result?.error?.message === 'string') detail = result.error.message.replace(/\s+/g, ' ').trim().slice(0, 300);
+      if (typeof result?.error?.message === 'string')
+        detail = result.error.message.replace(/\s+/g, ' ').trim().slice(0, 300);
     } catch {}
-    throw new CliError(2, `oiloil 参数错误${detail ? `：${detail}` : '（HTTP 400）'}。请修正后重试。`);
+    throw new CliError(
+      2,
+      `oiloil 参数错误${detail ? `：${detail}` : '（HTTP 400）'}。请修正后重试。`
+    );
   }
   if (response.status === 409 && command === 'image') {
     recovery.statusRequired = true;
-    throw new CliError(7, 'oiloil 检测到重复的幂等键。请用随后给出的 status 命令查询原请求，不要直接重新生成。');
+    throw new CliError(
+      7,
+      'oiloil 检测到重复的幂等键。请用随后给出的 status 命令查询原请求，不要直接重新生成。'
+    );
   }
   if (response.status >= 400 && response.status < 500) {
-    throw new CliError(7, `oiloil 拒绝了请求（HTTP ${response.status}），未收到图片。请检查请求后重试。`);
+    throw new CliError(
+      7,
+      `oiloil 拒绝了请求（HTTP ${response.status}），未收到图片。请检查请求后重试。`
+    );
   }
   if (recovery) {
     // Persist before validating image/usage, so a malformed paid result is recoverable.
@@ -249,26 +344,44 @@ async function request(command, opts, token, root, recovery) {
       await recovery.handle.sync();
     } catch {
       // A second filesystem may still be writable; do not throw away the in-memory result.
-      try { recovery.extra = await writeUnique(path.join(path.dirname(opts.out), `oiloil-response-${randomUUID()}.json`), Buffer.from(raw), 0o600); }
-      catch { recovery.writeFailed = true; }
+      try {
+        recovery.extra = await writeUnique(
+          path.join(path.dirname(opts.out), `oiloil-response-${randomUUID()}.json`),
+          Buffer.from(raw),
+          0o600
+        );
+      } catch {
+        recovery.writeFailed = true;
+      }
     }
     recovery.received = true;
   }
   if (!response.ok) {
     if (recovery) recovery.statusRequired = true;
-    throw new CliError(7, `oiloil 接口返回异常（HTTP ${response.status}），未自动重试。请查询原请求或到 ${ACCOUNT} 核对记录后再决定是否重试；任务照常继续。`);
+    throw new CliError(
+      7,
+      `oiloil 接口返回异常（HTTP ${response.status}），未自动重试。请查询原请求或到 ${ACCOUNT} 核对记录后再决定是否重试；任务照常继续。`
+    );
   }
-  try { return JSON.parse(raw); }
-  catch { throw new CliError(7, 'oiloil 返回了无法解析的响应，未自动重试；请先核对账户记录。'); }
+  try {
+    return JSON.parse(raw);
+  } catch {
+    throw new CliError(7, 'oiloil 返回了无法解析的响应，未自动重试；请先核对账户记录。');
+  }
 }
 
 async function writeUnique(target, bytes, mode = 0o644) {
-  const ext = path.extname(target), stem = target.slice(0, target.length - ext.length);
+  const ext = path.extname(target),
+    stem = target.slice(0, target.length - ext.length);
   for (let suffix = 0; ; suffix++) {
     const file = suffix ? `${stem}-${suffix}${ext}` : target;
     let handle;
-    try { handle = await fs.open(file, 'wx', mode); }
-    catch (error) { if (error.code === 'EEXIST') continue; throw error; }
+    try {
+      handle = await fs.open(file, 'wx', mode);
+    } catch (error) {
+      if (error.code === 'EEXIST') continue;
+      throw error;
+    }
     try {
       await handle.writeFile(bytes);
       await handle.sync();
@@ -282,18 +395,25 @@ async function writeUnique(target, bytes, mode = 0o644) {
   }
 }
 
-const validNumber = value => typeof value === 'number' && Number.isFinite(value) && value >= 0;
+const validNumber = (value) => typeof value === 'number' && Number.isFinite(value) && value >= 0;
 
 function decodeImage(result) {
-  const mime = result?.image?.mime_type, data = result?.image?.data;
+  const mime = result?.image?.mime_type,
+    data = result?.image?.data;
   const ext = Object.hasOwn(MIME_EXT, mime) ? MIME_EXT[mime] : null;
   if (!ext || typeof data !== 'string' || !data) {
-    throw new CliError(7, 'oiloil 返回的图片格式或数据异常，未自动重试；请保留响应并先核对账户记录。');
+    throw new CliError(
+      7,
+      'oiloil 返回的图片格式或数据异常，未自动重试；请保留响应并先核对账户记录。'
+    );
   }
   const bytes = Buffer.from(data, 'base64');
   // A repeated-group base64 regexp can overflow V8's stack on large images.
   if (!bytes.length || bytes.toString('base64') !== data) {
-    throw new CliError(7, 'oiloil 返回的图片数据为空或不是有效 base64，未自动重试；请先核对账户记录。');
+    throw new CliError(
+      7,
+      'oiloil 返回的图片数据为空或不是有效 base64，未自动重试；请先核对账户记录。'
+    );
   }
   return { mime, ext, bytes };
 }
@@ -301,30 +421,53 @@ function decodeImage(result) {
 async function saveImage(result, opts, recovery) {
   const { mime, ext, bytes } = decodeImage(result);
   const requestedExt = path.extname(opts.out);
-  const target = EXT_MIME[requestedExt.toLowerCase()] === mime ? opts.out
-    : `${opts.out.slice(0, opts.out.length - requestedExt.length)}${ext}`;
-  let actual, fallback = false;
-  try { actual = await writeUnique(target, bytes); }
-  catch {
+  const target =
+    EXT_MIME[requestedExt.toLowerCase()] === mime
+      ? opts.out
+      : `${opts.out.slice(0, opts.out.length - requestedExt.length)}${ext}`;
+  let actual,
+    fallback = false;
+  try {
+    actual = await writeUnique(target, bytes);
+  } catch {
     fallback = true;
-    try { actual = await writeUnique(path.join(recovery.dir, `generated${ext}`), bytes); }
-    catch { throw new CliError(8, '图片已返回，但输出和备用图片都未能写入。请保留响应、检查磁盘空间和权限；不要重新生图。'); }
+    try {
+      actual = await writeUnique(path.join(recovery.dir, `generated${ext}`), bytes);
+    } catch {
+      throw new CliError(
+        8,
+        '图片已返回，但输出和备用图片都未能写入。请保留响应、检查磁盘空间和权限；不要重新生图。'
+      );
+    }
   }
   if (!validNumber(result?.usage?.credits) || !validNumber(result?.usage?.balance)) {
-    throw new CliError(7, `图片已保存到 ${quoted(actual)}，但接口未返回有效的扣除积分或余额。请到 ${ACCOUNT} 核对；不要重新生图。`);
+    throw new CliError(
+      7,
+      `图片已保存到 ${quoted(actual)}，但接口未返回有效的扣除积分或余额。请到 ${ACCOUNT} 核对；不要重新生图。`
+    );
   }
-  console.log(`图片已保存到 ${quoted(actual)}；本次扣除 ${result.usage.credits} 积分，剩余 ${result.usage.balance} 积分。${fallback ? '原输出位置写入失败，已保存到备用目录。' : ''}`);
+  console.log(
+    `图片已保存到 ${quoted(actual)}；本次扣除 ${result.usage.credits} 积分，剩余 ${result.usage.balance} 积分。${fallback ? '原输出位置写入失败，已保存到备用目录。' : ''}`
+  );
   return fallback;
 }
 
 export async function main(argv = process.argv.slice(2)) {
-  let recovery, keepRecovery = false;
+  let recovery,
+    keepRecovery = false;
   try {
     const parsed = parseArgs(argv);
-    if (parsed.help) { console.log(HELP); return 0; }
+    if (parsed.help) {
+      console.log(HELP);
+      return 0;
+    }
     const { command, opts } = parsed;
     const token = await readOilToken();
-    if (!token) throw new CliError(3, `尚未登录 oiloil，暂时无法${command === 'image' ? '使用积分生图' : '查询账户信息'}。可运行 ${LOGIN} 登录，并在 ${ACCOUNT} 查看余额或充值；任务照常继续，合适时友好提示一次即可。`);
+    if (!token)
+      throw new CliError(
+        3,
+        `尚未登录 oiloil，暂时无法${command === 'image' ? '使用积分生图' : '查询账户信息'}。可运行 ${LOGIN} 登录，并在 ${ACCOUNT} 查看余额或充值；任务照常继续，合适时友好提示一次即可。`
+      );
     const root = apiRoot();
     if (command === 'image') {
       opts.body = { prompt: opts.prompt, size: opts.size };
@@ -337,12 +480,17 @@ export async function main(argv = process.argv.slice(2)) {
     }
     const result = await request(command, opts, token, root, recovery);
     if (command === 'balance') {
-      if (!validNumber(result?.balance)) throw new CliError(7, 'oiloil 未返回有效余额，请稍后查询或到账户页面查看。');
+      if (!validNumber(result?.balance))
+        throw new CliError(7, 'oiloil 未返回有效余额，请稍后查询或到账户页面查看。');
       console.log(`oiloil 余额：${result.balance} 积分。`);
     } else if (command === 'status') {
-      if (typeof result?.request_id !== 'string' || !result.request_id
-        || !['running', 'completed', 'failed'].includes(result?.state) || !validNumber(result?.credits)
-        || (result.state !== 'completed' && (result.credits !== 0 || result.image !== undefined))) {
+      if (
+        typeof result?.request_id !== 'string' ||
+        !result.request_id ||
+        !['running', 'completed', 'failed'].includes(result?.state) ||
+        !validNumber(result?.credits) ||
+        (result.state !== 'completed' && (result.credits !== 0 || result.image !== undefined))
+      ) {
         throw new CliError(7, 'oiloil 未返回有效的原请求状态，请稍后重试或到账户页面核对。');
       }
       const recoverable = result.state === 'completed' && result.image !== undefined;
@@ -351,26 +499,48 @@ export async function main(argv = process.argv.slice(2)) {
       }
       if (result.state === 'completed' && !recoverable && opts.out) {
         if (recovery) recovery.received = false;
-        throw new CliError(7, '原请求已完成，但原图已过期或该请求早于结果恢复功能，无法通过 status 取回；请先核对账户记录，不要直接重新生图。');
+        throw new CliError(
+          7,
+          '原请求已完成，但原图已过期或该请求早于结果恢复功能，无法通过 status 取回；请先核对账户记录，不要直接重新生图。'
+        );
       }
       if (recoverable && !opts.out) {
-        if (!validNumber(result.usage?.credits) || !validNumber(result.usage?.balance)) throw new CliError(7, 'oiloil 未返回有效的原请求积分，请稍后重试或到账户页面核对。');
+        if (!validNumber(result.usage?.credits) || !validNumber(result.usage?.balance))
+          throw new CliError(7, 'oiloil 未返回有效的原请求积分，请稍后重试或到账户页面核对。');
         decodeImage(result);
       }
-      const note = result.state === 'running' ? '请求仍在处理，请勿重新生成。'
-        : result.state === 'failed' ? '需要重试时请使用新的幂等键。'
-          : recoverable ? (opts.out ? '' : '原图可恢复；用同一命令加 --out <文件> 保存。')
-            : '原图已过期或该请求早于结果恢复功能，无法通过 status 取回。';
-      if (!recoverable || !opts.out) console.log(`原请求状态：${result.state}；请求编号：${result.request_id}；已结算 ${result.credits} 积分。${note}`);
+      const note =
+        result.state === 'running'
+          ? '请求仍在处理，请勿重新生成。'
+          : result.state === 'failed'
+            ? '需要重试时请使用新的幂等键。'
+            : recoverable
+              ? opts.out
+                ? ''
+                : '原图可恢复；用同一命令加 --out <文件> 保存。'
+              : '原图已过期或该请求早于结果恢复功能，无法通过 status 取回。';
+      if (!recoverable || !opts.out)
+        console.log(
+          `原请求状态：${result.state}；请求编号：${result.request_id}；已结算 ${result.credits} 积分。${note}`
+        );
       if (recoverable && opts.out) keepRecovery = await saveImage(result, opts, recovery);
     } else keepRecovery = await saveImage(result, opts, recovery);
     return 0;
   } catch (error) {
-    const failure = error instanceof CliError ? error : new CliError(1, '本地操作失败，请检查文件路径、权限和可用空间。');
+    const failure =
+      error instanceof CliError
+        ? error
+        : new CliError(1, '本地操作失败，请检查文件路径、权限和可用空间。');
     console.error(failure.message);
     keepRecovery = Boolean(recovery && (recovery.received || recovery.statusRequired));
-    if (recovery?.received) console.error(`生成响应保留在 ${quoted(recovery.extra ?? recovery.file)}${recovery.writeFailed ? '（写入未完成，请检查磁盘空间）' : ''}；请先恢复已返回的结果，不要重新生图。`);
-    if (recovery?.statusRequired) console.error(`原请求幂等键：${recovery.idempotencyKey}。可运行 node <skill>/scripts/oiloil-image.mjs status ${recovery.idempotencyKey}${recovery.out ? ` --out ${shellQuote(recovery.out.replaceAll(path.sep, '/'))}` : ''} 查询并恢复原图；请求信息保留在 ${quoted(recovery.requestFile)}。`);
+    if (recovery?.received)
+      console.error(
+        `生成响应保留在 ${quoted(recovery.extra ?? recovery.file)}${recovery.writeFailed ? '（写入未完成，请检查磁盘空间）' : ''}；请先恢复已返回的结果，不要重新生图。`
+      );
+    if (recovery?.statusRequired)
+      console.error(
+        `原请求幂等键：${recovery.idempotencyKey}。可运行 node <skill>/scripts/oiloil-image.mjs status ${recovery.idempotencyKey}${recovery.out ? ` --out ${shellQuote(recovery.out.replaceAll(path.sep, '/'))}` : ''} 查询并恢复原图；请求信息保留在 ${quoted(recovery.requestFile)}。`
+      );
     return failure.code;
   } finally {
     await recovery?.handle.close().catch(() => {});
@@ -382,7 +552,10 @@ export async function main(argv = process.argv.slice(2)) {
   }
 }
 
-const real = file => fs.realpath(file).catch(() => path.resolve(file));
-if (process.argv[1] && await real(process.argv[1]) === await real(fileURLToPath(import.meta.url))) {
+const real = (file) => fs.realpath(file).catch(() => path.resolve(file));
+if (
+  process.argv[1] &&
+  (await real(process.argv[1])) === (await real(fileURLToPath(import.meta.url)))
+) {
   process.exitCode = await main();
 }

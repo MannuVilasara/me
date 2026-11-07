@@ -91,7 +91,9 @@ export default function Page() {
               Projects & Systems
             </h1>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-              Software systems, developer platforms, and automation tools I&apos;ve designed and built. Each project represents an attempt to solve real friction—from simplifying CI/CD telemetry to crafting calm, tactile web interfaces.
+              Software systems, developer platforms, and automation tools I&apos;ve designed and
+              built. Each project represents an attempt to solve real friction—from simplifying
+              CI/CD telemetry to crafting calm, tactile web interfaces.
             </p>
           </div>
         </header>

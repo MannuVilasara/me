@@ -51,7 +51,11 @@ export default function ProjectCard({ project, delay = 0 }: ProjectCardProps) {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, delay: Math.min(delay * 0.05, 0.3), ease: [0.22, 1, 0.36, 1] }}
+        transition={{
+          duration: 0.35,
+          delay: Math.min(delay * 0.05, 0.3),
+          ease: [0.22, 1, 0.36, 1],
+        }}
         onClick={() => setModalOpen(true)}
         className="group relative flex flex-col h-full rounded-2xl border border-border/70 bg-card/75 hover:bg-card hover:border-border transition-all duration-300 shadow-2xs hover:shadow-md hover:-translate-y-1 cursor-pointer overflow-hidden p-4 sm:p-5"
       >

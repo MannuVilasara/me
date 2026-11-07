@@ -25,17 +25,17 @@
 node <skill>/scripts/shoot.mjs index.html --size desktop,mobile --out shots
 ```
 
-| 要什么 | 加上 |
-| --- | --- |
-| 同时截桌面与手机标准视口 | `index.html --size desktop,mobile --out shots`（单端看一眼用 `--size desktop`；不写时是手机 390x844；只看整体版式可加 `--thumb`） |
-| 一次截完多个候选并出并排图 | 直接传候选目录（如 `explore`）或多个 HTML 文件，同一次浏览器会话截完并自动出 `sheet.png` |
-| 只看改过的局部组件或区域 | `--selector ".card"`，自动滚入视口并只截该元素区域 |
-| 操作几步再截 | `--steps "click .open; wait 300"` |
-| 需要核对长页滚动动效 | `--frames 8 --steps "scroll 600; scroll 600; scroll 600"`，按页面长度多写几步；录屏条件见上文 |
-| 给用户指出问题：在元素上画框、标编号 | `--mark "1=.page-head .btn; 2=.toggle-row"` |
-| 看清一段过渡 | `--frames 8 --steps "click .open"`，只出带时间的序列图；录屏条件见上文 |
-| 把几张图拼成一张对比图，不需要页面 | `--stitch a.png --label 修改前 --stitch b.png --label 修改后` |
-| 按共有元素统一比例并裁同一区域 | `--stitch a.png --match-width 240 --stitch b.png --match-width 300 --crop "0,0,800,600"`；以首图元素宽为准，裁切坐标在统一比例后；已知倍数时各图改用 `--scale`，完整写法见 `--help` |
+| 要什么                               | 加上                                                                                                                                                                                |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 同时截桌面与手机标准视口             | `index.html --size desktop,mobile --out shots`（单端看一眼用 `--size desktop`；不写时是手机 390x844；只看整体版式可加 `--thumb`）                                                   |
+| 一次截完多个候选并出并排图           | 直接传候选目录（如 `explore`）或多个 HTML 文件，同一次浏览器会话截完并自动出 `sheet.png`                                                                                            |
+| 只看改过的局部组件或区域             | `--selector ".card"`，自动滚入视口并只截该元素区域                                                                                                                                  |
+| 操作几步再截                         | `--steps "click .open; wait 300"`                                                                                                                                                   |
+| 需要核对长页滚动动效                 | `--frames 8 --steps "scroll 600; scroll 600; scroll 600"`，按页面长度多写几步；录屏条件见上文                                                                                       |
+| 给用户指出问题：在元素上画框、标编号 | `--mark "1=.page-head .btn; 2=.toggle-row"`                                                                                                                                         |
+| 看清一段过渡                         | `--frames 8 --steps "click .open"`，只出带时间的序列图；录屏条件见上文                                                                                                              |
+| 把几张图拼成一张对比图，不需要页面   | `--stitch a.png --label 修改前 --stitch b.png --label 修改后`                                                                                                                       |
+| 按共有元素统一比例并裁同一区域       | `--stitch a.png --match-width 240 --stitch b.png --match-width 300 --crop "0,0,800,600"`；以首图元素宽为准，裁切坐标在统一比例后；已知倍数时各图改用 `--scale`，完整写法见 `--help` |
 
 交互、保存、提交和失败恢复从页面真实入口开始，用 `--steps "click .open; fill #name \"内容\"; drag .card 120 0"` 或宿主浏览器真实点击，必要时连续填写、点击和等待到结果。保存后刷新或重新进入读回，失败后恢复到可重试状态；保留能对应实际结果的截图或操作记录，无法执行就写明未验证。其余选项、选择器和动作的写法、输出文件和 `report.json` 的结构：运行 `node <skill>/scripts/shoot.mjs --help`。拿不准写法时先加 `--dry-run` 检查，不会启动浏览器。超时会自动放宽时限重跑一次，仍失败时照报错里的命令重跑。
 

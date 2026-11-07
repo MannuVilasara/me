@@ -10,12 +10,7 @@ import ProjectPreviewArt from './ProjectPreviewArt';
 
 type CategoryFilter = 'All' | 'Platform & Infra' | 'Web Apps' | 'CLI & Tooling';
 
-const categories: CategoryFilter[] = [
-  'All',
-  'Platform & Infra',
-  'Web Apps',
-  'CLI & Tooling',
-];
+const categories: CategoryFilter[] = ['All', 'Platform & Infra', 'Web Apps', 'CLI & Tooling'];
 
 export default function ProjectSection() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('All');
@@ -25,8 +20,7 @@ export default function ProjectSection() {
   // Filtered projects
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
-      const matchesCategory =
-        selectedCategory === 'All' || project.category === selectedCategory;
+      const matchesCategory = selectedCategory === 'All' || project.category === selectedCategory;
 
       const query = searchQuery.trim().toLowerCase();
       if (!query) return matchesCategory;
@@ -142,7 +136,9 @@ export default function ProjectSection() {
                   Flagship Platform
                 </span>
                 <span className="text-muted-foreground/70">•</span>
-                <span className="text-muted-foreground font-medium">{flagshipProject.createdAt}</span>
+                <span className="text-muted-foreground font-medium">
+                  {flagshipProject.createdAt}
+                </span>
                 <span className="text-muted-foreground/70">•</span>
                 <span className="text-muted-foreground">{flagshipProject.category}</span>
               </div>
@@ -277,9 +273,7 @@ export default function ProjectSection() {
       </div>
 
       {/* Featured Architecture Modal */}
-      {featuredModalProject && (
-        <ProjectCard project={featuredModalProject} delay={0} />
-      )}
+      {featuredModalProject && <ProjectCard project={featuredModalProject} delay={0} />}
     </div>
   );
 }

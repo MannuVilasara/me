@@ -69,12 +69,12 @@ python3 "$OIL_MOTION/scripts/compose_travel_frames.py" subject.png \
 
 Concept Contract 锁定 `aspect_ratio` 后，关键帧、视频和编译输出沿用同一比例：
 
-| `aspect_ratio` | 关键帧 `--size` | 视频画幅 | 常见容器 |
-| --- | --- | --- | --- |
-| `16:9` | `2048x1152` 或 `1536x864` | 从首帧推断为 `16:9` | 横向全屏、Hero、宽幅转场 |
-| `9:16` | `1152x2048` 或 `864x1536` | `9:16` | 竖屏全屏、移动端故事 |
-| `1:1` | `1024x1024` 或 `2048x2048` | `1:1` | 卡片、头像、方形视窗 |
-| `21:9` | `2016x864` | `21:9` | 宽银幕叙事 |
+| `aspect_ratio` | 关键帧 `--size`            | 视频画幅            | 常见容器                 |
+| -------------- | -------------------------- | ------------------- | ------------------------ |
+| `16:9`         | `2048x1152` 或 `1536x864`  | 从首帧推断为 `16:9` | 横向全屏、Hero、宽幅转场 |
+| `9:16`         | `1152x2048` 或 `864x1536`  | `9:16`              | 竖屏全屏、移动端故事     |
+| `1:1`          | `1024x1024` 或 `2048x2048` | `1:1`               | 卡片、头像、方形视窗     |
+| `21:9`         | `2016x864`                 | `21:9`              | 宽银幕叙事               |
 
 默认图片模型（gpt-image-2 系列）要求宽高都是 16 的倍数、最长边不超过 3840、长短边之比
 不超过 3:1、总像素在 655,360 到 8,294,400 之间，脚本会在联网前校验。换用其他模型时以
@@ -305,14 +305,14 @@ playback stops.
 镜头句：推进用 `The camera moves forward in one uninterrupted dolly at a steady speed toward <TARGET>.`；
 机位不动用 `The camera stays completely locked.`
 
-| 范式 | `<PARADIGM_CLAUSE>` |
-|---|---|
-| 尺度穿透 | `The center subject <TARGET> stays exactly at the center while the surroundings expand past the frame edges, passing through <INTERMEDIATE_LAYERS>.` |
-| 遮挡转场 | `A large foreground <OCCLUDER> crosses the lens and fills the entire frame by the last frame. Exposure stays constant.` |
-| 形状匹配 | `The <SHAPE> outline keeps exactly the same screen position and size while its surface transforms from <SUBJECT_A> into <SUBJECT_B>.` |
-| 时间流转 | `Only materials and lighting change, continuously from <STATE_A> to <STATE_B>; silhouette, geometry, and perspective never change.` |
+| 范式     | `<PARADIGM_CLAUSE>`                                                                                                                                              |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 尺度穿透 | `The center subject <TARGET> stays exactly at the center while the surroundings expand past the frame edges, passing through <INTERMEDIATE_LAYERS>.`             |
+| 遮挡转场 | `A large foreground <OCCLUDER> crosses the lens and fills the entire frame by the last frame. Exposure stays constant.`                                          |
+| 形状匹配 | `The <SHAPE> outline keeps exactly the same screen position and size while its surface transforms from <SUBJECT_A> into <SUBJECT_B>.`                            |
+| 时间流转 | `Only materials and lighting change, continuously from <STATE_A> to <STATE_B>; silhouette, geometry, and perspective never change.`                              |
 | 倒影穿越 | `The camera pushes into the reflection on <REFLECTIVE_SURFACE>; the reflected scene grows sharper until it fills the frame as the real scene of the last frame.` |
-| 剖切穿墙 | `As the camera reaches the wall of <STRUCTURE>, the surface dissolves into a clean cutaway that reveals <INTERIOR>, without slowing down.` |
+| 剖切穿墙 | `As the camera reaches the wall of <STRUCTURE>, the surface dissolves into a clean cutaway that reveals <INTERIOR>, without slowing down.`                       |
 
 ## 产品拆解与爆炸图
 

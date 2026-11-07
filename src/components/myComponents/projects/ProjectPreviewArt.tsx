@@ -174,12 +174,16 @@ export default function ProjectPreviewArt({
             <div className="w-px h-6 bg-border/60" />
             <div className="space-y-0.5">
               <span className="block text-[9px] text-muted-foreground">FLOOR 2</span>
-              <span className="block text-[11px] font-sans font-bold text-foreground">Labs 201-208</span>
+              <span className="block text-[11px] font-sans font-bold text-foreground">
+                Labs 201-208
+              </span>
             </div>
             <div className="w-px h-6 bg-border/60" />
             <div className="space-y-0.5">
               <span className="block text-[9px] text-muted-foreground">TOUR</span>
-              <span className="block text-[11px] font-sans font-bold text-amber-500">360° Pano</span>
+              <span className="block text-[11px] font-sans font-bold text-amber-500">
+                360° Pano
+              </span>
             </div>
           </div>
         </div>

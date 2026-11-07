@@ -13,9 +13,7 @@ export type StepGestureAdapter = {
   destroy(): void;
 };
 
-export function createStepGestureAdapter(
-  options: StepGestureOptions,
-): StepGestureAdapter {
+export function createStepGestureAdapter(options: StepGestureOptions): StepGestureAdapter {
   const threshold = Math.max(1, options.threshold ?? 40);
   const idleMilliseconds = Math.max(16, options.idleMilliseconds ?? 140);
   let accumulated = 0;
@@ -42,12 +40,7 @@ export function createStepGestureAdapter(
 
   return {
     feed(delta: number) {
-      if (
-        destroyed ||
-        programmaticNavigation ||
-        !Number.isFinite(delta) ||
-        delta === 0
-      ) return;
+      if (destroyed || programmaticNavigation || !Number.isFinite(delta) || delta === 0) return;
       const direction: StepDirection = delta < 0 ? -1 : 1;
       if (lockedDirection === direction) {
         scheduleRelease();

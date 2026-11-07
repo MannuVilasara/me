@@ -18,8 +18,8 @@ node "$OIL_MOTION/scripts/credential-ui/src/profile.ts" setup default
 
 ## 服务与用途绑定
 
-| 配置名 | 业务环境变量 | 系统凭据引用 |
-| --- | --- | --- |
+| 配置名  | 业务环境变量     | 系统凭据引用                |
+| ------- | ---------------- | --------------------------- |
 | default | `ZENMUX_API_KEY` | `oil-motion/zenmux/default` |
 
 图片和视频共用这一个 Key。配置好 Key 不代表可以随意调用收费接口：每次生成仍按主流程先做 Pilot，批量生成前让用户确认。

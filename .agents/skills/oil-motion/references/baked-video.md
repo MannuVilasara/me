@@ -54,8 +54,15 @@ python3 "$OIL_MOTION/scripts/compile_scroll_video.py" \
 ```
 
 ```css
-.motion-stage { overflow: hidden; }
-.motion-video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.motion-stage {
+  overflow: hidden;
+}
+.motion-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 ```
 
 根据预算中的 `runtime.controller` 接入 [runtime.md](runtime.md)：

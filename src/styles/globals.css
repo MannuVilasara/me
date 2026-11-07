@@ -351,22 +351,38 @@
 
 /* Oil Motion & UI Micro-animations */
 @keyframes eq-1 {
-  0%, 100% { height: 4px; }
-  50% { height: 16px; }
+  0%,
+  100% {
+    height: 4px;
+  }
+  50% {
+    height: 16px;
+  }
 }
 
 @keyframes eq-2 {
-  0%, 100% { height: 14px; }
-  50% { height: 6px; }
+  0%,
+  100% {
+    height: 14px;
+  }
+  50% {
+    height: 6px;
+  }
 }
 
 @keyframes eq-3 {
-  0%, 100% { height: 8px; }
-  50% { height: 18px; }
+  0%,
+  100% {
+    height: 8px;
+  }
+  50% {
+    height: 18px;
+  }
 }
 
 @keyframes soft-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.8;
   }
@@ -391,4 +407,3 @@
 .animate-soft-pulse {
   animation: soft-pulse 3s ease-in-out infinite;
 }
-

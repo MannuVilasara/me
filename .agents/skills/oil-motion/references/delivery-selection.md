@@ -81,11 +81,11 @@ capacity = columns * rows
 
 控制器只由合同中的 `time_control` 决定：
 
-| `time_control` | `runtime.controller` |
-|---|---|
-| `scrub` | `frame-scrub` |
-| `segment-play` | `segment-playback` |
-| `autonomous` | `autonomous-playback` |
+| `time_control` | `runtime.controller`  |
+| -------------- | --------------------- |
+| `scrub`        | `frame-scrub`         |
+| `segment-play` | `segment-playback`    |
+| `autonomous`   | `autonomous-playback` |
 
 `delivery.selected` 可以与任一合理控制器组合。例如视频既可以逐帧 scrub，也可以按片段正常播放；图集也可以按时间自动播放。
 

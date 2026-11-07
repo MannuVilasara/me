@@ -71,25 +71,25 @@ When you want to compare designs, it puts them side by side on one page. They ca
 
 The open-source version takes a new page from a blank start to a good-looking design. Pro builds on that: it makes interfaces easier to use, improves existing projects, and raises the quality bar with stricter review and polishing.
 
-| | Oil UI (open source) | Oil UI Pro |
-| --- | :---: | :---: |
-| Design direction: product category, tone, distinct directions, comparison page | ✓ | ✓ |
-| Visuals: hierarchy, typography, color, spacing, imagery, and motion | ✓ | ✓ |
-| Memorable moments and scroll storytelling (parallax, continuous shots) | ✓ | ✓ |
-| Screenshot recreation | ✓ | ✓ |
-| Pacing, feel, generated assets, and real-time 3D for mini-games | ✓ | ✓ |
-| Independent review | Visual scoring and a lightweight UX walkthrough | Repeated review and revision aiming for 9/10; checks whether directions overlap; autonomous risk probes and same-path UX rechecks |
-| Polish: checks for AI design defaults, a detail checklist, and how to simplify | | ✓ |
-| Usability: interactions and states, forms, dialogs and popovers, desktop and mobile layouts | | ✓ |
-| Dashboards and tools: workspace layouts chosen for the product, with one style throughout | | ✓ |
-| Existing projects: separate approaches for a UI refresh, a flow fix, and a new feature | Tells you which one you need | ✓ |
-| Design system: record DESIGN.md for new projects, merge conflicting rules into one | Points out the conflicts | ✓ |
-| From one page to a full set: page map, a reference page per page type, cross-page consistency checks, splitting work across agents | | ✓ |
-| Revisions: turn "make it feel more premium" into concrete changes, before/after for every round, keep confirmed parts intact, say when the direction itself is wrong | | ✓ |
-| Polish a single component to the extreme | | ✓ |
-| 19 card prototypes with code and spatial expansion containers | | ✓ |
-| Effects such as light trails, dot patterns, and flowing gradients | | ✓ |
-| Scene layouts, visuals, and state checks for mini-games | | ✓ |
+|                                                                                                                                                                      |              Oil UI (open source)               |                                                            Oil UI Pro                                                             |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: |
+| Design direction: product category, tone, distinct directions, comparison page                                                                                       |                        ✓                        |                                                                 ✓                                                                 |
+| Visuals: hierarchy, typography, color, spacing, imagery, and motion                                                                                                  |                        ✓                        |                                                                 ✓                                                                 |
+| Memorable moments and scroll storytelling (parallax, continuous shots)                                                                                               |                        ✓                        |                                                                 ✓                                                                 |
+| Screenshot recreation                                                                                                                                                |                        ✓                        |                                                                 ✓                                                                 |
+| Pacing, feel, generated assets, and real-time 3D for mini-games                                                                                                      |                        ✓                        |                                                                 ✓                                                                 |
+| Independent review                                                                                                                                                   | Visual scoring and a lightweight UX walkthrough | Repeated review and revision aiming for 9/10; checks whether directions overlap; autonomous risk probes and same-path UX rechecks |
+| Polish: checks for AI design defaults, a detail checklist, and how to simplify                                                                                       |                                                 |                                                                 ✓                                                                 |
+| Usability: interactions and states, forms, dialogs and popovers, desktop and mobile layouts                                                                          |                                                 |                                                                 ✓                                                                 |
+| Dashboards and tools: workspace layouts chosen for the product, with one style throughout                                                                            |                                                 |                                                                 ✓                                                                 |
+| Existing projects: separate approaches for a UI refresh, a flow fix, and a new feature                                                                               |          Tells you which one you need           |                                                                 ✓                                                                 |
+| Design system: record DESIGN.md for new projects, merge conflicting rules into one                                                                                   |            Points out the conflicts             |                                                                 ✓                                                                 |
+| From one page to a full set: page map, a reference page per page type, cross-page consistency checks, splitting work across agents                                   |                                                 |                                                                 ✓                                                                 |
+| Revisions: turn "make it feel more premium" into concrete changes, before/after for every round, keep confirmed parts intact, say when the direction itself is wrong |                                                 |                                                                 ✓                                                                 |
+| Polish a single component to the extreme                                                                                                                             |                                                 |                                                                 ✓                                                                 |
+| 19 card prototypes with code and spatial expansion containers                                                                                                        |                                                 |                                                                 ✓                                                                 |
+| Effects such as light trails, dot patterns, and flowing gradients                                                                                                    |                                                 |                                                                 ✓                                                                 |
+| Scene layouts, visuals, and state checks for mini-games                                                                                                              |                                                 |                                                                 ✓                                                                 |
 
 Oil UI Pro costs $9.99: a one-time purchase with lifetime updates. Purchase it at [ui.oiloil.org/pro](https://ui.oiloil.org/en/pro/?utm_source=github&utm_medium=referral&utm_campaign=readme-en).
 

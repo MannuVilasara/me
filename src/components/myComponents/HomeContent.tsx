@@ -84,10 +84,12 @@ export default function HomeContent() {
           {/* Oil Tone Personal Narrative */}
           <div className="max-w-2xl text-sm sm:text-base text-muted-foreground leading-relaxed space-y-3 mb-7">
             <p>
-              I care about software that feels honest and deliberate in the hand—from the natural weight of a micro-interaction to the silent predictability of a deployment pipeline.
+              I care about software that feels honest and deliberate in the hand—from the natural
+              weight of a micro-interaction to the silent predictability of a deployment pipeline.
             </p>
             <p>
-              Working primarily across TypeScript, Next.js, and Docker, with a growing obsession for platform engineering, developer tooling, and distributed automation.
+              Working primarily across TypeScript, Next.js, and Docker, with a growing obsession for
+              platform engineering, developer tooling, and distributed automation.
             </p>
           </div>
 
@@ -169,11 +171,10 @@ export default function HomeContent() {
         {/* SOFT CONTACT SECTION */}
         <section className="mt-14 border-t border-border/50 pt-10">
           <div className="mb-6">
-            <h2 className="text-xl font-bold tracking-tight text-foreground">
-              Say Hello
-            </h2>
+            <h2 className="text-xl font-bold tracking-tight text-foreground">Say Hello</h2>
             <p className="text-xs text-muted-foreground mt-1">
-              Have an interesting problem, a platform challenge, or just want to chat? Drop a note below.
+              Have an interesting problem, a platform challenge, or just want to chat? Drop a note
+              below.
             </p>
           </div>
 

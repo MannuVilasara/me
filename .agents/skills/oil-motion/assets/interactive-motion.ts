@@ -16,17 +16,11 @@ export type FrameAnimator = {
   destroy(): void;
 };
 
-const clamp = (value: number, min: number, max: number) =>
-  Math.min(max, Math.max(min, value));
+const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-const wrap = (value: number, length: number) =>
-  ((value % length) + length) % length;
+const wrap = (value: number, length: number) => ((value % length) + length) % length;
 
-const shortestCircularDelta = (
-  from: number,
-  to: number,
-  frameCount: number,
-) => {
+const shortestCircularDelta = (from: number, to: number, frameCount: number) => {
   let delta = wrap(to, frameCount) - wrap(from, frameCount);
   if (delta > frameCount / 2) delta -= frameCount;
   if (delta < -frameCount / 2) delta += frameCount;
@@ -39,7 +33,7 @@ const smoothDamp = (
   velocity: number,
   smoothTime: number,
   maxSpeed: number,
-  deltaTime: number,
+  deltaTime: number
 ): [number, number] => {
   const safeTime = Math.max(0.0001, smoothTime);
   const omega = 2 / safeTime;
@@ -53,19 +47,14 @@ const smoothDamp = (
   let nextVelocity = (velocity - omega * temp) * decay;
   let nextPosition = limitedTarget + (change + temp) * decay;
 
-  if (
-    (originalTarget - current > 0) ===
-    (nextPosition > originalTarget)
-  ) {
+  if (originalTarget - current > 0 === nextPosition > originalTarget) {
     nextPosition = originalTarget;
     nextVelocity = 0;
   }
   return [nextPosition, nextVelocity];
 };
 
-export function createFrameAnimator(
-  options: FrameAnimatorOptions,
-): FrameAnimator {
+export function createFrameAnimator(options: FrameAnimatorOptions): FrameAnimator {
   const frameCount = Math.max(1, Math.floor(options.frameCount));
   const circular = options.circular ?? false;
   const smoothTime = options.smoothTime ?? 0.11;
@@ -80,9 +69,7 @@ export function createFrameAnimator(
   let destroyed = false;
 
   const normalizeFrame = (frame: number) =>
-    circular
-      ? wrap(frame, frameCount)
-      : clamp(frame, 0, frameCount - 1);
+    circular ? wrap(frame, frameCount) : clamp(frame, 0, frameCount - 1);
 
   const render = () => {
     const frame = Math.round(normalizeFrame(position));
@@ -95,9 +82,7 @@ export function createFrameAnimator(
   const loop = (now: number) => {
     raf = 0;
     if (destroyed) return;
-    const deltaTime = lastTime
-      ? Math.min((now - lastTime) / 1000, 1 / 30)
-      : 1 / 60;
+    const deltaTime = lastTime ? Math.min((now - lastTime) / 1000, 1 / 30) : 1 / 60;
     lastTime = now;
 
     if (reducedMotion) {
@@ -110,7 +95,7 @@ export function createFrameAnimator(
         velocity,
         smoothTime,
         maxSpeed,
-        deltaTime,
+        deltaTime
       );
     }
     render();
@@ -156,11 +141,7 @@ export function createFrameAnimator(
     },
   };
 }
-export function createCssSpriteRenderer(
-  element: HTMLElement,
-  columns: number,
-  rows: number,
-) {
+export function createCssSpriteRenderer(element: HTMLElement, columns: number, rows: number) {
   const safeColumns = Math.max(1, Math.floor(columns));
   const safeRows = Math.max(1, Math.floor(rows));
   element.style.backgroundSize = `${safeColumns * 100}% ${safeRows * 100}%`;
@@ -175,9 +156,9 @@ export function createCssSpriteRenderer(
 }
 
 export type SegmentRateCurve =
-  | { type: "constant"; rate: number }
+  | { type: 'constant'; rate: number }
   | {
-      type: "edge-mid-edge";
+      type: 'edge-mid-edge';
       edgeRate: number;
       midRate: number;
     };
@@ -231,19 +212,16 @@ type VideoFrameCapable = HTMLVideoElement & {
 };
 
 const segmentRate = (segment: TimelineSegment, time: number) => {
-  const curve = segment.curve ?? { type: "constant", rate: 1 };
-  if (curve.type === "constant") return Math.max(0.1, curve.rate);
+  const curve = segment.curve ?? { type: 'constant', rate: 1 };
+  if (curve.type === 'constant') return Math.max(0.1, curve.rate);
   const span = Math.max(0.0001, segment.hold - segment.start);
   const progress = clamp((time - segment.start) / span, 0, 1);
   const edgeWeight = Math.cos(Math.PI * progress) ** 2;
-  return Math.max(
-    0.1,
-    curve.midRate + (curve.edgeRate - curve.midRate) * edgeWeight,
-  );
+  return Math.max(0.1, curve.midRate + (curve.edgeRate - curve.midRate) * edgeWeight);
 };
 
 const validateSegments = (segments: readonly TimelineSegment[]) => {
-  if (!segments.length) throw new Error("segments 不能为空");
+  if (!segments.length) throw new Error('segments 不能为空');
   segments.forEach((segment, index) => {
     if (!(segment.start <= segment.hold && segment.hold < segment.endExclusive)) {
       throw new Error(`segment ${index} 必须满足 start <= hold < endExclusive`);
@@ -254,30 +232,28 @@ const validateSegments = (segments: readonly TimelineSegment[]) => {
   });
 };
 
-export function createSegmentPlayer(
-  options: SegmentPlayerOptions,
-): SegmentPlayer {
+export function createSegmentPlayer(options: SegmentPlayerOptions): SegmentPlayer {
   validateSegments(options.segments);
   const video = options.video as VideoFrameCapable;
   const maxState = options.segments.length;
   const frameDuration = Math.max(0.001, options.frameDuration);
   const reducedMotion = options.reducedMotion ?? false;
   const states = options.states ?? [
-    { id: "state-0", hold: options.segments[0].start },
+    { id: 'state-0', hold: options.segments[0].start },
     ...options.segments.map((segment, index) => ({
       id: segment.to ?? `state-${index + 1}`,
       hold: segment.hold,
     })),
   ];
   if (states.length !== maxState + 1) {
-    throw new Error("states 数量必须等于 segments 数量加一");
+    throw new Error('states 数量必须等于 segments 数量加一');
   }
   const stateIds = states.map((state) => state.id);
   if (new Set(stateIds).size !== stateIds.length || stateIds.some((id) => !id)) {
-    throw new Error("timeline state id 必须非空且唯一");
+    throw new Error('timeline state id 必须非空且唯一');
   }
   if (Math.abs(states[0].hold - options.segments[0].start) > frameDuration / 2) {
-    throw new Error("初始 state hold 必须对应第一段 start");
+    throw new Error('初始 state hold 必须对应第一段 start');
   }
   options.segments.forEach((segment, index) => {
     if (segment.from && segment.from !== states[index].id) {
@@ -291,7 +267,7 @@ export function createSegmentPlayer(
     }
   });
   const resolveState = (state: number | string) => {
-    if (typeof state === "string") {
+    if (typeof state === 'string') {
       const index = stateIds.indexOf(state);
       if (index < 0) throw new Error(`未知 timeline state id：${state}`);
       return index;
@@ -333,9 +309,8 @@ export function createSegmentPlayer(
   const segmentForTime = (time: number, direction: -1 | 1) => {
     if (direction === 1) {
       return (
-        options.segments.find(
-          (segment) => time < segment.hold + frameDuration / 2,
-        ) ?? options.segments[maxState - 1]
+        options.segments.find((segment) => time < segment.hold + frameDuration / 2) ??
+        options.segments[maxState - 1]
       );
     }
     for (let index = maxState - 1; index >= 0; index -= 1) {
@@ -346,11 +321,7 @@ export function createSegmentPlayer(
     return options.segments[0];
   };
 
-  const removeBoundaryGap = (
-    time: number,
-    direction: -1 | 1,
-    targetTime: number,
-  ) => {
+  const removeBoundaryGap = (time: number, direction: -1 | 1, targetTime: number) => {
     if (direction === 1) {
       for (let index = 1; index < maxState; index += 1) {
         const previousHold = options.segments[index - 1].hold;
@@ -359,7 +330,8 @@ export function createSegmentPlayer(
           targetTime > previousHold + frameDuration / 2 &&
           time >= previousHold - frameDuration / 2 &&
           time < nextStart
-        ) return nextStart;
+        )
+          return nextStart;
       }
     } else {
       for (let index = maxState - 1; index > 0; index -= 1) {
@@ -369,7 +341,8 @@ export function createSegmentPlayer(
           targetTime <= previousHold + frameDuration / 2 &&
           time > previousHold &&
           time <= nextStart + frameDuration / 2
-        ) return previousHold;
+        )
+          return previousHold;
       }
     }
     return time;
@@ -393,7 +366,7 @@ export function createSegmentPlayer(
     const initialTime = removeBoundaryGap(
       video.currentTime,
       targetTime >= video.currentTime ? 1 : -1,
-      targetTime,
+      targetTime
     );
     if (initialTime !== video.currentTime) video.currentTime = initialTime;
 
@@ -410,11 +383,7 @@ export function createSegmentPlayer(
       scheduledHandle = 0;
       if (destroyed || token !== runToken) return;
 
-      const boundedTime = removeBoundaryGap(
-        video.currentTime,
-        direction,
-        targetTime,
-      );
+      const boundedTime = removeBoundaryGap(video.currentTime, direction, targetTime);
       if (boundedTime !== video.currentTime) video.currentTime = boundedTime;
       const reached =
         direction === 1
@@ -431,9 +400,7 @@ export function createSegmentPlayer(
         video.playbackRate = rate;
       } else {
         video.pause();
-        const delta = lastTick
-          ? Math.min((now - lastTick) / 1000, 1 / 30)
-          : 1 / 60;
+        const delta = lastTick ? Math.min((now - lastTick) / 1000, 1 / 30) : 1 / 60;
         video.currentTime = Math.max(targetTime, video.currentTime - rate * delta);
       }
       lastTick = now;
@@ -464,7 +431,7 @@ export function createSegmentPlayer(
     video.currentTime = stateTime(currentState);
   };
   if (video.readyState >= 1) seekInitialState();
-  else video.addEventListener("loadedmetadata", seekInitialState, { once: true });
+  else video.addEventListener('loadedmetadata', seekInitialState, { once: true });
 
   const handleVideoError = (event: Event) => {
     if (destroyed) return;
@@ -474,7 +441,7 @@ export function createSegmentPlayer(
     lastTick = 0;
     options.onError?.(video.error ?? event);
   };
-  video.addEventListener("error", handleVideoError);
+  video.addEventListener('error', handleVideoError);
 
   return {
     goTo(state: number | string) {
@@ -505,8 +472,8 @@ export function createSegmentPlayer(
     destroy() {
       this.cancel();
       destroyed = true;
-      video.removeEventListener("loadedmetadata", seekInitialState);
-      video.removeEventListener("error", handleVideoError);
+      video.removeEventListener('loadedmetadata', seekInitialState);
+      video.removeEventListener('error', handleVideoError);
     },
   };
 }

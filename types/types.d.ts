@@ -326,4 +326,3 @@ declare module 'pacman-contribution-graph' {
     start(): void;
   }
 }
-

@@ -2,15 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import {
-  Sliders,
-  Terminal,
-  Layers,
-  Sparkles,
-  Play,
-  RotateCcw,
-  CheckCircle2,
-} from 'lucide-react';
+import { Sliders, Terminal, Layers, Sparkles, Play, RotateCcw, CheckCircle2 } from 'lucide-react';
 import {
   SiNextdotjs,
   SiTypescript,
@@ -43,7 +35,8 @@ const stackItems: StackItem[] = [
     category: 'Frontend',
     icon: SiNextdotjs,
     role: 'Core Architecture',
-    usage: 'App Router, Turbopack, Server Components, and ISR caching pipelines for zero-jank loads.',
+    usage:
+      'App Router, Turbopack, Server Components, and ISR caching pipelines for zero-jank loads.',
   },
   {
     name: 'Tailwind CSS v4',
@@ -57,7 +50,8 @@ const stackItems: StackItem[] = [
     category: 'Platform',
     icon: SiDocker,
     role: 'Infrastructure',
-    usage: 'Multi-stage lean builds, isolated local runtime environments, and reproducible deploys.',
+    usage:
+      'Multi-stage lean builds, isolated local runtime environments, and reproducible deploys.',
   },
   {
     name: 'CI/CD & Actions',
@@ -132,12 +126,12 @@ export default function CraftWorkbench() {
   };
 
   // 3. Stack Category Filter (Optimized for instant response)
-  const [stackFilter, setStackFilter] = useState<'All' | 'Frontend' | 'Platform' | 'Backend'>('All');
+  const [stackFilter, setStackFilter] = useState<'All' | 'Frontend' | 'Platform' | 'Backend'>(
+    'All'
+  );
 
   const filteredStack =
-    stackFilter === 'All'
-      ? stackItems
-      : stackItems.filter((item) => item.category === stackFilter);
+    stackFilter === 'All' ? stackItems : stackItems.filter((item) => item.category === stackFilter);
 
   return (
     <section className="my-14">
@@ -151,7 +145,8 @@ export default function CraftWorkbench() {
             </h2>
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed max-w-xl">
-            Skills are best understood in action. Interact with live UI physics, test simulated platform pipelines, or explore the architectural stack.
+            Skills are best understood in action. Interact with live UI physics, test simulated
+            platform pipelines, or explore the architectural stack.
           </p>
         </div>
 
@@ -209,7 +204,8 @@ export default function CraftWorkbench() {
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Adjust spring tension and damping parameters to feel how subtle physics changes interface weight and responsiveness.
+                  Adjust spring tension and damping parameters to feel how subtle physics changes
+                  interface weight and responsiveness.
                 </p>
               </div>
 
@@ -367,7 +363,8 @@ export default function CraftWorkbench() {
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Simulate a production deployment workflow, verifying code integrity, Turbopack packaging, and real network telemetry.
+                  Simulate a production deployment workflow, verifying code integrity, Turbopack
+                  packaging, and real network telemetry.
                 </p>
               </div>
 
@@ -533,7 +530,8 @@ export default function CraftWorkbench() {
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  How technologies fit into production workflows—explained with honest intention, not just logos.
+                  How technologies fit into production workflows—explained with honest intention,
+                  not just logos.
                 </p>
               </div>
 
@@ -579,9 +577,7 @@ export default function CraftWorkbench() {
                           {item.role}
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground leading-relaxed">
-                        {item.usage}
-                      </p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{item.usage}</p>
                     </div>
 
                     <div className="flex items-center justify-between pt-2.5 border-t border-border/30 text-[10px] font-mono text-muted-foreground/70">
