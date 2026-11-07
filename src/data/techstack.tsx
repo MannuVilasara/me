@@ -10,7 +10,6 @@ import {
   SiExpress,
   SiMongodb,
   SiPostgresql,
-  SiOpenai,
   SiGithubactions,
 } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
@@ -69,11 +68,6 @@ export const tools = [
     name: 'Arch Linux',
     description: 'Linux Distribution',
     icon: <SiArchlinux className="text-blue-400 text-4xl" />,
-  },
-  {
-    name: 'OpenAI',
-    description: 'AI and Machine Learning',
-    icon: <SiOpenai className=" text-4xl" />,
   },
 ];
 
