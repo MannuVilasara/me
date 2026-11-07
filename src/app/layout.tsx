@@ -1,4 +1,4 @@
-import { JetBrains_Mono, DM_Sans } from 'next/font/google';
+import { JetBrains_Mono, DM_Sans, Syne } from 'next/font/google';
 
 import { ThemeProvider, GlobalModalProvider, Providers } from '@/components/myComponents/providers';
 import '@/styles/globals.css';
@@ -26,6 +26,14 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
   preload: true,
   fallback: ['monospace'],
+});
+
+const syne = Syne({
+  subsets: ['latin'],
+  variable: '--font-syne',
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
 });
 
 export const metadata: Metadata = {
@@ -75,7 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html
         lang="en"
         suppressHydrationWarning
-        className={`${jetbrainsMono.variable} ${dmSans.variable} overflow-scroll scrollbar-hide`}
+        className={`${jetbrainsMono.variable} ${dmSans.variable} ${syne.variable} overflow-scroll scrollbar-hide`}
       >
         <head>
           <script
@@ -106,7 +114,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <CommandMenuProvider>
                   <ProgressBar />
                   <Oneko />
-                  <div className="mx-auto max-w-2xl px-5 sm:px-6 lg:px-8 flex flex-col pt-12 min-h-screen">
+                  <div className="mx-auto max-w-4xl lg:max-w-5xl px-5 sm:px-6 lg:px-8 flex flex-col pt-8 sm:pt-12 min-h-screen">
                     <Navbar />
                     <main className="grow">{children}</main>
                     <Footer />

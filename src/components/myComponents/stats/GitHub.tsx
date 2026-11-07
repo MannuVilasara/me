@@ -15,7 +15,7 @@ function Github() {
   // Show skeleton until mounted to prevent hydration mismatch
   if (!mounted) {
     return (
-      <div className="flex justify-center pb-2">
+      <div className="w-full flex justify-center py-2">
         <div className="w-full max-w-3xl space-y-3">
           {/* Month labels skeleton */}
           <div className="flex gap-6 pl-10">
@@ -67,12 +67,13 @@ function Github() {
   }
 
   return (
-    <div className="flex justify-center pb-2">
+    <div className="w-full overflow-x-auto flex justify-center py-2">
       <GitHubCalendar
         username="MannuVilasara"
         colorScheme={resolvedTheme === 'dark' ? 'dark' : 'light'}
-        blockSize={7.5}
-        fontSize={14}
+        blockSize={11.5}
+        blockMargin={3.5}
+        fontSize={12}
       />
     </div>
   );

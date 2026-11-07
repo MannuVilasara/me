@@ -1,0 +1,42 @@
+{
+  "version": 3,
+  "skills": {
+    "oil-ui": {
+      "source": "oil-oil/oil-ui",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/oil-oil/oil-ui.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "0d64a00f3a5c45bf7a30d35bded9b7c0fdff2128",
+      "installedAt": "2026-11-07T08:22:28.735Z",
+      "updatedAt": "2026-11-07T08:22:28.735Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
+      "installedAt": "2026-11-07T08:22:32.746Z",
+      "updatedAt": "2026-11-07T08:22:32.746Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "cline",
+    "codex",
+    "cursor",
+    "droid",
+    "fx",
+    "gemini-cli",
+    "github-copilot",
+    "kilo",
+    "kimi-code-cli",
+    "opencode",
+    "pi",
+    "warp",
+    "zed"
+  ]
+}

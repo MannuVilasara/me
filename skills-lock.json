@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "oil-motion": {
+      "source": "oil-oil/oil-motion",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "c31745d171ab550660f29ce65550222b47ee97c81b16d908339ea94199fa9489"
+    },
+    "oil-tone": {
+      "source": "oil-oil/oil-tone",
+      "sourceType": "github",
+      "skillPath": "skills/oil-tone/SKILL.md",
+      "computedHash": "fcbb7a808c0ebcc47b0bc438eb62db54eb7b861a09708b13dc7cfcfb20c86518"
+    }
+  }
+}

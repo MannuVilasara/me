@@ -1,18 +1,14 @@
 'use client';
 
 import { lazy, Suspense, useState } from 'react';
-import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { Copy, Check, Github, Instagram, Terminal } from 'lucide-react';
-import { FaDiscord } from 'react-icons/fa';
-import { Button } from '@/components/ui/button';
+import { FaDiscord, FaTwitter } from 'react-icons/fa';
+import LiveTelemetryBar from '@/components/myComponents/LiveTelemetryBar';
+import CraftWorkbench from '@/components/myComponents/CraftWorkbench';
+import FeaturedProjects from '@/components/myComponents/FeaturedProjects';
 
-// Dynamically import heavy animation libraries
-const Typewriter = dynamic(() => import('typewriter-effect'), {
-  ssr: false,
-  loading: () => <span className="text-2xl">Full Stack Developer, India</span>,
-});
-
-// Lazy load components below the fold
+// Lazy load below the fold components
 const Activities = lazy(() => import('@/components/myComponents/Activities/Activities'));
 const DiscordMessageBox = lazy(() => import('@/components/myComponents/Contact/MessageBox'));
 
@@ -34,7 +30,7 @@ export default function HomeContent() {
         name: 'Who is Manpreet Singh?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Manpreet Singh is a Full Stack Developer from India, specializing in building scalable and efficient web applications using modern technologies like React, Next.js, and TypeScript.',
+          text: 'Manpreet Singh (Mannu Vilasara) is a Full Stack Developer and Platform Engineer from India, building scalable web systems with React, Next.js, TypeScript, and Docker.',
         },
       },
       {
@@ -42,7 +38,7 @@ export default function HomeContent() {
         name: 'What technologies does Manpreet Singh work with?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Manpreet Singh works with React, Next.js, TypeScript, JavaScript, Node.js, Tailwind CSS, and various other modern web development tools and frameworks.',
+          text: 'Manpreet works with React, Next.js, TypeScript, Tailwind CSS, Node.js, Docker, PostgreSQL, and modern cloud deployment pipelines.',
         },
       },
     ],
@@ -54,114 +50,134 @@ export default function HomeContent() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="flex flex-col">
-        <main className="grow px-4 max-w-3xl mx-auto py-8">
-          <h1 className="text-4xl font-bold mb-4">Manpreet Singh</h1>
-          <div className="text-xl sm:text-2xl text-muted-foreground font-medium h-8 flex items-center mb-8">
-            <span className="mr-2 text-foreground/50">{'>'}</span>
-            <Typewriter
-              options={{
-                strings: ['Full Stack Developer', 'Tech Enthusiast', 'Open For Internships'],
-                autoStart: true,
-                loop: true,
-                delay: 50,
-                deleteSpeed: 30,
-                cursor: '_',
-              }}
-            />
+
+      <div className="flex flex-col space-y-4">
+        {/* HERO SECTION (Oil UI + Oil Tone) */}
+        <section className="pt-2 sm:pt-4 pb-4">
+          {/* Top Meta Strip */}
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/70 bg-card/70 backdrop-blur-xs text-xs text-muted-foreground font-mono shadow-2xs">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span>Available for select engineering opportunities</span>
+            </div>
+
+            <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-muted-foreground/70">
+              <span>Punjab, India</span>
+              <span>•</span>
+              <span>IST (UTC+5:30)</span>
+            </div>
           </div>
-          <div className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed space-y-4">
-            <p>
-              I work with latest technologies to build scalable and efficient web applications. My
-              expertise lies in full-stack development, with a focus on creating seamless user
-              experiences and robust backend systems.
-            </p>
-            <p>
-              Beyond full-stack, I also have a strong passion for{' '}
-              <span className="font-semibold text-foreground">DevOps</span> and{' '}
-              <span className="font-semibold text-foreground">Platform Engineering</span>. I love
-              building infrastructure, automating workflows, and scaling systems, and I'm actively
-              looking to deep dive further into the platform ecosystem!
+
+          {/* Heading & Role */}
+          <div className="space-y-2.5 mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground font-display">
+              Manpreet Singh
+            </h1>
+            <p className="text-lg sm:text-xl font-medium text-foreground/90 tracking-tight">
+              Full-stack engineer building tactile interfaces and deterministic platform systems.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            {/* NPX Card */}
+          {/* Oil Tone Personal Narrative */}
+          <div className="max-w-2xl text-sm sm:text-base text-muted-foreground leading-relaxed space-y-3 mb-7">
+            <p>
+              I care about software that feels honest and deliberate in the hand—from the natural weight of a micro-interaction to the silent predictability of a deployment pipeline.
+            </p>
+            <p>
+              Working primarily across TypeScript, Next.js, and Docker, with a growing obsession for platform engineering, developer tooling, and distributed automation.
+            </p>
+          </div>
+
+          {/* Quick Actions & NPX Chip */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* NPX Tactile Chip */}
             <button
               onClick={handleCopy}
-              className="group cursor-pointer flex items-center gap-3 px-4 py-2.5 rounded-lg border border-border bg-muted/30 hover:bg-muted/60 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-              aria-label="Copy npx command"
+              className="group flex items-center gap-2.5 px-3.5 py-2 rounded-xl border border-border/70 bg-card/70 hover:bg-card hover:border-border transition-all duration-200 cursor-pointer shadow-xs active:scale-[0.98]"
+              title="Click to copy npx card command"
             >
-              <Terminal className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-              <code className="font-mono text-sm text-foreground">npx hello-mannu</code>
-              <div className="pl-3 border-l border-border/50 ml-1">
+              <Terminal className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
+              <code className="font-mono text-xs text-foreground font-medium">npx hello-mannu</code>
+              <div className="pl-2 border-l border-border/50 ml-0.5">
                 {copied ? (
-                  <Check className="h-3.5 w-3.5 text-green-500 animate-in zoom-in" />
+                  <Check className="h-3 w-3 text-emerald-500 animate-in zoom-in" />
                 ) : (
-                  <Copy className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
+                  <Copy className="h-3 w-3 text-muted-foreground/60 group-hover:text-foreground transition-colors" />
                 )}
               </div>
             </button>
 
-            {/* Social Links */}
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-foreground"
-                asChild
+            {/* Social Icons */}
+            <div className="flex items-center gap-1.5">
+              <Link
+                href="https://github.com/MannuVilasara"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-9 w-9 rounded-xl flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-card/90 border border-border/60 bg-card/40 transition-colors shadow-2xs"
+                title="GitHub"
               >
-                <a
-                  href="https://github.com/MannuVilasara"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="GitHub"
-                >
-                  <Github className="h-5 w-5" />
-                </a>
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-foreground"
-                asChild
+                <Github className="h-4 w-4" />
+              </Link>
+              <Link
+                href="https://twitter.com/dev_mannuu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-9 w-9 rounded-xl flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-card/90 border border-border/60 bg-card/40 transition-colors shadow-2xs"
+                title="Twitter / X"
               >
-                <a
-                  href="https://instagram.com/dev_mannuu"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Instagram"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-foreground"
-                asChild
+                <FaTwitter className="h-4 w-4" />
+              </Link>
+              <Link
+                href="https://discord.com/users/786926252811485186"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-9 w-9 rounded-xl flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-card/90 border border-border/60 bg-card/40 transition-colors shadow-2xs"
+                title="Discord"
               >
-                <a
-                  href="https://discord.com/users/786926252811485186"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Discord"
-                >
-                  <FaDiscord className="h-5 w-5" />
-                </a>
-              </Button>
+                <FaDiscord className="h-4 w-4" />
+              </Link>
+              <Link
+                href="https://instagram.com/dev_mannuu"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-9 w-9 rounded-xl flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-card/90 border border-border/60 bg-card/40 transition-colors shadow-2xs"
+                title="Instagram"
+              >
+                <Instagram className="h-4 w-4" />
+              </Link>
             </div>
           </div>
-        </main>
+        </section>
 
-        <Suspense fallback={<div className="h-40 animate-pulse bg-muted rounded-lg" />}>
+        {/* REAL-TIME DYNAMIC TELEMETRY HUD */}
+        <LiveTelemetryBar />
+
+        {/* CRAFT WORKBENCH (Skills showcased by using them) */}
+        <CraftWorkbench />
+
+        {/* SELECTED WORK / PROJECTS */}
+        <FeaturedProjects />
+
+        {/* PACMAN CONTRIBUTIONS & ACTIVITY */}
+        <Suspense fallback={<div className="h-40 animate-pulse bg-muted/30 rounded-2xl" />}>
           <Activities />
         </Suspense>
 
-        <section className="mt-16 border-t pt-8">
-          <h2 className="text-2xl font-semibold mb-4 text-muted-foreground">Send me a message</h2>
+        {/* SOFT CONTACT SECTION */}
+        <section className="mt-14 border-t border-border/50 pt-10">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold tracking-tight text-foreground">
+              Say Hello
+            </h2>
+            <p className="text-xs text-muted-foreground mt-1">
+              Have an interesting problem, a platform challenge, or just want to chat? Drop a note below.
+            </p>
+          </div>
 
-          <Suspense fallback={<div className="h-32 animate-pulse bg-muted rounded-lg" />}>
+          <Suspense fallback={<div className="h-32 animate-pulse bg-muted/30 rounded-2xl" />}>
             <DiscordMessageBox />
           </Suspense>
         </section>

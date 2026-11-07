@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.env
+.env.*
+!.env.example
+build/
+dist/
+tmp/
+*.job.json
+node_modules/

@@ -1,0 +1,15 @@
+Use case: illustration-story
+Asset type: transparent hero illustration for the Oil Motion GitHub README
+Input image: use oil-visual/assets/characters/oil-character-turnaround-v1.png as the exact identity reference for both recurring characters.
+
+Create one polished editorial manga scene that clearly communicates turning keyframes and AI video into interactive web motion. The glasses stick-figure protagonist operates a long horizontal film-strip workbench. On the left is one intact slim smartphone-like product as the approved start keyframe; across the middle are several continuous motion frames; on the right the same product is cleanly separated into an exploded view as the approved end keyframe. A large physical scroll/scrub wheel and a thin progress rail visibly control which film frame is active. The warm-yellow Border Collie sits beside the rail, watching the active frame with a gentle curious expression. Keep the characters secondary to the film strip and transformation evidence.
+
+Preserve the supplied person's round head, three-strand hair, thin round glasses with clearly visible solid-black pupils, small smile, loose white T-shirt, slender line limbs, and height-to-head ratio. Preserve the supplied dog's narrow white facial blaze, folded ears, gentle dark eyes, compact seated body, fluffy white chest, warm-yellow coat map, and full side-resting tail. Do not make the dog a round chibi puppy.
+
+Style: professional oil-visual manga/comic ink illustration; clean confident black outlines with varied line weight; restrained circular halftone screentone; 90% black, white and halftone gray; warm yellow only on the dog, scrubber knob and a few tiny star accents; muted blue only on a few product/frame surfaces. Flat 2D editorial illustration, not 3D.
+
+Composition: wide horizontal 3:2 scene, readable silhouette, three visual regions from start keyframe to motion frames to end keyframe. Keep generous clear padding around the entire scene for compositing.
+
+Background: genuine transparency with a preserved alpha channel. Every pixel outside the subject must be fully transparent. No green/magenta/grey/white backdrop, checkerboard, gradient, texture, noise, shadow, floor, horizon, reflection or lighting variation.
+
+No text, letters, numbers, logo, watermark, interface cards, dashboard, extra limbs, duplicated dog, missing pupils, motion blur, glossy rendering, photorealism or cast shadow. Keep every subject fully separated from all image borders.

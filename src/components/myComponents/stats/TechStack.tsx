@@ -14,25 +14,26 @@ type TechStackProps = {
 
 export default function TechStack({ techStack }: TechStackProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-5">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
       {techStack.map((tech, index) => (
         <motion.div
           key={index}
-          className="flex items-center gap-4 rounded-lg border bg-neutral-100 dark:bg-neutral-900 p-4 transition-colors duration-300 cursor-pointer"
-          whileHover={{
-            scale: 1.03,
-            boxShadow: '0 8px 24px rgba(255, 255, 255, 0.1), 0 4px 12px rgba(255, 255, 255, 0.08)',
-          }}
+          className="group flex items-center gap-3.5 rounded-xl border border-border/60 bg-card/40 hover:bg-card/90 hover:border-border p-3.5 transition-all duration-200 cursor-pointer backdrop-blur-xs"
+          whileHover={{ y: -2 }}
           transition={{
             type: 'spring',
-            stiffness: 300,
-            damping: 20,
+            stiffness: 350,
+            damping: 25,
           }}
         >
-          <div className="flex-shrink-0">{tech.icon}</div>
-          <div>
-            <h4 className="text-foreground font-semibold">{tech.name}</h4>
-            <p className="text-muted-foreground text-sm">{tech.description}</p>
+          <div className="shrink-0 p-2 rounded-lg bg-muted/50 text-foreground group-hover:scale-105 transition-transform">
+            {tech.icon}
+          </div>
+          <div className="min-w-0">
+            <h4 className="text-foreground text-sm font-semibold truncate group-hover:text-primary transition-colors">
+              {tech.name}
+            </h4>
+            <p className="text-muted-foreground text-xs truncate">{tech.description}</p>
           </div>
         </motion.div>
       ))}
